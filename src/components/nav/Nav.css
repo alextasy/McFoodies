@@ -1,0 +1,44 @@
+.Nav{
+    width: 100vw;
+    height: 125px;
+    background-color: white;
+    border-bottom: 1px solid #dedede;
+    display: flex;
+    justify-content: center;
+}
+.Nav section{
+    width: 1200px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.Nav section #logo{
+    margin-right: auto;
+}
+
+.Nav section span{
+    margin-right: 40px;
+    color: #666666;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.Nav section button{
+    width: 150px;
+    height: 42px;
+
+    border: none;
+    border-bottom: 2px solid #bababa;
+    
+    background-color: #d90a0a;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Nav section button:focus{
+    outline: none;
+}
+

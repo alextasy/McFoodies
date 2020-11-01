@@ -1,11 +1,14 @@
 .Nav{
     width: 100vw;
-    height: 125px;
+    height: 100px;
     background-color: white;
     border-bottom: 1px solid #dedede;
     display: flex;
     justify-content: center;
+    position: fixed;
+    z-index: 1000;
 }
+
 .Nav section{
     width: 1200px;
     display: flex;
@@ -22,6 +25,11 @@
     color: #666666;
     font-size: 22px;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.Nav section span:hover{
+    color: #d90a0a;
 }
 
 .Nav section button{
@@ -29,7 +37,7 @@
     height: 42px;
 
     border: none;
-    border-bottom: 2px solid #bababa;
+    border-bottom: 2px solid #cccccc;
     
     background-color: #d90a0a;
     color: white;

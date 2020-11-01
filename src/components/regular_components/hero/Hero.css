@@ -1,0 +1,46 @@
+.Hero{
+    width: 100%;
+    height: 500px;
+    margin: 26px 0;
+    position: relative;  
+}
+
+.Hero section{
+    overflow: hidden;
+    display: flex;
+}
+
+.Hero section img{
+    transform: translateX(-100%);
+}
+
+.Hero #Shadow{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.Hero button{
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.Hero button:focus{
+    outline: none;
+}
+
+.Hero button.prevBtn{ 
+    background-image: url('../../../images/icons/left_arrow.png'); 
+}
+.Hero button.nextBtn{ 
+    background-image: url('../../../images/icons/right_arrow.png'); 
+    right: 0px;
+}

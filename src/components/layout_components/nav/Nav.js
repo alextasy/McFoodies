@@ -1,7 +1,7 @@
 import React from 'react';
 import './Nav.css';
-import logo from '../../images/icons/logo.svg';
-import phoneIcon from '../../images/icons/phone.png';
+import logo from '../../../images/icons/logo.svg';
+import phoneIcon from '../../../images/icons/phone.png';
 
 function Nav() {
     return (

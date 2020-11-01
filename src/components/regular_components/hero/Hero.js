@@ -15,14 +15,21 @@ function Hero() {
     const slide = (event, direction)=>{
         
         const arrayOfImg = [...event.target.parentNode.firstChild.children] // Selects the <img> in <section>
-        const transitionLenght = 600
+        const clickedButton = event.target;
+        const transitionLenght = 600;
         const firstImgCloneIndex = arrayOfImg.length - 1;// It's the last img of the array. -1 because of the clone at the start
         const lastImgCloneIndex = 0;
         
         counter += direction; // direction = +1 or -1
+        clickedButton.disabled = true;
 
         arrayOfImg.forEach((element)=> {
+            element.addEventListener('transitionend', ()=> {
+                element.style.animation = 'none' // Resets animation, so it can be played again
+                clickedButton.disabled = false;}); 
+
             element.style.transition = `transform ease-in-out ${transitionLenght}ms`;
+            element.style.animation = `slide ${transitionLenght}ms`;
             element.style.transform = `translateX(-${100*counter}%)`;
         });
 

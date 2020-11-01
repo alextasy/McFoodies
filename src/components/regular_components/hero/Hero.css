@@ -3,6 +3,7 @@
     height: 500px;
     margin: 26px 0;
     position: relative;  
+    background-color: black;
 }
 
 .Hero section{
@@ -12,6 +13,21 @@
 
 .Hero section img{
     transform: translateX(-100%);
+}
+
+@keyframes slide{
+    0%{
+        opacity: 1;
+    }
+    35%{
+        opacity: 0.2;
+    }
+    65%{
+        opacity: 0.2;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 
 .Hero #Shadow{

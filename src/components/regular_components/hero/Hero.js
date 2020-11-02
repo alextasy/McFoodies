@@ -10,23 +10,34 @@ import shadow from '../../../images/main/Shadow.png';
 
 function Hero() {
 
+    const transitionLenght = 600;
     let counter = 1;
 
-    const slide = (event, direction)=>{
+    const slide = (button, direction)=>{
         
-        const arrayOfImg = [...event.target.parentNode.firstChild.children] // Selects the <img> in <section>
-        const clickedButton = event.target;
-        const transitionLenght = 600;
+        const arrayOfImg = [...button.parentNode.firstChild.children]; // Selects the <img> in <section>
+        const clickedButton = button;
+        const indicators = [...button.parentNode.lastChild.children];
         const firstImgCloneIndex = arrayOfImg.length - 1;// It's the last img of the array. -1 because of the clone at the start
         const lastImgCloneIndex = 0;
         
+        
+        indicators.forEach((element)=>{
+            element.style.transitionDuration = transitionLenght + 'ms';
+            element.style.animationDuration = transitionLenght + 'ms';
+        })
+        
+        indicators[counter-1].className = '';
         counter += direction; // direction = +1 or -1
-        clickedButton.disabled = true;
+
+        switch(counter){
+            case firstImgCloneIndex: indicators[0].className = 'active'; break;
+            case lastImgCloneIndex: indicators[indicators.length-1].className = 'active'; break;
+            default:indicators[counter-1].className = 'active';
+        }
 
         arrayOfImg.forEach((element)=> {
-            element.addEventListener('transitionend', ()=> {
-                element.style.animation = 'none' // Resets animation, so it can be played again
-                clickedButton.disabled = false;}); 
+            element.addEventListener('transitionend', ()=> {element.style.animation = 'none'}); // Resets animation, so it can be played again; 
 
             element.style.transition = `transform ease-in-out ${transitionLenght}ms`;
             element.style.animation = `slide ${transitionLenght}ms`;
@@ -43,18 +54,21 @@ function Hero() {
 
         const firstImgIndex = 1;
         const lastImgIndex = firstImgCloneIndex -1; // The clone is the last in the array, actual last is the one before it
-        clickedButton.disabled = false; //Fixes a bug where the button is disabled when the reset happens
 
         let index = counter === firstImgCloneIndex ? firstImgIndex : lastImgIndex;
 
         arrayOfImg.forEach((element)=> {
-
             element.style.transition = 'none';
             element.style.transform = `translateX(-${100*index}%)`;
         });
         counter = index;
     }
      
+    const temporaryDisableButton = (button)=>{
+        console.log(button);
+        button.disabled = true;
+        setTimeout(()=> button.disabled = false, transitionLenght)
+    }
 
 
     return (
@@ -72,13 +86,28 @@ function Hero() {
             </section>
             <img src={shadow} id="Shadow"/>
 
-            <button className="prevBtn" onClick={(event)=> slide(event, -1)}></button>
-            <button className="nextBtn" onClick={(event)=> slide(event, +1)}></button>
-            
+            <button 
+                className="prevBtn" 
+                onClick={(event)=> {slide(event.target, -1); temporaryDisableButton(event.target)}}>
+            </button>
+
+            <button 
+                className="nextBtn" 
+                onClick={(event)=> {slide(event.target, +1); temporaryDisableButton(event.target)}}>
+            </button>
+
+            <div className="indicators">
+                <span className='active'></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
 
             
         </div>
     )
 }
 
-export default Hero
+export default Hero;

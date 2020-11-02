@@ -60,3 +60,37 @@
     background-image: url('../../../images/icons/right_arrow.png'); 
     right: 0px;
 }
+
+.Hero .indicators{
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    align-items: center;
+}
+.Hero .indicators span{
+    width: 12px;
+    height: 12px;
+    margin: 0px 3px;
+    background-color: none;
+    border: 2px solid #dadada;
+    border-radius: 50%;
+    transition: all ease-in-out;
+}
+.Hero .indicators span.active{
+    width: 14px;
+    height: 14px;
+    background-color: white;
+    border: 2px solid white;
+    animation: active ease-in-out;
+}
+@keyframes active{
+    0%{
+        width: 12px;
+        height: 12px;
+        background-color: none;
+        border: 2px solid #dadada;
+    }
+}

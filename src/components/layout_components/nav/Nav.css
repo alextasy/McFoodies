@@ -32,21 +32,3 @@
     color: #d90a0a;
 }
 
-.Nav section button{
-    width: 150px;
-    height: 42px;
-
-    border: none;
-    border-bottom: 2px solid #cccccc;
-    
-    background-color: #d90a0a;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.Nav section button:focus{
-    outline: none;
-}
-

@@ -2,6 +2,7 @@ import React from 'react';
 import './Nav.css';
 import logo from '../../../images/icons/logo.svg';
 import phoneIcon from '../../../images/icons/phone.png';
+import Button from '../../regular_components/button/Button';
 
 function Nav() {
     return (
@@ -16,7 +17,7 @@ function Nav() {
 
                 <span>MENU</span>
                 <span>SIGN IN</span>
-                <button>ORDER NOW</button>
+                <Button>ORDER NOW</Button>
 
             </section>
         </div>

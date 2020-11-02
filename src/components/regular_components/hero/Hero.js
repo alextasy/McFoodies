@@ -7,6 +7,7 @@ import img4 from '../../../images/main/4.jpg';
 import img5 from '../../../images/main/5.jpg';
 import img6 from '../../../images/main/6.jpg';
 import shadow from '../../../images/main/Shadow.png';
+import Button from '../button/Button';
 
 function Hero() {
 
@@ -16,7 +17,6 @@ function Hero() {
     const slide = (button, direction)=>{
         
         const arrayOfImg = [...button.parentNode.firstChild.children]; // Selects the <img> in <section>
-        const clickedButton = button;
         const indicators = [...button.parentNode.lastChild.children];
         const firstImgCloneIndex = arrayOfImg.length - 1;// It's the last img of the array. -1 because of the clone at the start
         const lastImgCloneIndex = 0;
@@ -27,14 +27,15 @@ function Hero() {
             element.style.animationDuration = transitionLenght + 'ms';
         })
         
-        indicators[counter-1].className = '';
+        indicators[counter-1].className = ''; // Previous image indicator becomes inactive
         counter += direction; // direction = +1 or -1
 
-        switch(counter){
+        switch(counter) //Assignes the active class to the proper element
+        { 
             case firstImgCloneIndex: indicators[0].className = 'active'; break;
             case lastImgCloneIndex: indicators[indicators.length-1].className = 'active'; break;
             default:indicators[counter-1].className = 'active';
-        }
+        };
 
         arrayOfImg.forEach((element)=> {
             element.addEventListener('transitionend', ()=> {element.style.animation = 'none'}); // Resets animation, so it can be played again; 
@@ -45,12 +46,12 @@ function Hero() {
         });
 
         if(counter === lastImgCloneIndex || counter === firstImgCloneIndex){
-            setTimeout(() => resetSlides(arrayOfImg, firstImgCloneIndex, clickedButton) , transitionLenght); // Waiting for transition end
+            setTimeout(() => resetSlides(arrayOfImg, firstImgCloneIndex), transitionLenght); // Waiting for transition end
         }
 
     }
 
-    const resetSlides = (arrayOfImg, firstImgCloneIndex, clickedButton) =>{
+    const resetSlides = (arrayOfImg, firstImgCloneIndex) =>{
 
         const firstImgIndex = 1;
         const lastImgIndex = firstImgCloneIndex -1; // The clone is the last in the array, actual last is the one before it
@@ -65,7 +66,6 @@ function Hero() {
     }
      
     const temporaryDisableButton = (button)=>{
-        console.log(button);
         button.disabled = true;
         setTimeout(()=> button.disabled = false, transitionLenght)
     }
@@ -95,6 +95,12 @@ function Hero() {
                 className="nextBtn" 
                 onClick={(event)=> {slide(event.target, +1); temporaryDisableButton(event.target)}}>
             </button>
+
+            <div className="order_modal">
+                <h1>FEELING HUNGRY?</h1>
+                <p>Delicous food at your doorstep in no time. High quality fresh ingredients for high quality people.</p>
+                <Button>ORDER NOW</Button>
+            </div>
 
             <div className="indicators">
                 <span className='active'></span>

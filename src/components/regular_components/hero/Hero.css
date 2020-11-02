@@ -94,3 +94,27 @@
         border: 2px solid #dadada;
     }
 }
+
+.Hero .order_modal{
+    width: 340px;
+    height: 220px;
+    background-color: white;
+    position: absolute;
+    right: 60px;
+    bottom: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.Hero .order_modal h1{
+    color: #eb0d0d;
+    border-bottom: dashed 2px #a6a6a6;
+    font-size: 32px;
+}
+.Hero .order_modal p{
+    color: #222222;
+    font-size: 16px;
+    width: 276px;
+    margin: 16px 0;
+}

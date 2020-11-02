@@ -34,15 +34,17 @@ function Hero() {
         });
 
         if(counter === lastImgCloneIndex || counter === firstImgCloneIndex){
-            setTimeout(() => resetSlides(arrayOfImg, firstImgCloneIndex) , transitionLenght); // Waiting for transition end
+            setTimeout(() => resetSlides(arrayOfImg, firstImgCloneIndex, clickedButton) , transitionLenght); // Waiting for transition end
         }
 
     }
 
-    const resetSlides = (arrayOfImg, firstImgCloneIndex) =>{
+    const resetSlides = (arrayOfImg, firstImgCloneIndex, clickedButton) =>{
 
         const firstImgIndex = 1;
         const lastImgIndex = firstImgCloneIndex -1; // The clone is the last in the array, actual last is the one before it
+        clickedButton.disabled = false; //Fixes a bug where the button is disabled when the reset happens
+
         let index = counter === firstImgCloneIndex ? firstImgIndex : lastImgIndex;
 
         arrayOfImg.forEach((element)=> {

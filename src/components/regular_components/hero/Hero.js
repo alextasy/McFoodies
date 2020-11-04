@@ -15,13 +15,12 @@ function Hero() {
     const transitionLenght = 600;
     let counter = 1;
 
-    const slide = (button, direction)=>{
-        
-        const arrayOfImg = [...button.parentNode.firstChild.children]; // Selects the <img> in <section>
-        const indicators = [...button.parentNode.lastChild.children];
+    const slide = (hero, direction)=>{
+        const arrayOfImg = [...hero.firstChild.children]; // Selects the <img> in <section>
+        const indicators = [...hero.lastChild.children];
         const firstImgCloneIndex = arrayOfImg.length - 1;// It's the last img of the array. -1 because of the clone at the start
         const lastImgCloneIndex = 0;
-        const modal = button.parentNode.children[4];
+        const modal = hero.children[4];
         
         
         indicators.forEach((element)=>{
@@ -45,6 +44,7 @@ function Hero() {
             element.addEventListener('transitionend', ()=> {
                 element.style.animation = 'none';  // Resets animation, so it can be played again;
                 modal.style.animation = 'none';
+                element.style.transition = 'none';
             });  
 
             element.style.transition = `transform ease-in-out ${transitionLenght}ms`;
@@ -93,14 +93,68 @@ function Hero() {
             case 7: h1.innerHTML = heroDescriptions.hero1.h1; p.innerHTML = heroDescriptions.hero1.p; break;   
         }     
     }
+    let isDown = false;
+    let startX;
+    let pos;
+    let difference;
+    let isTransitioning = false;
+    const onLoad = (element)=>{
+
+        const images = [...element.firstChild.children]; 
+
+        element.addEventListener('pointerdown', (e)=> {
+            e.preventDefault();
+            if(isTransitioning) return;
+            pos = -1200 * counter
+            
+            isDown = true;
+            startX = e.pageX;
+        });
+        element.addEventListener('pointerup', ()=> {
+            console.log('up');
+            finishTransition(element, images)
+        });
+        element.addEventListener('pointerleave', ()=> finishTransition(element, images));
+            
+        element.addEventListener('pointermove', (e)=> {
+            if(!isDown || isTransitioning) return;
+            difference = e.pageX - startX;
+
+            if(difference > 400 || difference < -400) {
+                finishTransition(element, images);
+                return;
+            }
+            moveImages( images)
+        });
+        
+    }
+    const finishTransition = (element, images)=>{
+        console.log(difference);
+        if(isTransitioning) return;
+        
+        isDown = false;
+
+        if(difference > 25) slide(element, 1);
+        if(difference < -25) slide(element, -1);
+        difference = 0;
+
+        isTransitioning = true;
+        setTimeout(()=> isTransitioning = false, transitionLenght)
+    };
+
+    const moveImages = ( images)=> {
+        images.forEach((image)=>{
+            image.style.transform = `translate(${pos - difference}px)`
+        })
+    }
 
 
     return (
-        <div className="Hero">
+        <div className="Hero" >
             
-            <section> 
+            <section > 
                 <img src={img6} alt="Fries"/> {/*clone of last image, helps transitions smoothly*/}
-                <img src={img1} alt="Pizza"/>
+                <img src={img1} alt="Pizza" onLoad={(e)=> onLoad(e.target.parentNode.parentNode)}/>
                 <img src={img2} alt="Burgers"/>
                 <img src={img3} alt="Pasta"/>
                 <img src={img4} alt="Chicken"/>
@@ -112,12 +166,12 @@ function Hero() {
 
             <button 
                 className="prevBtn" 
-                onClick={(event)=> {slide(event.target, -1); temporaryDisableButton(event.target)}}>
+                onClick={(event)=> {slide(event.target.parentNode, -1); temporaryDisableButton(event.target)}}>
             </button>
 
             <button 
                 className="nextBtn" 
-                onClick={(event)=> {slide(event.target, +1); temporaryDisableButton(event.target)}}>
+                onClick={(event)=> {slide(event.target.parentNode, +1); temporaryDisableButton(event.target)}}>
             </button>
 
             <div className="order_modal">

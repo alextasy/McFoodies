@@ -34,6 +34,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    pointer-events: none;
 }
 
 .Hero button{
@@ -105,6 +106,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    pointer-events: none;
+    z-index: 10;
 }
 .Hero .order_modal h1{
     width: 280px;
@@ -115,7 +118,7 @@
     text-align: center;
 }
 .Hero .order_modal p{
-    color: #222222;
+    color: #434343;
     font-size: 16px;
     width: 280px;
     margin: 16px 33px;

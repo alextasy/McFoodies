@@ -1,0 +1,28 @@
+.Card{
+    width: 265px;
+    height: 425px;
+    border: 1px solid #cecece;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.Card h1{
+    font-size: 24px;
+    font-weight: normal;
+    color: #d90a0a;
+    text-align: center;
+}
+.Card img{
+    width: 225px;
+    height: 225px;
+    object-fit: contain;
+}
+.Card p{
+    width: 220px;
+    height: 70px;
+    font-size: 16px;
+    color: #434343;
+    line-height: 24px;
+}

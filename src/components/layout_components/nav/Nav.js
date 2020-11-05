@@ -6,7 +6,7 @@ import Button from '../../regular_components/button/Button';
 
 function Nav() {
     return (
-        <div className="Nav">
+        <nav className="Nav">
              <section>
 
                 <img id='logo' src={logo} alt="Logo"></img>
@@ -20,7 +20,7 @@ function Nav() {
                 <Button>ORDER NOW</Button>
 
             </section>
-        </div>
+        </nav>
     )
 }
 

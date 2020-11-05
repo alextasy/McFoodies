@@ -80,11 +80,6 @@ function Hero() {
         counter = counter === firstImgCloneIndex ? firstImgIndex : lastImgIndex;
         images.forEach((image)=> image.style.transform = `translateX(-${100*counter}%)`);
     }
-     
-    // const temporaryDisableButton = (button)=>{
-    //     button.disabled = true;
-    //     setTimeout(()=> button.disabled = false, transitionLenght)
-    // }
 
     const updateModalText = (modal)=>{
         const h1 = modal.firstChild;

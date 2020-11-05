@@ -11,8 +11,20 @@
     display: flex;
 }
 
+.Hero #shadow_overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
 .Hero section img{
     transform: translateX(-100%);
+    
+}
+.Hero section img.transitioning{
+    transition: transform 600ms ease-in-out;
+    animation: fade 600ms ease-in-out;
 }
 
 @keyframes fade{
@@ -28,13 +40,6 @@
     100%{
         opacity: 1;
     }
-}
-
-.Hero #Shadow{
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
 }
 
 .Hero button{
@@ -78,23 +83,16 @@
     background-color: none;
     border: 2px solid #dadada;
     border-radius: 50%;
-    transition: all ease-in-out;
+    transition: all 600ms ease-in-out;
+    cursor: pointer;
 }
 .Hero .indicators span.active{
     width: 14px;
     height: 14px;
     background-color: white;
     border: 2px solid white;
-    animation: active ease-in-out;
 }
-@keyframes active{
-    0%{
-        width: 12px;
-        height: 12px;
-        background-color: none;
-        border: 2px solid #dadada;
-    }
-}
+
 
 .Hero .order_modal{
     width: 340px;
@@ -106,8 +104,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    pointer-events: none;
-    z-index: 10;
 }
 .Hero .order_modal h1{
     width: 280px;

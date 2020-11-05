@@ -1,76 +1,84 @@
 import React from 'react';
 import './Hero.css';
-import img1 from '../../../images/main/1.jpg';
-import img2 from '../../../images/main/2.jpg';
-import img3 from '../../../images/main/3.jpg';
-import img4 from '../../../images/main/4.jpg';
-import img5 from '../../../images/main/5.jpg';
-import img6 from '../../../images/main/6.jpg';
-import shadow from '../../../images/main/Shadow.png';
+import images from './hero_images';
+import shadow_overlay from '../../../images/main/Shadow.png';
 import Button from '../button/Button';
-import heroDescriptions from './card_descriptions';
+import modal_info from './modal_info';
 
 function Hero() {
 
     const transitionLenght = 600;
     let counter = 1;
+    let isTransitioning = false;
 
-    const slide = (hero, direction)=>{
-        const arrayOfImg = [...hero.firstChild.children]; // Selects the <img> in <section>
+    const hero_images = <section>
+        
+        <img src={images[images.length -1].src} //Clone of last image to make transitions easy
+             alt={images[images.length -1].alt}   
+             onLoad={(e)=> onLoad(e.target.parentNode.parentNode)} 
+        ></img>
+
+        {images.map((image)=> <img src={image.src} alt={image.alt} key={image.alt}></img>)}
+        
+        <img src={images[0].src} alt={images[0].alt}/> {/*Clone of last image to make transitions easy*/} 
+
+    </section>
+
+    const indicators = <div className="indicators">
+
+        {images.map((image, index)=> 
+            <span 
+                key={image.alt} 
+                style={{transitionDuration: `${transitionLenght}ms`, animationDuration: `${transitionLenght}ms`}}
+                className = {index === 0 ? 'active' : null} // First element is active at start.
+                onClick={(e)=> {
+                    if(counter === index + 1) return;
+                    slide(e.target.parentNode.parentNode, index + 1 - counter);
+                }}>
+            </span>)}
+    </div>
+
+    const slide = (hero, imagesToJump)=>{
+        const images = [...hero.firstChild.children]; // Selects the <img> in <section>
         const indicators = [...hero.lastChild.children];
-        const firstImgCloneIndex = arrayOfImg.length - 1;// It's the last img of the array. -1 because of the clone at the start
+        const firstImgCloneIndex = images.length - 1;// It's the last img of the array.
         const lastImgCloneIndex = 0;
         const modal = hero.children[4];
         
-        
-        indicators.forEach((element)=>{
-            element.style.transitionDuration = transitionLenght + 'ms';
-            element.style.animationDuration = transitionLenght + 'ms';
-        })
+        isTransitioning = true;
         indicators[counter-1].className = ''; // Previous image indicator becomes inactive
+        counter += imagesToJump; // Jumps left or right number of images depending on imagesToJump value.
 
-        counter += direction; // direction = +1 or -1
-        modal.style.animation = `flip ${transitionLenght}ms ease-in-out ${direction === -1 ? 'alternate' : ''}`;
+        modal.style.animation = `flip ${transitionLenght}ms ease-in-out`;
         setTimeout(()=> updateModalText(modal), transitionLenght/2);
 
-        switch(counter) //Assignes the active class to the proper element
-        { 
-            case firstImgCloneIndex: indicators[0].className = 'active'; break;
-            case lastImgCloneIndex: indicators[indicators.length-1].className = 'active'; break;
-            default:indicators[counter-1].className = 'active';
-        };
+        if(counter === firstImgCloneIndex) indicators[0].className = 'active';
+        else if(counter === lastImgCloneIndex) indicators[indicators.length-1].className = 'active';
+        else indicators[counter-1].className = 'active';
 
-        arrayOfImg.forEach((element)=> {
-            element.addEventListener('transitionend', ()=> {
-                element.style.animation = 'none';  // Resets animation, so it can be played again;
-                modal.style.animation = 'none';
-                element.style.transition = 'none';
-            });  
+        images.forEach((element)=> {
 
-            element.style.transition = `transform ease-in-out ${transitionLenght}ms`;
-            element.style.animation = `fade ${transitionLenght}ms ease-in-out`;
+            element.classList.toggle('transitioning');
             element.style.transform = `translateX(-${100*counter}%)`;
-        });
 
-        if(counter === lastImgCloneIndex || counter === firstImgCloneIndex){
-            setTimeout(() => resetSlides(arrayOfImg, firstImgCloneIndex, modal), transitionLenght); // Waiting for transition end
-        }
+            setTimeout(()=>  {
+                element.classList.toggle('transitioning');
+                modal.style.animation = 'none';
+                isTransitioning = false;
+                if(counter === lastImgCloneIndex || counter === firstImgCloneIndex){
+                    resetSlides(images, firstImgCloneIndex); 
+                }
+            }, transitionLenght);
+        });   
 
     }
 
-    const resetSlides = (arrayOfImg, firstImgCloneIndex, modal) =>{
-
+    const resetSlides = (images, firstImgCloneIndex,) =>{
         const firstImgIndex = 1;
         const lastImgIndex = firstImgCloneIndex -1; // The clone is the last in the array, actual last is the one before it
 
-        let index = counter === firstImgCloneIndex ? firstImgIndex : lastImgIndex;
-
-        arrayOfImg.forEach((element)=> {
-            element.style.transition = 'none';
-            element.style.transform = `translateX(-${100*index}%)`;
-            modal.style.animation = 'none';
-        });
-        counter = index;
+        counter = counter === firstImgCloneIndex ? firstImgIndex : lastImgIndex;
+        images.forEach((image)=> image.style.transform = `translateX(-${100*counter}%)`);
     }
      
     const temporaryDisableButton = (button)=>{
@@ -81,88 +89,61 @@ function Hero() {
     const updateModalText = (modal)=>{
         const h1 = modal.firstChild;
         const p = modal.children[1];
+        const firstImgCloneIndex = images.length +1; // 2 clones are added to the array of img so last img index is lenght + 1
+        const lastImgCloneIndex = 0;
 
-        switch(counter){
-            case 0: h1.innerHTML = heroDescriptions.hero6.h1; p.innerHTML = heroDescriptions.hero6.p; break;
-            case 1: h1.innerHTML = heroDescriptions.hero1.h1; p.innerHTML = heroDescriptions.hero1.p; break;
-            case 2: h1.innerHTML = heroDescriptions.hero2.h1; p.innerHTML = heroDescriptions.hero2.p; break;
-            case 3: h1.innerHTML = heroDescriptions.hero3.h1; p.innerHTML = heroDescriptions.hero3.p; break;
-            case 4: h1.innerHTML = heroDescriptions.hero4.h1; p.innerHTML = heroDescriptions.hero4.p; break;
-            case 5: h1.innerHTML = heroDescriptions.hero5.h1; p.innerHTML = heroDescriptions.hero5.p; break;
-            case 6: h1.innerHTML = heroDescriptions.hero6.h1; p.innerHTML = heroDescriptions.hero6.p; break;
-            case 7: h1.innerHTML = heroDescriptions.hero1.h1; p.innerHTML = heroDescriptions.hero1.p; break;   
-        }     
+        if(lastImgCloneIndex)       {h1.innerHTML = modal_info.hero6.h1; p.innerHTML = modal_info.hero6.p;}
+        else if(firstImgCloneIndex) {h1.innerHTML = modal_info.hero1.h1; p.innerHTML = modal_info.hero1.p;}
+        else {h1.innerHTML = modal_info[`hero${counter}`].h1; p.innerHTML = modal_info[`hero${counter}`].p;}
     }
-    let isDown = false;
-    let startX;
-    let pos;
-    let difference;
-    let isTransitioning = false;
+    
     const onLoad = (element)=>{
 
-        const images = [...element.firstChild.children]; 
+        let isDown = false;
+        let startX, currentPos, dragDistance;
+        const images = [...element.firstChild.children];
+        element.addEventListener('touchstart', (e)=> e.preventDefault()); // optimizes for mobile
 
         element.addEventListener('pointerdown', (e)=> {
             e.preventDefault();
             if(isTransitioning) return;
-            pos = -1200 * counter
-            
+
+            currentPos = - element.clientWidth * counter;
             isDown = true;
             startX = e.pageX;
         });
-        element.addEventListener('pointerup', ()=> {
-            console.log('up');
-            finishTransition(element, images)
-        });
+        element.addEventListener('pointerup', ()=> {finishTransition(element, images)});
         element.addEventListener('pointerleave', ()=> finishTransition(element, images));
-            
+
         element.addEventListener('pointermove', (e)=> {
             if(!isDown || isTransitioning) return;
-            difference = e.pageX - startX;
 
-            if(difference > 400 || difference < -400) {
+            dragDistance = e.pageX - startX;
+
+            if(dragDistance > 400 || dragDistance < -400) {
                 finishTransition(element, images);
                 return;
             }
-            moveImages( images)
+            images.forEach((image)=> image.style.transform = `translate(${currentPos - dragDistance}px)`);
         });
-        
+
+        const finishTransition = (element)=>{
+            if(isTransitioning) return;
+            
+            isDown = false;
+            console.log(dragDistance);
+            if(dragDistance) slide(element, dragDistance < 0 ? -1 : 1);
+            dragDistance = 0;
+        };
+    
     }
-    const finishTransition = (element, images)=>{
-        console.log(difference);
-        if(isTransitioning) return;
-        
-        isDown = false;
-
-        if(difference > 25) slide(element, 1);
-        if(difference < -25) slide(element, -1);
-        difference = 0;
-
-        isTransitioning = true;
-        setTimeout(()=> isTransitioning = false, transitionLenght)
-    };
-
-    const moveImages = ( images)=> {
-        images.forEach((image)=>{
-            image.style.transform = `translate(${pos - difference}px)`
-        })
-    }
-
+    
 
     return (
         <div className="Hero" >
             
-            <section > 
-                <img src={img6} alt="Fries"/> {/*clone of last image, helps transitions smoothly*/}
-                <img src={img1} alt="Pizza" onLoad={(e)=> onLoad(e.target.parentNode.parentNode)}/>
-                <img src={img2} alt="Burgers"/>
-                <img src={img3} alt="Pasta"/>
-                <img src={img4} alt="Chicken"/>
-                <img src={img5} alt="Brownies"/>
-                <img src={img6} alt="Fries"/>
-                <img src={img1} alt="Pizza"/>  {/*clone of first image, helps transitions smoothly*/}
-            </section>
-            <img src={shadow} id="Shadow"/>
+            {hero_images}
+            <img src={shadow_overlay} id="shadow_overlay" alt=''/>
 
             <button 
                 className="prevBtn" 
@@ -179,17 +160,8 @@ function Hero() {
                 <p>Delicous food at your doorstep in no time. High quality fresh ingredients <br/>for high quality people.</p>
                 <Button style={{margin: '0 auto'}}>ORDER NOW</Button>
             </div>
+            {indicators}
 
-            <div className="indicators">
-                <span className='active'></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-
-            
         </div>
     )
 }

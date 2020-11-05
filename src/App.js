@@ -6,18 +6,29 @@ import Hero from './components/regular_components/hero/Hero';
 import cardProps from './components/regular_components/card/cardProps';
 
 function App() {
+
+  const homePageCards =  <div className='home_page_cards'>
+    
+    {cardProps.map((card)=>
+        <Card 
+          title={card.title} 
+          description={card.description} 
+          imageSrc={card.src} 
+          buttonText="VIEW" 
+          key={card.title}
+    />)}
+  </div>
+
   return (
     <div className="App">
 
       <Nav/>
       <Container>
         <Hero/>
-        <h1 style={{marginBottom: '45px'}}>EXPLORE OUR VARIETY</h1>
-        <Card 
-          title={cardProps.pizza.title} 
-          description={cardProps.pizza.description} 
-          imageSrc={cardProps.pizza.src} 
-          buttonText="VIEW" />
+        <h1 className='main_h1'>EXPLORE OUR VARIETY</h1>
+        {homePageCards}
+        <h1 className='main_h1'>SIGN UP FOR OUR NEWSLETTER</h1>
+
       </Container>
 
     </div>

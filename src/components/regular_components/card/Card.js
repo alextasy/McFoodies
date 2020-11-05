@@ -7,7 +7,6 @@ function Card(props) {
     const buttonStyle = {
         width: '125px', 
         height: '35px',
-       // marginBottom: '15px'
     }
 
     return (

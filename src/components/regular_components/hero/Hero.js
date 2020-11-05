@@ -81,10 +81,10 @@ function Hero() {
         images.forEach((image)=> image.style.transform = `translateX(-${100*counter}%)`);
     }
      
-    const temporaryDisableButton = (button)=>{
-        button.disabled = true;
-        setTimeout(()=> button.disabled = false, transitionLenght)
-    }
+    // const temporaryDisableButton = (button)=>{
+    //     button.disabled = true;
+    //     setTimeout(()=> button.disabled = false, transitionLenght)
+    // }
 
     const updateModalText = (modal)=>{
         const h1 = modal.firstChild;
@@ -147,12 +147,12 @@ function Hero() {
 
             <button 
                 className="prevBtn" 
-                onClick={(event)=> {slide(event.target.parentNode, -1); temporaryDisableButton(event.target)}}>
+                onClick={(event)=> isTransitioning ? null : slide(event.target.parentNode, -1)}>
             </button>
 
             <button 
                 className="nextBtn" 
-                onClick={(event)=> {slide(event.target.parentNode, +1); temporaryDisableButton(event.target)}}>
+                onClick={(event)=> isTransitioning ? null : slide(event.target.parentNode, +1)}>
             </button>
 
             <div className="order_modal">

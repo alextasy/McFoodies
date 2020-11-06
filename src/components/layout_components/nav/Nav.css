@@ -31,4 +31,7 @@
 .Nav section span:hover{
     color: #d90a0a;
 }
+.Nav img{
+    cursor: pointer;
+}
 

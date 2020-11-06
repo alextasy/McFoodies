@@ -11,3 +11,4 @@ import youtube_hover from  '../../../images/icons/social/youtube_hover.png';
 
 export const icons = [phone, instagram, facebook, twitter, youtube];
 export const icons_hover = [phone_hover, instagram_hover, facebook_hover, twitter_hover, youtube_hover];
+export const icons_alt = ['Phone icon', 'Instagram icon', 'Facebook icon', 'Twitter icon', 'Youtube icon'];

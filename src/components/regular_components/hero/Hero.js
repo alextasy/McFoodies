@@ -7,7 +7,7 @@ import modal_info from './modal_info';
 
 function Hero() {
 
-    const transitionLenght = 600;
+    const transitionLength = 600;
     let counter = 1;
     let isTransitioning = false;
 
@@ -29,10 +29,10 @@ function Hero() {
         {images.map((image, index)=> 
             <span 
                 key={image.alt} 
-                style={{transitionDuration: `${transitionLenght}ms`, animationDuration: `${transitionLenght}ms`}}
+                style={{transitionDuration: `${transitionLength}ms`, animationDuration: `${transitionLength}ms`}}
                 className = {index === 0 ? 'active' : null} // First element is active at start.
                 onClick={(e)=> {
-                    if(counter === index + 1) return;
+                    if(counter === index + 1 || isTransitioning) return; //If the same element is clicked returns
                     slide(e.target.parentNode.parentNode, index + 1 - counter);
                 }}>
             </span>)}
@@ -49,8 +49,8 @@ function Hero() {
         indicators[counter-1].className = ''; // Previous image indicator becomes inactive
         counter += imagesToJump; // Jumps left or right number of images depending on imagesToJump value.
 
-        modal.style.animation = `flip ${transitionLenght}ms ease-in-out`;
-        setTimeout(()=> updateModalText(modal), transitionLenght/2);
+        modal.style.animation = `flip ${transitionLength}ms ease-in-out`;
+        setTimeout(()=> updateModalText(modal), transitionLength/2);
 
         if(counter === firstImgCloneIndex) indicators[0].className = 'active';
         else if(counter === lastImgCloneIndex) indicators[indicators.length-1].className = 'active';
@@ -68,7 +68,7 @@ function Hero() {
                 if(counter === lastImgCloneIndex || counter === firstImgCloneIndex){
                     resetSlides(images, firstImgCloneIndex); 
                 }
-            }, transitionLenght);
+            }, transitionLength);
         });   
 
     }

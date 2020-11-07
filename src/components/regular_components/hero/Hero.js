@@ -87,8 +87,8 @@ function Hero() {
         const firstImgCloneIndex = images.length +1; // 2 clones are added to the array of img so last img index is lenght + 1
         const lastImgCloneIndex = 0;
 
-        if(lastImgCloneIndex)       {h1.innerHTML = modal_info.hero6.h1; p.innerHTML = modal_info.hero6.p;}
-        else if(firstImgCloneIndex) {h1.innerHTML = modal_info.hero1.h1; p.innerHTML = modal_info.hero1.p;}
+        if(counter === lastImgCloneIndex)       {h1.innerHTML = modal_info.hero6.h1; p.innerHTML = modal_info.hero6.p;}
+        else if(counter === firstImgCloneIndex) {h1.innerHTML = modal_info.hero1.h1; p.innerHTML = modal_info.hero1.p;}
         else {h1.innerHTML = modal_info[`hero${counter}`].h1; p.innerHTML = modal_info[`hero${counter}`].p;}
     }
     

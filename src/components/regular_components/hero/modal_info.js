@@ -16,8 +16,8 @@ const hero = {
         p:  'Everythin is cooked on demand. There is nothing like the taste of food that finished cooking just now'
     },
     hero5 : {
-        h1: 'DESERTS?',
-        p:  'Craving something sweet? No problem, we got you covered with our freshly baked deserts and ice cream selection!'
+        h1: 'DESSERTS?',
+        p:  'Craving something sweet? No problem, we got you covered with our freshly baked desserts and ice cream selection!'
     },
     hero6 : {
         h1: 'ORDER NOW!',

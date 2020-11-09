@@ -1,0 +1,62 @@
+.Menu{
+    width: 100%;
+}
+.Menu nav{
+    width: 100vw;
+    height: 100px;
+    background-color: #d90a0a;
+    position: fixed;
+    display: flex;
+    z-index: 200;
+    left: 0;
+    justify-content: center;
+}
+.Menu nav section{
+    width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.Menu nav section .menu_icons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.Menu nav section .menu_icons img{
+    height: 50px;
+    pointer-events: none;
+}
+.Menu nav section .menu_icons span{
+    margin-top: 6px;
+    font-size: 16px;
+    color: #770a0a;
+    pointer-events: none;
+    
+}.Menu nav section .menu_icons span.active{
+    color: white;
+}
+.Menu .cards_container{
+    margin-top: 145px;
+    width: 100%;
+    height: 895px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.Menu .cards_container .Card{
+    margin-bottom: 45px;
+}
+.Menu .cards_container .filler{
+    width: 265px;
+    height: 425px;
+}
+
+.Menu .cards_container .Spinner{
+    position: absolute;
+    top: 400px;
+    left: 50%;
+    transform: translate(-50%);
+}
+

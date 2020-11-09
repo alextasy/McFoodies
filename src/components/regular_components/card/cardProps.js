@@ -6,7 +6,7 @@ import card_chicken from '../../../images/cards/chicken.png';
 const cardProperties = [
      {
         title: 'PIZZA',
-        description: 'Italian dough, fresh vegetables, wide cheese selection, variety of meats',
+        description: 'Italian dough, fresh vegetables, wide cheese selection, variety of meats and tastes',
         src: card_pizza
     },
      {

@@ -22,13 +22,11 @@
     object-position: center;
 }
 .Card p{
-    display: flex;
     width: 230px;
     height: 70px;
     font-size: 16px;
     color: #434343;
     line-height: 24px;
-    align-items: center;
     text-align: center;
 }
 .Card .price{

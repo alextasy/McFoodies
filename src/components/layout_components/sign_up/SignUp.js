@@ -1,64 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../regular_components/button/Button';
 import Container from '../container/Container';
 import './SignUp.css';
 
-class SignUp extends React.Component {
-
-
-    state = {
-            auth: {
-                email: '', 
-                password: '',
-                repeatPassword: ''
-            },
-            address: {
-                firstLine: '',
-                secondLine: '',
-                city: '',
-                zipCode: '',
-                phoneNumber: '',
-                newsletter: false
-            }
-    }       
-
-    render() {
-        
-        console.log(this.state);
-        return(
+function SignUp() {
+    const [authInfo, setAuthInfo] = useState({email: '', password: '', repeatPassword: ''})
+    const [userInfo, setUserInfo] = useState({
+        name: '',
+        firstLine: '',
+        secondLine: '',
+        city: '',
+        zipCode: '',
+        phoneNumber: '',
+        newsletter: false,
+    })
+    console.log(authInfo);
+    return (
         <Container class='Sign_up'>
             <form>
-                <h2>Sign in details:</h2>
+                <h2>SIGN IN DETAILS:</h2>
 
                 <div className='input_div'>
-                    <label>Email:</label>
-                    <input type='email' value={this.state.auth.email} onChange={(e)=> this.setState({auth: {email: e.target.value}})}></input>
+                    <label>EMAIL:</label>
+                    <input type='email' value={authInfo.email} ></input>
                 </div>
 
                 <div className='input_div'>
-                    <label>Password:</label>
-                    <input type='password' value={this.state.auth.password}></input>
+                    <label>PASSWORD:</label>
+                    <input type='password' value={authInfo.password}></input>
                 </div>
 
                 <div className='input_div'>
-                    <label>Repeat password:</label>
-                    <input type='password' value={this.state.auth.repeatPassword}></input>
+                    <label>REPEAT PASSWORD:</label>
+                    <input type='password' value={authInfo.repeatPassword}></input>
                 </div>
 
-                <h2>Address:</h2>
+                <h2>CONTACT DETAILS:</h2>
 
                 <div className='input_div'>
-                    <label>First line of address:</label>
-                    <input type='text' value={this.state.address.firstLine}></input>
-                </div>
-
-                <div className='input_div'>
-                    <label>Second line of address(optional):</label>
-                    <input type='text' value={this.state.address.secondLine}></input>
+                    <label>FULL NAME:</label>
+                    <input type='text' value={userInfo.name} maxLength='15'></input>
                 </div>
 
                 <div className='input_div'>
-                    <label>City:</label>
+                    <label>PHONE NUMBER:</label>
+                    <input type='text' value={userInfo.phoneNumber} maxLength='15'></input>
+                </div>
+
+                
+            </form>
+
+            <form>
+                 <h2>ADDRESS:</h2>
+
+                <div className='input_div'>
+                    <label>FIRST LINE OF ADDRESS:</label>
+                    <input type='text' value={userInfo.firstLine}></input>
+                </div>
+
+                <div className='input_div'>
+                    <label>SECOND LINE OF ADDRESS (OPTIONAL):</label>
+                    <input type='text' value={userInfo.secondLine}></input>
+                </div>
+
+                <div className='input_div'>
+                    <label>CITY:</label>
                     <select onChange={(e)=> console.log(e.target.value)} >
                         <option value='' disabled selected id='disabled'></option>
                         <option value='London'>London</option>
@@ -69,27 +75,21 @@ class SignUp extends React.Component {
                 </div>
 
                 <div className='input_div'>
-                    <label>ZIP/Postal code:</label>
-                    <input type='text' value={this.state.address.zipCode} maxLength='7'></input>
-                </div>
-
-                <h2>Contact details:</h2>
-
-                <div className='input_div'>
-                    <label>Phone number:</label>
-                    <input type='text' value={this.state.address.phoneNumber} maxLength='15'></input>
+                    <label>ZIP/POSTAL CODE:</label>
+                    <input type='text' value={userInfo.zipCode} maxLength='7'></input>
                 </div>
 
                 <div className='input_div checkbox'>
-                    <input type='checkbox' value={this.state.address.newsletter}></input>
-                    <label>I want to sign up to McFoodie's newsletter</label>
+                    <input type='checkbox' value={userInfo.newsletter}></input>
+                    <label>I want to sign up to McFoodie's newsletter to receive information about future products, promotions and discounts. </label>
                 </div>
 
-                <Button style={{margin: '25px 0 45px'}}>SIGN UP</Button>
-                
+                <Button style={{margin: '25px auto 0', width: '200px'}}>SIGN UP</Button>
+
             </form>
+
         </Container>
-    )}
+    )
 }
 
 export default SignUp

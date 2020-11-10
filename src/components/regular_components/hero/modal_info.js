@@ -17,7 +17,7 @@ const hero = {
     },
     hero5 : {
         h1: 'DESSERTS?',
-        p:  'Craving something sweet? No problem, we got you covered with our freshly baked desserts and ice cream selection!'
+        p:  'Craving something sweet? No problem, we got you covered with our freshly baked desserts and ice cream options!'
     },
     hero6 : {
         h1: 'ORDER NOW!',

@@ -28,7 +28,7 @@ function SignInModal(props) {
         <div className= 'SignInModal'>
             <Modal click={props.close}> 
                 <div className='input_div'>
-                    <label>Email:</label>
+                    <label>EMAIL:</label>
                     <input 
                         type='email'
                         value={emailInput} 
@@ -39,7 +39,7 @@ function SignInModal(props) {
                 </div>
                 
                 <div className='input_div'>
-                    <label>Password:</label>
+                    <label>PASSWORD:</label>
                     <input 
                         type='password' 
                         value={passwordInput} 
@@ -51,12 +51,15 @@ function SignInModal(props) {
 
                 <div className='button_div'>
                     <Button 
-                        style={{width: '120px', height: '36px'}}
+                        style={{width: '262.5px', height: '36px', marginTop: '10px' }}
                         click={(e)=> signInHandler(e.target.parentNode.parentNode.lastChild)}>
                         SIGN IN
                     </Button>
 
-                    <p>Don't have an account yet? <span onClick={()=> props.history.push('/signup')}> Sign up here!</span></p>
+                    <p>Don't have an account yet? <span onClick={()=> {
+                        (props.close)();
+                        props.history.push('/signup');
+                    }}> Sign up here!</span></p>
 
                 </div>
                 <div className='animate'></div>

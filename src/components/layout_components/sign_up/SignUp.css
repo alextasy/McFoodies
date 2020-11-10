@@ -1,18 +1,25 @@
 .Sign_up{
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-height: calc(100vh - 270px);
+    max-height: 810px;
+
 }
 .Sign_up h2{
     margin: 25px 0;
+    color: #d90a0a;
 }
 
 .Sign_up form{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    height: 490px;
+    margin: 25px 0 43px;
 }
 
 .Sign_up form .input_div{
-    width: 300px;
+    width: 500px;
     margin: 8px 0;
 }
 .Sign_up form select{
@@ -25,13 +32,14 @@
 
 .Sign_up form .checkbox{
     flex-direction: row;
-    align-items: center;
     font-size: 14px;
+    width: 500px;
+    line-height: 22px;
+    margin-top: 16px;
+    margin-bottom: 6px;
 }
 
 .Sign_up form .checkbox label{
     margin-left: 10px;
-}
-.Sign_up form .checkbox input{
-    background-color: red;
+    margin-top: 7px;
 }

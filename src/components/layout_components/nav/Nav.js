@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Nav.css';
 import logo from '../../../images/icons/logo.png';
 import phoneIcon from '../../../images/icons/phone.png';
 import phoneIcon_hover from '../../../images/icons/phone_hover.png';
 import Button from '../../regular_components/button/Button';
 import {withRouter} from 'react-router-dom';
+import SignInModal from '../../regular_components/sign_in_modal/SignInModal';
 
 function Nav(props) {
 
-    const phoneIconOnHover = (img) => img.src = img.src === phoneIcon ? phoneIcon_hover : phoneIcon;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const phoneIconOnHover = (img) => img.src = img.src === phoneIcon ? phoneIcon_hover : phoneIcon;  
 
     return (
         <nav className="Nav">
@@ -26,10 +28,13 @@ function Nav(props) {
                 >0 873 421 891</span>
 
                 <span onClick={() => props.history.push('/menu')}>MENU</span>
-                <span>SIGN IN</span>
+
+                <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
+
                 <Button click={() => props.history.push('/menu')}>ORDER NOW</Button>
 
             </section>
+            {isModalOpen ? <SignInModal close={()=> setIsModalOpen(false)}/> : null}
         </nav>
     )
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import images from '../../regular_components/hero/hero_images';
 import './Footer.css';
 import {icons, icons_hover, icons_alt} from './icons';
 
@@ -19,7 +18,7 @@ function Footer() {
         </span>
 
          {icons.map((icon, index)=>{
-            if(index === 0) return;
+            if(index === 0) return null;
             return <img src={icons[index]} alt={icons_alt[index]} key={index}
                         onMouseEnter={(e)=> e.target.src=icons_hover[index]}
                         onMouseOut={(e)=> e.target.src=icons[index]}

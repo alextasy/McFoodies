@@ -14,5 +14,35 @@
     overflow: hidden;
 }
 
+/* GLOBAL INPUT STYLES */
 
+.input_div{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    width: 80%;
+}
+.input_div input{
+    height: 30px;
+    border: 1px solid #aaaaaa;
+    font-size: 16px;
+    padding: 0px 10px;
+    outline: none;
+}
+.input_div input:focus{
+    border: 1px solid #202020;
+}
+
+/* IF FIELD IS EMPTY */
+
+.empty input{
+    border: 1px solid #d90a0a;
+}
+.empty input::placeholder{
+    color: #d90a0a;
+    font-size: 14px;
+}
+.empty label{
+    color: #d90a0a;
+}
 

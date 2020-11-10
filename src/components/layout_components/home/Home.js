@@ -4,6 +4,7 @@ import Hero from '../../regular_components/hero/Hero';
 import cardProps from '../../regular_components/card/cardProps';
 import './Home.css';
 import Newsletter from '../../regular_components/newsletter/Newsletter';
+import Container from '../container/Container';
 
 function Home() {
 
@@ -20,14 +21,14 @@ function Home() {
   </div>
 
     return (
-        <div className='Home'>
+        <Container class='Home'>
             <Hero/>
             <h1 className='main_h1'>EXPLORE OUR VARIETY</h1>
             {homePageCards}
             <h1 className='main_h1'>SUBSCRIBE TO OUR NEWSLETTER</h1>
             <Newsletter/>
-        </div>
+        </Container>
     )
 }
 
-export default Home
+export default Home;

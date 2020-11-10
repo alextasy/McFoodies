@@ -1,0 +1,19 @@
+.SignInModal .modal_container{
+    height: 340px;
+}
+
+.SignInModal .button_div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SignInModal .button_div p{
+    margin-top: 12px;
+    font-size: 14px;
+}
+.SignInModal .button_div span{
+    color:  #d90a0a;
+    cursor: pointer;
+}
+ 

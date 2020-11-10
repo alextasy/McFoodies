@@ -1,0 +1,37 @@
+.Sign_up{
+    align-items: flex-start;
+}
+.Sign_up h2{
+    margin: 25px 0;
+}
+
+.Sign_up form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Sign_up form .input_div{
+    width: 300px;
+    margin: 8px 0;
+}
+.Sign_up form select{
+    height: 30px;
+    border: 1px solid #aaaaaa;
+    font-size: 16px;
+    padding: 0px 10px;
+    outline: none;
+}
+
+.Sign_up form .checkbox{
+    flex-direction: row;
+    align-items: center;
+    font-size: 14px;
+}
+
+.Sign_up form .checkbox label{
+    margin-left: 10px;
+}
+.Sign_up form .checkbox input{
+    background-color: red;
+}

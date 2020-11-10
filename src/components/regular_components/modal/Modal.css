@@ -1,13 +1,14 @@
 .Modal .modal_overlay{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 1000;
-    animation: fade 300ms ease-in forwards;
+    animation: fade_in 300ms ease-in forwards;
+    overflow: hidden;
 }
-@keyframes fade{
+@keyframes fade_in{
     0%{
         background-color: rgba(0, 0, 0, 0.2);
     }
@@ -18,7 +19,7 @@
 
 .Modal .modal_container{
     width: 350px;
-    height: 280px;
+    min-height: 280px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -46,11 +47,4 @@
         top: 50%;
         transform: translate(-50%, -50%);
     }
-}
-
-.Modal .modal_container div{
-    width: 68%;
-    line-height: 24px;
-    font-size: 16px;
-    text-align: justify;
 }

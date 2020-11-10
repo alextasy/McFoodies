@@ -1,9 +1,11 @@
 .Menu{
-    width: 1200px;
+    width: 100%;
     margin-top: 100px;
+    display: flex;
+    justify-content: center;
 }
 .Menu nav{
-    width: 100vw;
+    width: 100%;
     height: 100px;
     background-color: #d90a0a;
     position: fixed;
@@ -39,7 +41,7 @@
 }
 .Menu .cards_container{
     margin-top: 145px;
-    width: 100%;
+    width: 1200px;
     height: 890px;
     display: grid;
     grid-template-columns: repeat(4, 265px);

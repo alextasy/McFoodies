@@ -28,6 +28,9 @@
     color: #434343;
     line-height: 24px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .Card .price{
     position: absolute;

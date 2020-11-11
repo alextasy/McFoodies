@@ -43,3 +43,22 @@
     margin-left: 10px;
     margin-top: 7px;
 }
+
+/* EMPY OR INVALID CLASES AND ID's */
+
+.Sign_up form .input_div.invalid::after , .input_div.invalid_email::after, .input_div.invalid_password::after{
+    content: '* Minimum length is 7';
+    color: #d90a0a;
+    position: absolute;
+    font-size: 12px;
+    top: 28px;
+    right: 10px;
+}
+
+.Sign_up form .input_div.invalid_email::after{
+    content: '* Invalid email';
+}
+
+.Sign_up form .input_div.invalid_password::after{
+    content: '* Passwords must match';
+}

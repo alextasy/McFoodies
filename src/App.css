@@ -21,6 +21,7 @@
     flex-direction: column;
     font-size: 14px;
     width: 75%;
+    position: relative;
 }
 .input_div input{
     margin-top: 3px;
@@ -30,20 +31,30 @@
     padding: 0px 10px;
     outline: none;
 }
+
 .input_div input:focus{
     border-bottom: 2px solid #d90a0a;
 }
 
-/* IF FIELD IS EMPTY */
+/* REMOVES DEFAULT AUTOFILL STYLES*/
 
-.empty input{
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+/* IF FIELD IS EMPTY OR INVALID */
+
+.empty input, .invalid input, .empty select, .invalid_email input, .invalid_password input{
     border: 1px solid #d90a0a;
+    color: #d90a0a;
 }
 .empty input::placeholder{
     color: #d90a0a;
-    font-size: 14px;
+    font-size: 12px;
 }
-.empty label{
+.empty label, .invalid label , .invalid_email label, .invalid_password label{
     color: #d90a0a;
 }
-

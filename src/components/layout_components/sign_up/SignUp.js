@@ -3,8 +3,11 @@ import Button from '../../regular_components/button/Button';
 import Container from '../container/Container';
 import './SignUp.css';
 import {auth, database as db} from '../../../firebase';
+import Modal from '../../regular_components/modal/Modal';
+import Spinner from '../../regular_components/spinner/Spinner';
+import {withRouter} from 'react-router-dom';
 
-function SignUp() {
+function SignUp(props) {
 
     const [userInfo, setUserInfo] = useState({
         email: '', 
@@ -18,8 +21,11 @@ function SignUp() {
         phoneNumber: '',
         newsletter: false,
     });
+    const [signUpMessage, setSignUpMessage] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSuccessful, setIsSuccessful] = useState(false);
 
-    //Acurately tracks if passowords match and updates based on that
+    //Acurately tracks if passwords match and updates based on that
 
     useEffect(()=>{ 
         if(userInfo.password === userInfo.repeatPassword) {
@@ -72,6 +78,8 @@ function SignUp() {
     }
 
     const signUpUser = ()=>{
+        setIsModalOpen(true);
+
         auth.createUserWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((credentials)=>{
                 console.log(credentials);
@@ -87,10 +95,28 @@ function SignUp() {
                     phoneNumber: userInfo.phoneNumber,
                     newsletter: false,
                 })
-
+                setSignUpMessage('Thank you for signing up. Enjoy our delicious food!');
+                setIsSuccessful(true);
             })
-            .catch((err)=> console.log(err))
+            .catch((err)=> {
+                setSignUpMessage(err.message);
+            });
     }
+    
+
+    const signUpModal = 
+        <Modal click={()=>{
+            if(isSuccessful) props.history.push('/menu');
+            setIsModalOpen(false);
+        }}>
+            {signUpMessage ? <p>{signUpMessage}</p> : <Spinner small={true}/>}
+            <Button click={()=> 
+                {
+                    if(isSuccessful) props.history.push('/menu');
+                    setIsModalOpen(false);
+                }}
+            >CLOSE</Button>
+        </Modal>
 
     return (
         <Container class='Sign_up'>
@@ -223,9 +249,9 @@ function SignUp() {
                 >SIGN UP</Button>
 
             </form>
-
+            {isModalOpen ? signUpModal : null}
         </Container>
     )
 }
 
-export default SignUp
+export default withRouter(SignUp);

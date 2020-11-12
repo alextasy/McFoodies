@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './Nav.css';
 import logo from '../../../images/icons/logo.png';
 import phoneIcon from '../../../images/icons/phone.png';
@@ -6,11 +6,15 @@ import phoneIcon_hover from '../../../images/icons/phone_hover.png';
 import Button from '../../regular_components/button/Button';
 import {withRouter} from 'react-router-dom';
 import SignInModal from '../../regular_components/sign_in_modal/SignInModal';
+import {AuthContext} from '../../../context';
 
 function Nav(props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const phoneIconOnHover = (img) => img.src = img.src === phoneIcon ? phoneIcon_hover : phoneIcon;  
+    const phoneIconOnHover = (img) => img.src = img.src === phoneIcon ? phoneIcon_hover : phoneIcon;
+    const context = useContext(AuthContext);
+    
+    console.log(context);
 
     return (
         <nav className="Nav">

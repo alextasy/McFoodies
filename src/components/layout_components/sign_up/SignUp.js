@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from '../../regular_components/button/Button';
 import Container from '../container/Container';
 import './SignUp.css';
-import {auth, database as db} from '../../../firebase';
+import {firebaseAuth, database as db} from '../../../firebase';
 import Modal from '../../regular_components/modal/Modal';
 import Spinner from '../../regular_components/spinner/Spinner';
 import {withRouter} from 'react-router-dom';
@@ -32,7 +32,7 @@ function SignUp(props) {
             document.querySelector('#repeatPassword').parentNode.classList.remove('invalid_password');
             return; 
         }
-    }, [userInfo.repeatPassword]);
+    }, [userInfo.password, userInfo.repeatPassword]);
 
     const updateState = (element)=>{
         const id = element.id;
@@ -42,7 +42,7 @@ function SignUp(props) {
         element.placeholder = 'This field is required...';
         value === '' ? parentDiv.classList.add('empty') : parentDiv.classList.remove('empty');            
 
-        (element.minLength != -1 && value.length < element.minLength) 
+        (element.minLength !== -1 && value.length < element.minLength) 
             ? parentDiv.classList.add('invalid')
             : parentDiv.classList.remove('invalid');
         
@@ -71,7 +71,7 @@ function SignUp(props) {
             document.querySelector('#email').parentNode.classList.add('invalid_email');
             formIsInvalid = true;
         }
-        if(userInfo.password != userInfo.repeatPassword) formIsInvalid = true;
+        if(userInfo.password !== userInfo.repeatPassword) formIsInvalid = true;
 
         if(formIsInvalid) return;
         signUpUser();
@@ -80,7 +80,7 @@ function SignUp(props) {
     const signUpUser = ()=>{
         setIsModalOpen(true);
 
-        auth.createUserWithEmailAndPassword(userInfo.email, userInfo.password)
+        firebaseAuth.createUserWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((credentials)=>{
                 console.log(credentials);
                 const userId = credentials.user.uid;

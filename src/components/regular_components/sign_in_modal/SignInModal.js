@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import {withRouter} from 'react-router-dom';
+import {firebaseAuth, database as db} from '../../../firebase';
+import {AuthContext} from '../../../context';
 import './SignInModal.css';
 
 function SignInModal(props) {
 
-    const [emailInput, setEmailInput] = useState('');
-    const [passwordInput, setPasswordInput] = useState('');
+    const [emailInput, setEmailInput] = useState('demo@demo.com');
+    const [passwordInput, setPasswordInput] = useState('demodemo');
+    const context = useContext(AuthContext);
  
     const checkIfEmpty = (input)=>{
         const inputDiv = input.parentNode;
@@ -19,9 +22,17 @@ function SignInModal(props) {
         inputDiv.classList.remove('empty');
     }
 
-    const signInHandler = (el)=>{
-        // el.style.animationName = 'trans'
-        // setTimeout(()=> el.style.animationName = '', 2000)
+    const signInHandler = ()=>{
+       firebaseAuth.signInWithEmailAndPassword(emailInput, passwordInput).then(
+           (credentials)=>{
+                db.collection('users').doc(credentials.user.uid).get().then(
+                    (doc=>{
+                        context.setUserInfo(doc.data());
+                        context.setIsAuth(true);
+                        console.log(context);
+                    })
+               )}
+       )
     }
 
     return (
@@ -52,7 +63,7 @@ function SignInModal(props) {
                 <div className='button_div'>
                     <Button 
                         style={{width: '262.5px', height: '36px', marginTop: '10px' }}
-                        click={(e)=> signInHandler(e.target.parentNode.parentNode.lastChild)}>
+                        click={()=> signInHandler()}>
                         SIGN IN
                     </Button>
 
@@ -62,7 +73,6 @@ function SignInModal(props) {
                     }}> Sign up here!</span></p>
 
                 </div>
-                <div className='animate'></div>
             </Modal>
         </div>
     )

@@ -126,7 +126,7 @@ function Hero() {
             if(isTransitioning) return;
             
             isDown = false;
-            if(dragDistance) slide(element, dragDistance < 0 ? -1 : 1);
+            if(dragDistance) slide(element, dragDistance < 0 ? 1 : -1);
             dragDistance = 0;
         };
     

@@ -7,8 +7,8 @@ import cartIcon from '../../../images/icons/cart.png'
 import Button from '../../regular_components/button/Button';
 import {withRouter} from 'react-router-dom';
 import SignInModal from '../../regular_components/sign_in_modal/SignInModal';
-import {AuthContext} from '../../../Context/AuthContext';
-import {CartContext} from '../../../Context/CartContext';
+import {AuthContext} from '../../../context/AuthContext';
+import {CartContext} from '../../../context/CartContext';
 import MyAccount from '../../regular_components/my_account/MyAccount';
 
 function Nav(props) {

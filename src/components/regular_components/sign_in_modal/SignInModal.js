@@ -1,9 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import {withRouter} from 'react-router-dom';
 import {firebaseAuth, database as db} from '../../../firebase';
-import {AuthContext} from '../../../Context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 import Spinner from '../spinner/Spinner';
 import './SignInModal.css';
 

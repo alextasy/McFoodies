@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
-import AuthContextProvider from './Context/AuthContext';
-import CartContextProvider from './Context/CartContext';
+import AuthContextProvider from './context/AuthContext';
+import CartContextProvider from './context/CartContext';
 
 ReactDOM.render(
 <BrowserRouter> 

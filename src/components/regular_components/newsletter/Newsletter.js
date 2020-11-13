@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
+import {AuthContext} from '../../../context/AuthContext';
 import './Newsletter.css';
 
 function Newsletter() {
@@ -8,6 +9,8 @@ function Newsletter() {
     const [inputValue, setInputValue] = useState('');
     const [hasSubscribed, setHasSubscribed] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
+
+    useEffect(()=>{}, [])
 
     const buttonStyle ={
         width: '120px',
@@ -18,7 +21,7 @@ function Newsletter() {
     }
 
     const emailRegexPattern = /^[a-z,0-9][a-z, 0-9,.,_]+@[a-z,.,_]+\.[a-z]{2,4}$/i;
-    const newssletterModal = 
+    const newsletterModal = 
     
         <Modal click={()=> setIsModalOpen(false)}>
             <div>Thank you for subscribing to our newsletter! We will be emailing our latest news, promotions and discounts to you.</div>
@@ -32,11 +35,12 @@ function Newsletter() {
         <input
             maxLength='40' 
             className='input'
-            type='text' 
+            type='email' 
             placeholder='Enter email:'
             value={inputValue} 
             onChange={(e)=> setInputValue(e.target.value)}
         />
+
 
     return (
         <div className='Newsletter'>
@@ -61,7 +65,7 @@ function Newsletter() {
                 >{hasSubscribed ? 'SUBSCRIBED' : 'SUBSCRIBE'}</Button>
             </div>
             
-            {isModalOpen ? newssletterModal : null}
+            {isModalOpen ? newsletterModal : null}
         </div>
     )
 }

@@ -86,17 +86,22 @@ function SignUp(props) {
                 const userId = credentials.user.uid;
 
                 db.collection('users').doc(userId).set( {
-                    email: userInfo.email,
                     name: userInfo.name,
                     firstLine: userInfo.firstLine,
                     secondLine: userInfo.secondLine,
                     city: userInfo.city,
                     zipCode: userInfo.zipCode,
                     phoneNumber: userInfo.phoneNumber,
-                    newsletter: false,
+                    newsletter: userInfo.newsletter,
                 })
                 setSignUpMessage('Thank you for signing up. Enjoy our delicious food!');
                 setIsSuccessful(true);
+
+                if(userInfo.newsletter) {
+                    db.collection('newsletter_users').doc(userInfo.email).set({
+                        isSigned: true
+                    });
+                }
             })
             .catch((err)=> {
                 setSignUpMessage(err.message);

@@ -2,6 +2,15 @@
     height: 350px;
 }
 
+.SignInModal #inputs_container{
+    display: flex;
+    height: 250px;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 .SignInModal .button_div{
     display: flex;
     flex-direction: column;
@@ -11,9 +20,19 @@
 .SignInModal .button_div p{
     margin-top: 12px;
     font-size: 14px;
+    width: 100%;
+    text-align: center;
 }
 .SignInModal .button_div span{
     color:  #d90a0a;
     cursor: pointer;
 }
- 
+
+.SignInModal .error{
+    color: #d90a0a;
+    font-size: 15px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+
+}

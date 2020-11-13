@@ -119,7 +119,7 @@ function Hero() {
                 finishTransition(element, images);
                 return;
             }
-            images.forEach((image)=> image.style.transform = `translate(${currentPos - dragDistance}px)`);
+            images.forEach((image)=> image.style.transform = `translate(${currentPos + dragDistance}px)`);
         });
 
         const finishTransition = (element)=>{

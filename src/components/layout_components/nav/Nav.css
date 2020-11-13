@@ -34,3 +34,26 @@
 .Nav img{
     cursor: pointer;
 }
+.Nav #cart{
+    margin-right: 40px;
+    position: relative;
+}
+.Nav #number_of_items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+    top: -6px;
+    right: -8px;
+
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+
+    background-color: #d90a0a;
+    
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+}

@@ -62,10 +62,3 @@
 .Sign_up form .input_div.invalid_password::after{
     content: '* Passwords must match';
 }
-
-/* SIGN UP MODAL */
-
-.Sign_up .Modal p{
-    width: 80%;
-    line-height: 24px;
-}

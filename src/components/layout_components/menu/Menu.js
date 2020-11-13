@@ -10,7 +10,7 @@ function Menu() {
 
     const [currentMenu, setCurrentMenu] = useState('pizza');
     const [items, setItems] = useState([]);
-    const [isLoading, setIsloading] = useState(true);
+    const [isLoading, setIsloading] = useState(false);
     
     useEffect(() => {
         setIsloading(true);
@@ -27,9 +27,10 @@ function Menu() {
                             description={item.description}
                             buttonText={'ADD TO CART'}
                             key={item.title} />
+                            
                     )       
             ));
-            setIsloading(false)
+            setIsloading(false);
             setItems(loadedItems);
         })
         

@@ -2,12 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom';
-import AuthContextProvider from './context';
+import AuthContextProvider from './Context/AuthContext';
+import CartContextProvider from './Context/CartContext';
 
 ReactDOM.render(
 <BrowserRouter> 
     <AuthContextProvider>
-      <App />
+      <CartContextProvider>
+         <App />
+      </CartContextProvider>
     </AuthContextProvider>  
   </BrowserRouter> ,
   document.getElementById('root')

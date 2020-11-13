@@ -1,14 +1,15 @@
 .SignInModal .modal_container{
-    height: 350px;
+    height: 380px;
 }
 
 .SignInModal #inputs_container{
     display: flex;
-    height: 250px;
+    height: 125px;
     width: 100%;
+    margin-top: 20px;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .SignInModal .button_div{
@@ -30,9 +31,8 @@
 
 .SignInModal .error{
     color: #d90a0a;
-    font-size: 15px;
-    height: 250px;
-    display: flex;
-    align-items: center;
+    font-size: 12px;
+    width: 75%;
+    margin: 10px 0 5px;
 
 }

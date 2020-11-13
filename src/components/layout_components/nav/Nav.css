@@ -37,6 +37,7 @@
 .Nav #cart{
     margin-right: 40px;
     position: relative;
+    cursor: pointer;
 }
 .Nav #number_of_items{
     display: flex;
@@ -47,13 +48,13 @@
     top: -6px;
     right: -8px;
 
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
 
     background-color: #d90a0a;
     
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: white;
 }

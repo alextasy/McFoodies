@@ -7,13 +7,21 @@ import cartIcon from '../../../images/icons/cart.png'
 import Button from '../../regular_components/button/Button';
 import {withRouter} from 'react-router-dom';
 import SignInModal from '../../regular_components/sign_in_modal/SignInModal';
-import {AuthContext} from '../../../context';
+import {AuthContext} from '../../../Context/AuthContext';
+import {CartContext} from '../../../Context/CartContext';
+import MyAccount from '../../regular_components/my_account/MyAccount';
 
 function Nav(props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const phoneIconOnHover = (img) => img.src = img.src === phoneIcon ? phoneIcon_hover : phoneIcon;
-    const context = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
+    const cartContext = useContext(CartContext);
+
+    const numberOfItemsInCart = cartContext.cartItems.length;
+
+    const isSignedIn = authContext.isAuth ?
+        <MyAccount/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
 
     return (
         <nav className="Nav">
@@ -32,10 +40,10 @@ function Nav(props) {
 
                 <span onClick={() => props.history.push('/menu')}>MENU</span>
 
-                <span onClick={()=> setIsModalOpen(true)}>{context.isAuth ? 'MY ACCOUNT' : 'SIGN IN'}</span>
+                {isSignedIn}
 
                 <div id='cart'>
-                    <div id='number_of_items'>6</div>
+                    <div id='number_of_items'>{numberOfItemsInCart}</div>
                     <img src={cartIcon} alt='Cart icon' height='33'></img>
                 </div>
 

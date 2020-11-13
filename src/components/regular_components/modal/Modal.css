@@ -5,12 +5,12 @@
     width: 100vw;
     height: 100vh;
     z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.6);
     animation: fade_in 300ms ease-out forwards;
     overflow: hidden;
 }
-
-.Modal .closing .modal_overlay{
-    animation-direction: alternate;
+.Modal .modal_overlay.closing{
+    animation: fade_in 300ms ease-out forwards alternate-reverse;
 }
 
 @keyframes fade_in{
@@ -38,9 +38,10 @@
     z-index: 1001;
     animation: slide 500ms ease-out;
 }
-.Modal .closing .modal_container{
-    animation-direction: alternate;
+.Modal .modal_container.closing{
+    animation: slide 500ms ease-out forwards alternate-reverse;
 }
+
 
 .Modal .modal_container p{
     width: 75%;

@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import Button from '../button/Button';
-import Modal from '../modal/Modal';
+import Modal, {closeModal} from '../modal/Modal';
 import {withRouter} from 'react-router-dom';
 import {firebaseAuth, database as db} from '../../../firebase';
 import {AuthContext} from '../../../context/AuthContext';
@@ -36,11 +36,12 @@ function SignInModal(props) {
 
         firebaseAuth.signInWithEmailAndPassword(emailInput, passwordInput).then(
            (credentials)=>{
+                context.setUserID(credentials.user.uid);
                 db.collection('users').doc(credentials.user.uid).get().then(
                     (doc=>{
                         context.setUserInfo(doc.data());
                         context.setIsAuth(true);
-                        closeModal();
+                        closeModal(props.close);
                     })
                )}
        )
@@ -52,24 +53,7 @@ function SignInModal(props) {
        )
     }
 
-    const closeModal = ()=>{
-        const modalOverlay = document.querySelector('.modal_overlay');
-        const modalContainer = document.querySelector('.modal_container');
-
-        modalOverlay.style.animation = 'none';
-        modalContainer.style.animation = 'none';
-
-        //Using timer to reset animations because strangely enough there is no good way to do that.
-
-        setTimeout(()=> {
-        modalOverlay.style.animation = 'fade_in 300ms ease-out alternate-reverse forwards';
-        modalContainer.style.animation = 'slide 500ms ease-out alternate-reverse forwards';
-        }, 100);
-
-        //Removes the element from the DOM
-        modalOverlay.addEventListener('animationend', props.close);
-
-    }
+    
 
     const inputFields =
         <div id='inputs_container'>
@@ -98,7 +82,7 @@ function SignInModal(props) {
 
     return (
         <div className= 'SignInModal'>
-            <Modal click={closeModal}> 
+            <Modal close={props.close}> 
             
                 {isLoading ? <Spinner small={true}/> : inputFields}
                 <div className='error'>{error}</div>
@@ -111,7 +95,7 @@ function SignInModal(props) {
                     </Button>
 
                     <p id='no_account'>Don't have an account yet? <span onClick={()=> {
-                        closeModal();
+                        closeModal(props.close);
                         props.history.push('/signup');
                     }}> Sign up here!</span></p>
 

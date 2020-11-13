@@ -86,6 +86,7 @@ function SignUp(props) {
                 const userId = credentials.user.uid;
 
                 db.collection('users').doc(userId).set( {
+                    email: userInfo.email,
                     name: userInfo.name,
                     firstLine: userInfo.firstLine,
                     secondLine: userInfo.secondLine,

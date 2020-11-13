@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../button/Button';
 import Modal from '../modal/Modal';
 import {AuthContext} from '../../../context/AuthContext';
@@ -10,7 +10,13 @@ function Newsletter() {
     const [hasSubscribed, setHasSubscribed] = useState(false);
     const [invalidEmail, setInvalidEmail] = useState(false);
 
-    useEffect(()=>{}, [])
+    const authContext = useContext(AuthContext);
+
+    useEffect(()=>{
+        setHasSubscribed(authContext.userInfo.newsletter);
+        console.log(hasSubscribed, authContext.userInfo.newsletter);
+        
+    }, [authContext.userInfo.newsletter])
 
     const buttonStyle ={
         width: '120px',

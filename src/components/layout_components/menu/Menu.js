@@ -14,7 +14,6 @@ function Menu() {
     
     useEffect(() => {
         setIsloading(true);
-
         db.collection('menu').doc(currentMenu).get()
         .then(async (doc) =>  { 
             const loadedItems = await Promise.all(doc.data()[currentMenu].map(async(item)=> 
@@ -30,7 +29,7 @@ function Menu() {
                             
                     )       
             ));
-            setIsloading(false);
+        setIsloading(false);
             setItems(loadedItems);
         })
         

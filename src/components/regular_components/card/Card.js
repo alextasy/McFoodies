@@ -4,11 +4,6 @@ import './Card.css';
 
 function Card(props) {
 
-    const buttonStyle = {
-        width: '135px', 
-        height: '35px',
-    }
-
     return (
         <div className='Card'>
             
@@ -18,7 +13,10 @@ function Card(props) {
                 <p>{props.description}</p>
                 {props.price ? <div className='price'>${props.price}</div> : null}
             </div>
-            <Button className='Button' style={buttonStyle}>{props.buttonText}</Button>
+            <Button className='Button' 
+                    style={{width: '135px', height: '35px'}}
+                    click={props.click}
+            >{props.buttonText}</Button>
         </div>
     )
 }

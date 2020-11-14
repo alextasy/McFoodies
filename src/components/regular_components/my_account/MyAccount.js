@@ -1,10 +1,12 @@
 import React from 'react';
+import './MyAccount.css';
 
 function MyAccount() {
     return (
-        <span className='MyAccount'>
-            MY ACCOUNT
-        </span>
+        <div className='MyAccount'>
+           <span>MY ACCOUNT</span> 
+            <div className='dropdown'></div>
+        </div>
     )
 }
 

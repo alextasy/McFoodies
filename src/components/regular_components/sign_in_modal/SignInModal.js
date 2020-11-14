@@ -36,6 +36,7 @@ function SignInModal(props) {
 
         firebaseAuth.signInWithEmailAndPassword(emailInput, passwordInput).then(
            (credentials)=>{
+               console.log(credentials);
                 context.setUserID(credentials.user.uid);
                 db.collection('users').doc(credentials.user.uid).get().then(
                     (doc=>{
@@ -82,7 +83,7 @@ function SignInModal(props) {
 
     return (
         <div className= 'SignInModal'>
-            <Modal close={props.close}> 
+            <Modal click={()=> closeModal(props.close)}> 
             
                 {isLoading ? <Spinner small={true}/> : inputFields}
                 <div className='error'>{error}</div>

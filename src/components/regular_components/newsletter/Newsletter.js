@@ -3,6 +3,7 @@ import Button from '../button/Button';
 import Modal, {closeModal} from '../modal/Modal';
 import {AuthContext} from '../../../context/AuthContext';
 import {database as db} from '../../../firebase';
+import Spinner from '../spinner/Spinner';
 import './Newsletter.css';
 
 function Newsletter() {
@@ -12,7 +13,7 @@ function Newsletter() {
 
     const [emailThatIsSubbed, setEmailThatIsSubbed] = useState(null);
     const [hasSubscribed, setHasSubscribed] = useState(false);
-    const [modalMessage, setModalMessage] = useState('');
+    const [modalMessage, setModalMessage] = useState(null);
 
     const authContext = useContext(AuthContext);
     const emailRegexPattern = /^[a-z,0-9][a-z, 0-9,.,_]+@[a-z,.,_]+\.[a-z]{2,4}$/i;
@@ -32,8 +33,8 @@ function Newsletter() {
 
     const newsletterModal = 
     
-        <Modal close={()=> setIsModalOpen(false)}>
-            <div>{modalMessage}</div>
+        <Modal click={()=> closeModal(()=> setIsModalOpen(false))}>
+            <div>{modalMessage ? modalMessage : <Spinner small={true}/>}</div>
             <Button 
                 style={{width: '75%', height: '38px'}} 
                 click={()=> closeModal(()=> setIsModalOpen(false))}
@@ -87,7 +88,6 @@ function Newsletter() {
         .catch(subscribe); //.catch will be executed if there is no doc with the email entered
     }
     
-
 
     return (
         <div className='Newsletter'>

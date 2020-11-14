@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../regular_components/button/Button';
 import Container from '../container/Container';
 import './SignUp.css';
 import {firebaseAuth, database as db} from '../../../firebase';
-import Modal from '../../regular_components/modal/Modal';
+import Modal, {closeModal} from '../../regular_components/modal/Modal';
 import Spinner from '../../regular_components/spinner/Spinner';
 import {withRouter} from 'react-router-dom';
+import { AuthContext } from '../../../context/AuthContext';
 
 function SignUp(props) {
 
@@ -24,6 +25,7 @@ function SignUp(props) {
     const [signUpMessage, setSignUpMessage] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSuccessful, setIsSuccessful] = useState(false);
+    const authContext = useContext(AuthContext);
 
     //Acurately tracks if passwords match and updates based on that
 
@@ -57,8 +59,8 @@ function SignUp(props) {
             if(userInfo[key] === ''){
                 const element = document.querySelector(`#${key}`);
 
-                if(key === 'secondLine') return;
-                if(key === 'city') {
+                if(key === 'secondLine') return;    // Second line of address is otional, so no validity check for it
+                if(key === 'city') {                // 'city' is a select and doesn't use the updateState function that tracks validity
                     element.classList.add('empty');
                     return;
                 }
@@ -78,26 +80,32 @@ function SignUp(props) {
     }
 
     const signUpUser = ()=>{
+
         setIsModalOpen(true);
 
         firebaseAuth.createUserWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((credentials)=>{
-                console.log(credentials);
                 const userId = credentials.user.uid;
 
+                // Removes passwords that shouldn't be stored
+                const noPassword = ({password, repeatPassword, ...rest}) => rest; 
+                
+                //Creates a user doc matching the Auth UID
+
                 db.collection('users').doc(userId).set( {
-                    email: userInfo.email,
-                    name: userInfo.name,
-                    firstLine: userInfo.firstLine,
-                    secondLine: userInfo.secondLine,
-                    city: userInfo.city,
-                    zipCode: userInfo.zipCode,
-                    phoneNumber: userInfo.phoneNumber,
-                    newsletter: userInfo.newsletter,
+                    ...noPassword(userInfo)
                 })
+                
+                //Changes the global state/context to be auth
+
+                authContext.setIsAuth(true);
+                authContext.setUserInfo(...noPassword(userInfo));
+                authContext.setUserID(userId);
+                   
                 setSignUpMessage('Thank you for signing up. Enjoy our delicious food!');
                 setIsSuccessful(true);
 
+                //Newsletter emails are stored in a different db so non-account users can be subbscribed
                 if(userInfo.newsletter) {
                     db.collection('newsletter_users').doc(userInfo.email).set({
                         isSigned: true
@@ -108,21 +116,20 @@ function SignUp(props) {
                 setSignUpMessage(err.message);
             });
     }
-    
 
-    const signUpModal = 
-        <Modal click={()=>{
+    const signUpModal = () =>{
+
+        const closeOrRedirect = ()=> {
             if(isSuccessful) props.history.push('/menu');
-            setIsModalOpen(false);
-        }}>
-            {signUpMessage ? <p>{signUpMessage}</p> : <Spinner small={true}/>}
-            <Button click={()=> 
-                {
-                    if(isSuccessful) props.history.push('/menu');
-                    setIsModalOpen(false);
-                }}
-            >CLOSE</Button>
-        </Modal>
+            closeModal(()=> setIsModalOpen(false));
+        }
+        return (
+            <Modal click={closeOrRedirect}>
+                    {signUpMessage ? <p>{signUpMessage}</p> : <Spinner small={true}/>}
+
+                    <Button click={closeOrRedirect}>CLOSE</Button>
+            </Modal>
+    )};
 
     return (
         <Container class='Sign_up'>
@@ -218,7 +225,7 @@ function SignUp(props) {
                 <div className='input_div' id='city'>
                     <label>CITY:</label>
                     <select 
-                        onChange={(e) => {setUserInfo({...userInfo, city: e.target.value});}}
+                        onChange={(e) => setUserInfo({...userInfo, city: e.target.value})}
                         onClick={(e)=> e.target.parentNode.classList.remove('empty') // If form was submited this class was added
                     }>
                             <option value=''> Choose city</option>
@@ -251,7 +258,7 @@ function SignUp(props) {
 
                 <Button 
                     style={{margin: '25px auto 0', width: '500px'}}
-                    click={()=> submitForm()}
+                    click={submitForm}
                 >SIGN UP</Button>
 
             </form>

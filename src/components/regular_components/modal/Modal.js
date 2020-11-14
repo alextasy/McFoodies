@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Modal.css';
 import logo from '../../../images/icons/logo.png';
 
@@ -8,6 +8,7 @@ export const closeModal = (closeFunction)=>{
             const modalContainer = document.querySelector('.modal_container');
 
             modalOverlay.style.pointerEvents = 'none'; //Prevents from reseting the funciton when being clicked.
+            
             modalOverlay.style.animation = 'none';
             modalContainer.style.animation = 'none';
 
@@ -28,7 +29,7 @@ function Modal(props) {
 
     return (
         <div className='Modal'>
-            <div className='modal_overlay' onClick={()=> closeModal(props.close)}></div>
+            <div className='modal_overlay' onClick={props.click}></div>
             <div className={'modal_container'}>
                 <img src={logo} alt='logo'/>
                 {props.children}

@@ -36,11 +36,10 @@ function SignInModal(props) {
 
         firebaseAuth.signInWithEmailAndPassword(emailInput, passwordInput).then(
            (credentials)=>{
-               console.log(credentials);
-                context.setUserID(credentials.user.uid);
                 db.collection('users').doc(credentials.user.uid).get().then(
                     (doc=>{
                         context.setUserInfo(doc.data());
+                        context.setUserID(credentials.user.uid);
                         context.setIsAuth(true);
                         closeModal(props.close);
                     })

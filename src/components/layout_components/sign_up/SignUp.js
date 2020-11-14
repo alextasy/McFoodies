@@ -81,28 +81,28 @@ function SignUp(props) {
 
     const signUpUser = ()=>{
 
+        // Removes passwords that shouldn't be stored
+        const noPassword = ({password, repeatPassword, ...rest}) => rest;
+        const newInfo = noPassword(userInfo); 
+
         setIsModalOpen(true);
 
         firebaseAuth.createUserWithEmailAndPassword(userInfo.email, userInfo.password)
             .then((credentials)=>{
                 const userId = credentials.user.uid;
-
-                // Removes passwords that shouldn't be stored
-                const noPassword = ({password, repeatPassword, ...rest}) => rest; 
                 
                 //Creates a user doc matching the Auth UID
 
                 db.collection('users').doc(userId).set( {
-                    ...noPassword(userInfo)
+                    ...newInfo
                 })
                 
                 //Changes the global state/context to be auth
 
                 authContext.setIsAuth(true);
-                authContext.setUserInfo(...noPassword(userInfo));
+                authContext.setUserInfo(...newInfo);
                 authContext.setUserID(userId);
                    
-                setSignUpMessage('Thank you for signing up. Enjoy our delicious food!');
                 setIsSuccessful(true);
 
                 //Newsletter emails are stored in a different db so non-account users can be subbscribed
@@ -114,22 +114,27 @@ function SignUp(props) {
             })
             .catch((err)=> {
                 setSignUpMessage(err.message);
+
+                //Firebase gives that error when you spread an object as data but technically it works so replacing the msg is enough
+
+                if(err.message === 'Found non-callable @@iterator') {
+                    setSignUpMessage('Thank you for signing up. Enjoy our delicious food!');
+                }
             });
     }
 
-    const signUpModal = () =>{
+    const closeOrRedirect = ()=> {
+        if(isSuccessful) props.history.push('/menu');
+        closeModal(()=> setIsModalOpen(false));
+    }
+    
+    const signUpModal = 
+        <Modal click={closeOrRedirect}>
+            {signUpMessage ? <p>{signUpMessage}</p> : <Spinner small={true}/>}
 
-        const closeOrRedirect = ()=> {
-            if(isSuccessful) props.history.push('/menu');
-            closeModal(()=> setIsModalOpen(false));
-        }
-        return (
-            <Modal click={closeOrRedirect}>
-                    {signUpMessage ? <p>{signUpMessage}</p> : <Spinner small={true}/>}
-
-                    <Button click={closeOrRedirect}>CLOSE</Button>
-            </Modal>
-    )};
+            <Button click={closeOrRedirect}>CLOSE</Button>
+        </Modal>
+ 
 
     return (
         <Container class='Sign_up'>

@@ -4,8 +4,9 @@ import images from './hero_images';
 import shadow_overlay from '../../../images/main/Shadow.png';
 import Button from '../button/Button';
 import modal_info from './modal_info';
+import {withRouter} from 'react-router-dom';
 
-function Hero() {
+function Hero(props) {
 
     const transitionLength = 600;
     let counter = 1;
@@ -29,7 +30,6 @@ function Hero() {
         {images.map((image, index)=> 
             <span 
                 key={image.alt} 
-                style={{transitionDuration: `${transitionLength}ms`, animationDuration: `${transitionLength}ms`}}
                 className = {index === 0 ? 'active' : null} // First element is active at start.
                 onClick={(e)=> {
                     if(counter === index + 1 || isTransitioning) return; //If the same element is clicked returns
@@ -54,7 +54,9 @@ function Hero() {
 
         if(counter === firstImgCloneIndex) indicators[0].className = 'active';
         else if(counter === lastImgCloneIndex) indicators[indicators.length-1].className = 'active';
-        else indicators[counter-1].className = 'active';
+
+        // counter - 1 because counter is counts from the array that has an extra img at the beggining 
+        else indicators[counter-1].className = 'active'; 
 
         images.forEach((element)=> {
 
@@ -65,6 +67,7 @@ function Hero() {
                 element.classList.toggle('transitioning');
                 modal.style.animation = 'none';
                 isTransitioning = false;
+
                 if(counter === lastImgCloneIndex || counter === firstImgCloneIndex){
                     resetSlides(images, firstImgCloneIndex); 
                 }
@@ -76,6 +79,8 @@ function Hero() {
     const resetSlides = (images, firstImgCloneIndex,) =>{
         const firstImgIndex = 1;
         const lastImgIndex = firstImgCloneIndex -1; // The clone is the last in the array, actual last is the one before it
+
+        //If counter = a clone img then it gets reset to the proper matching one
 
         counter = counter === firstImgCloneIndex ? firstImgIndex : lastImgIndex;
         images.forEach((image)=> image.style.transform = `translateX(-${100*counter}%)`);
@@ -126,7 +131,7 @@ function Hero() {
             if(isTransitioning) return;
             
             isDown = false;
-            if(dragDistance) slide(element, dragDistance < 0 ? 1 : -1);
+            if(dragDistance) slide(element, dragDistance < 0 ? 1 : -1); //imagesToJump will be +/- 1 depending if we drag right or left
             dragDistance = 0;
         };
     
@@ -152,7 +157,7 @@ function Hero() {
             <div className="order_modal">
                 <h1>FEELING HUNGRY?</h1>
                 <p>Delicous food at your doorstep in no time. High quality fresh ingredients <br/>for high quality people.</p>
-                <Button style={{margin: '0 auto'}}>ORDER NOW</Button>
+                <Button style={{margin: '0 auto'}} click={()=> props.history.push('/menu')}>ORDER NOW</Button>
             </div>
             {indicators}
 
@@ -160,4 +165,4 @@ function Hero() {
     )
 }
 
-export default Hero;
+export default withRouter(Hero);

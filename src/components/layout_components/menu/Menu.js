@@ -68,8 +68,10 @@ function Menu(props) {
     const icons = categoryProps.map((imgProps, index) => {
 
         const changeCategory = (element)=>{
-            props.history.push(`/menu/${element.innerHTML.toLowerCase()}`)
+            props.history.push(`/menu/${element.innerHTML.toLowerCase()}`); //Labels for icons are in caps
         }
+
+        return (
 
         <div 
             className='menu_icons' 
@@ -81,7 +83,7 @@ function Menu(props) {
             <img src={currentCategory === imgProps.title ? categoryPropsActive[index] : imgProps.src} 
                  alt={`${imgProps.title} icon`}/>
             <span className={currentCategory === imgProps.title ? 'active' : null}>{imgProps.title.toUpperCase()}</span>
-        </div> 
+        </div>)
     });
 
     return (

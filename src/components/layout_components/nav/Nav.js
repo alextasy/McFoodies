@@ -18,7 +18,9 @@ function Nav(props) {
     const authContext = useContext(AuthContext);
     const cartContext = useContext(CartContext);
 
-    const numberOfItemsInCart = cartContext.cartItems.length;
+    const numberOfItemsInCart = cartContext.cartItems.reduce((numberOfItems, item)=>{
+        return numberOfItems + item.quantity;
+    }, 0);
 
     const isSignedIn = authContext.isAuth ?
         <MyAccount/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>

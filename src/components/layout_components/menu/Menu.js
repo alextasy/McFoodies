@@ -8,22 +8,25 @@ import {CartContext} from '../../../context/CartContext';
 
 function Menu(props) {
 
-    const [currentMenu, setCurrentMenu] = useState('pizza');
     const [items, setItems] = useState(null);
-    const [cartItems, setCartItems] = useState([]);
     const cartContext = useContext(CartContext);
+    let currentCategory = props.match.params.category;  // will be equal to pizza or burgers or etc.
 
     useEffect(()=> {
+        let incorrectUrlParams = true;
+
         categoryProps.forEach((category) => {
-            if(category.title === props.match.params.category) setCurrentMenu(category.title);
-        })
-    }, [props]);
+            if(category.title === currentCategory) incorrectUrlParams = false;
+        });
 
-    useEffect(() => {
+        if(incorrectUrlParams){                 //Protects against incorrect urls from users
+            props.history.push('/menu/pizza');
+            currentCategory = 'pizza';
+        }
 
-        db.collection('menu').doc(currentMenu).get()
+        db.collection('menu').doc(currentCategory).get()
         .then(async (doc) =>  { 
-            const loadedItems = await Promise.all(doc.data()[currentMenu].map(async(item)=> 
+            const loadedItems = await Promise.all(doc.data()[currentCategory].map(async(item)=> 
                 await storage.refFromURL(item.url).getDownloadURL()
                     .then((url)=>
                         <Card
@@ -37,9 +40,8 @@ function Menu(props) {
                     )       
             ));
             setItems(loadedItems);
-        })   
-    }, [currentMenu]);
-
+        }) 
+    }, [props]); //Whenever the URL changes to a different category it would mean props.history changed
     
     const addToCart = (item, url)=>{
         const newItem = {title: item.title, imageSrc: url, price: item.price, quantity: 1};
@@ -63,7 +65,12 @@ function Menu(props) {
         });
     }
 
-    const icons = categoryProps.map((imgProps, index) => 
+    const icons = categoryProps.map((imgProps, index) => {
+
+        const changeCategory = (element)=>{
+            props.history.push(`/menu/${element.innerHTML.toLowerCase()}`)
+        }
+
         <div 
             className='menu_icons' 
             key={imgProps.title}
@@ -71,16 +78,12 @@ function Menu(props) {
             //img & span have pointer events turned off to make sure there are no targeting issues
             >
 
-            <img src={currentMenu === imgProps.title ? categoryPropsActive[index] : imgProps.src} 
+            <img src={currentCategory === imgProps.title ? categoryPropsActive[index] : imgProps.src} 
                  alt={`${imgProps.title} icon`}/>
-            <span className={currentMenu === imgProps.title ? 'active' : null}>{imgProps.title.toUpperCase()}</span>
+            <span className={currentCategory === imgProps.title ? 'active' : null}>{imgProps.title.toUpperCase()}</span>
         </div> 
-    );
+    });
 
-    const changeCategory = (element)=>{
-        props.history.push(`/menu/${element.innerHTML.toLowerCase()}`)
-    }
-   
     return (
         <div className='Menu'>
             <nav>

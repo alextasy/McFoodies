@@ -1,19 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import {menuIcons, menuIconsActive} from './menu_icons';
+import React, { useState, useEffect, useContext } from 'react';
+import {categoryProps, categoryPropsActive} from './category_props';
 import './Menu.css';
 import {storage, database as db} from '../../../firebase';
 import Card from '../../regular_components/card/Card';
-import Spinner from '../../regular_components/spinner/Spinner';
 import {withRouter} from 'react-router-dom';
+import {CartContext} from '../../../context/CartContext';
 
-function Menu() {
+function Menu(props) {
 
     const [currentMenu, setCurrentMenu] = useState('pizza');
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsloading] = useState(false);
-    
+    const [items, setItems] = useState(null);
+    const [cartItems, setCartItems] = useState([]);
+    const cartContext = useContext(CartContext);
+
+    useEffect(()=> {
+        categoryProps.forEach((category) => {
+            if(category.title === props.match.params.category) setCurrentMenu(category.title);
+        })
+    }, [props]);
+
     useEffect(() => {
-        setIsloading(true);
+
         db.collection('menu').doc(currentMenu).get()
         .then(async (doc) =>  { 
             const loadedItems = await Promise.all(doc.data()[currentMenu].map(async(item)=> 
@@ -25,17 +32,38 @@ function Menu() {
                             price={item.price} 
                             description={item.description}
                             buttonText={'ADD TO CART'}
-                            key={item.title} />
-                            
+                            key={item.title} 
+                            click={()=> addToCart(item, url)}/> 
                     )       
             ));
-        setIsloading(false);
             setItems(loadedItems);
-        })
-        
+        })   
     }, [currentMenu]);
 
-    const icons = menuIcons.map((imgProps, index) => 
+    
+    const addToCart = (item, url)=>{
+        const newItem = {title: item.title, imageSrc: url, price: item.price, quantity: 1};
+        
+        cartContext.setCartItems((currentItems)=> {
+            let updatedItems = currentItems;
+            let notAlreadyInCart = true;
+
+            //Checks if we already have the item so quantity can be updated instead of adding a copy
+
+            updatedItems.forEach((currentItem)=> { 
+                if(currentItem.title === newItem.title){
+                    currentItem.quantity += 1;
+                    notAlreadyInCart = false;
+                }
+            });
+
+            if(notAlreadyInCart) updatedItems.push(newItem);
+
+            return [...updatedItems];
+        });
+    }
+
+    const icons = categoryProps.map((imgProps, index) => 
         <div 
             className='menu_icons' 
             key={imgProps.title}
@@ -43,14 +71,14 @@ function Menu() {
             //img & span have pointer events turned off to make sure there are no targeting issues
             >
 
-            <img src={currentMenu === imgProps.title ? menuIconsActive[index] : imgProps.src} 
+            <img src={currentMenu === imgProps.title ? categoryPropsActive[index] : imgProps.src} 
                  alt={`${imgProps.title} icon`}/>
             <span className={currentMenu === imgProps.title ? 'active' : null}>{imgProps.title.toUpperCase()}</span>
         </div> 
     );
 
     const changeCategory = (element)=>{
-        setCurrentMenu(element.innerHTML.toLowerCase())
+        props.history.push(`/menu/${element.innerHTML.toLowerCase()}`)
     }
    
     return (
@@ -62,7 +90,7 @@ function Menu() {
             </nav>
 
             <div className='cards_container'>
-                {isLoading ? <Spinner/> : items}
+                {items}
             </div>
         </div>
     )

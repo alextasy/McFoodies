@@ -1,12 +1,13 @@
 import React from 'react';
 import Card from '../../regular_components/card/Card';
 import Hero from '../../regular_components/hero/Hero';
-import cardProps from '../../regular_components/card/cardProps';
+import cardProps from './cardProps';
 import './Home.css';
 import Newsletter from '../../regular_components/newsletter/Newsletter';
 import Container from '../container/Container';
+import {withRouter} from 'react-router-dom';
 
-function Home() {
+function Home(props) {
 
     const homePageCards =  <div className='home_page_cards'>
     
@@ -17,6 +18,7 @@ function Home() {
           imageSrc={card.src} 
           buttonText="VIEW" 
           key={card.title}
+          click={() => props.history.push(`/menu/${card.title.toLowerCase()}`)}
     />)}
   </div>
 
@@ -31,4 +33,4 @@ function Home() {
     )
 }
 
-export default Home;
+export default withRouter(Home);

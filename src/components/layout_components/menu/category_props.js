@@ -14,7 +14,7 @@ import extras_active from '../../../images/icons/menu/extras_active.png';
 import desserts_active from '../../../images/icons/menu/desserts_active.png';
 import drinks_active from '../../../images/icons/menu/drinks_active.png';
 
-export const menuIcons = [
+export const categoryProps = [
     {title: 'pizza', src: pizza},
     {title: 'burgers', src: burgers},
     {title: 'pasta', src: pasta},
@@ -23,7 +23,7 @@ export const menuIcons = [
     {title: 'desserts', src: desserts},
     {title: 'drinks', src: drinks}
 ]
-export const menuIconsActive = [
+export const categoryPropsActive = [
     pizza_active,
     burgers_active,
     pasta_active,

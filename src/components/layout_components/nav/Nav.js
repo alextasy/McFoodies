@@ -10,6 +10,7 @@ import SignInModal from '../../regular_components/sign_in_modal/SignInModal';
 import {AuthContext} from '../../../context/AuthContext';
 import {CartContext} from '../../../context/CartContext';
 import MyAccount from '../../regular_components/my_account/MyAccount';
+import CartPopUp from '../../regular_components/cart_pop_up/CartPopUp';
 
 function Nav(props) {
 
@@ -48,6 +49,8 @@ function Nav(props) {
                     <div id='number_of_items'>{numberOfItemsInCart}</div>
                     <img src={cartIcon} alt='Cart icon' height='33'></img>
                 </div>
+
+                <CartPopUp/>
 
                 <Button click={() => props.history.push('/menu')}>ORDER NOW</Button>
 

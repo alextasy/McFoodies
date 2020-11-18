@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import './Cart.css'
 import cartIcon from '../../../images/icons/cart.png'
 import {CartContext} from '../../../context/CartContext';
@@ -6,12 +6,18 @@ import Button from '../button/Button';
 
 function CartPopUp(props) {
 
+    //CART ICON
+
     const context = useContext(CartContext);
     let total = 0;
 
     const numberOfItemsInCart = context.cartItems.reduce((numberOfItems, item)=>{
         return numberOfItems + item.quantity;
     }, 0);
+
+    // CART POPUP CONTENT 
+
+    const empty = <div className='item'><p>Add items in the cart to be able to order.</p></div>
 
     const itemsInCart = context.cartItems.map((item) =>{ 
         total += (item.price * item.quantity);
@@ -45,49 +51,62 @@ function CartPopUp(props) {
     //OPENING AND CLOSING THE POPUP
 
     const [isCartPopUpOpen, setIsCartPopUpOpen] = useState(false);
-    let timeout;
+    const cartPopUpRef = useRef();
+    const fadeOutAnimation = 'fade-in 400ms forwards ease-in alternate-reverse';
+    let timeout, nestedTimeout;
 
-    const mouseEnterHandler = ()=>{
-        console.log('enter');
+    const showCartPopUp = ()=>{
         setIsCartPopUpOpen(true);
+
         clearTimeout(timeout);
+        clearTimeout(nestedTimeout); // Clearing this prevents from a bug where isCartOpen gets updated to a negative when it shouldn't
     }
 
-    const mouseOutHandler = ()=>{
-        console.log('exit');
-        timeout = setTimeout(()=>setIsCartPopUpOpen(false), 1000);
+    const hideCartPopUp = (closeAfter)=>{
+        const popUpStyle = cartPopUpRef.current.style;
+
+        timeout = setTimeout(()=> {
+            popUpStyle.animation = fadeOutAnimation;
+            nestedTimeout = setTimeout(()=> setIsCartPopUpOpen(false), 350); // 350 instead of 400 to no trigger onAnimationEnd
+        }, closeAfter ? closeAfter : 550)
     }
+
+    // CART POP UP COMPONENT
+
+    const cartPopUp = 
+        <div 
+            className='cart_pop_up' 
+            onMouseEnter={()=> showCartPopUp()}
+            onMouseLeave={()=> hideCartPopUp()}
+            onAnimationEnd={(e)=> e.target.style.animation = 'none'} //Resets animation so fade out can be played
+            ref={cartPopUpRef}>
+                
+            {itemsInCart.length > 0 ? itemsInCart : empty}
+            <div className='checkout_section'>
+                <span>Total: ${total.toFixed(2)}</span>
+                <Button>CHECKOUT</Button>
+            </div>
+        </div>
   
     return (
         <div className= 'Cart'>
 
             <div 
                 className= 'cart_icon'
-                onMouseEnter={mouseEnterHandler}
-                onMouseLeave={mouseOutHandler}>
+                onMouseEnter={()=> showCartPopUp()}
+                onMouseLeave={()=> hideCartPopUp()}>
                     
                 <div id='number_of_items'>{numberOfItemsInCart}</div>
                 <img src={cartIcon} alt='Cart icon' height='33'></img>
 
             </div>
 
-            <div 
-                className='cart_pop_up' 
-                style={{display: isCartPopUpOpen ? 'block' : 'none'}}
-                onMouseEnter={mouseEnterHandler}
-                onMouseLeave={mouseOutHandler}>
-                    
-                {itemsInCart}
-                <div className='checkout_section'>
-                    <span>Total: ${total.toFixed(2)}</span>
-                    <Button>CHECKOUT</Button>
-                </div> 
-
-            </div>
+            {isCartPopUpOpen ? cartPopUp : null} 
 
         </div>
         
     )
 }
+
 
 export default CartPopUp;

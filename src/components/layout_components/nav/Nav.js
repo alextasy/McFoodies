@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext} from 'react';
 import './Nav.css';
 import logo from '../../../images/icons/logo.png';
 import phoneIcon from '../../../images/icons/phone.png';

@@ -84,6 +84,11 @@
     position: relative;
     align-items: center;
 }
+.Cart .cart_pop_up .item p{
+    margin: 0 auto;
+    color: #666666;
+}
+
 .Cart .cart_pop_up .item span, 
 .Cart .cart_pop_up .item span:hover, 
 .Cart .cart_pop_up .checkout_section span, 

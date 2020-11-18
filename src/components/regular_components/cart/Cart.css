@@ -1,4 +1,35 @@
-.CartPopUp{
+.Cart .cart_icon{
+    margin-right: 40px;
+    position: relative;
+    cursor: pointer;
+}
+.Cart .cart_icon img{
+    pointer-events: none;
+}
+.Cart .cart_icon #number_of_items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+
+    top: -6px;
+    right: -8px;
+
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+
+    background-color: #d90a0a;
+    
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
+}
+
+/* CART POPUP STYLES */
+
+.Cart .cart_pop_up{
     width: 385px;
     right: 0px;
     top: 80px;
@@ -6,9 +37,22 @@
     background-color: white;
     border: 1px solid #dedede;
     box-shadow: 0 4px 8px 0px rgba(0, 0, 0, 0.294);
+    animation: fade-in 400ms forwards ease-in;
 }
 
-.CartPopUp::before, .CartPopUp::after{
+@keyframes fade-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+/* CREATING THE TRIANGLE AT THE TOP OF THE POPUP */
+
+.Cart .cart_pop_up::before, 
+.Cart .cart_pop_up::after{
     content: '';
     background-color: transparent;
     width: 0px;
@@ -20,7 +64,7 @@
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
 }
-.CartPopUp::before{
+.Cart .cart_pop_up::before{
     top: -17px;
     left: 166px;
     border-bottom: 17px solid #dedede;
@@ -28,8 +72,9 @@
     border-right: 11px solid transparent;
 }
 
+/* THE POPUP CONTENT */
 
-.CartPopUp .item{
+.Cart .cart_pop_up .item{
     border-top: 1px solid #dedede;
     margin-top: -1px; /*Prevents double borders*/
     padding: 15px;
@@ -39,66 +84,68 @@
     position: relative;
     align-items: center;
 }
-.CartPopUp .item span, .CartPopUp .item span:hover, 
-.CartPopUp .checkout_section span, .CartPopUp .checkout_section span:hover{
+.Cart .cart_pop_up .item span, 
+.Cart .cart_pop_up .item span:hover, 
+.Cart .cart_pop_up .checkout_section span, 
+.Cart .cart_pop_up .checkout_section span:hover{
     color: #666666;
     cursor: default;
 }
 
-.CartPopUp .item img{
+.Cart .cart_pop_up .item img{
     height: 85px;
     position: absolute;
     cursor: default;
     object-fit: cover;
 }
 
-.CartPopUp .item .properties_section{
+.Cart .cart_pop_up .item .properties_section{
     margin-left: 100px;
 }
 
-.CartPopUp .item h1{
+.Cart .cart_pop_up .item h1{
     font-weight: normal;
     font-size: 18px;
     color: #d90a0a;
     margin-bottom: 3px;
 }
 
-.CartPopUp .item .properties_section span{
+.Cart .cart_pop_up .item .properties_section span{
     font-size: 12px;
     font-weight: normal;
     margin: 0px 20px 0 0;
 }
 
-.CartPopUp .item .total_section{
+.Cart .cart_pop_up .item .total_section{
     margin-left: auto;
 }
 
-.CartPopUp .item .total_section span{
+.Cart .cart_pop_up .item .total_section span{
     display: block;
     font-size: 16px;
     margin: 0 10px 6px 0;
 }
 
-.CartPopUp .item .total_section #remove{
+.Cart .cart_pop_up .item .total_section #remove{
     margin: 0 10px 0 0;
     color: #d90a0a;
     font-size: 14px;
     font-weight: normal;
     cursor: pointer;
 }
-.CartPopUp .checkout_section{
+.Cart .cart_pop_up .checkout_section{
     display: flex;
     justify-content: flex-end;
     align-items: center;
     height: 70px;
 }
-.CartPopUp .checkout_section span{
+.Cart .cart_pop_up .checkout_section span{
     margin-right: auto;
     margin-left: 25px;
     font-size: 18px;
 }
 
 
-.CartPopUp .Button{
+.Cart .cart_pop_up .Button{
     margin: 25px;
 }

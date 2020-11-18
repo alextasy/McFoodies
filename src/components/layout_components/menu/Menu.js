@@ -21,6 +21,7 @@ function Menu(props) {
 
         if(incorrectUrlParams){                 //Protects against incorrect urls from users
             props.history.push('/menu/pizza');
+            // eslint-disable-next-line
             currentCategory = 'pizza';
         }
 

@@ -3,6 +3,7 @@ import './Cart.css'
 import cartIcon from '../../../images/icons/cart.png'
 import {CartContext} from '../../../context/CartContext';
 import Button from '../button/Button';
+import {withRouter} from 'react-router-dom';
 
 // Exported to give access from non parent components as menu to be able to open the popup
 
@@ -10,11 +11,11 @@ let itemWasAddedRecently = false;
 
 export const itemAddedRecentlyHandler =()=>{
     itemWasAddedRecently = true;
-    setTimeout(()=> itemWasAddedRecently = false, 500);
+    setTimeout(()=> itemWasAddedRecently = false, 10);
 }
 
 
-function CartPopUp() {
+function CartPopUp(props) {
 
     //CART ICON
 
@@ -95,7 +96,7 @@ function CartPopUp() {
             hideCartPopUp(2500);
         }
     // eslint-disable-next-line
-    }, [itemWasAddedRecently]);
+    }, [numberOfItemsInCart]);
 
     // CART POP UP COMPONENT
 
@@ -106,11 +107,14 @@ function CartPopUp() {
             onMouseLeave={()=> hideCartPopUp()}
             onAnimationEnd={(e)=> e.target.style.animation = 'none'} //Resets animation so fade out can be played
             ref={cartPopUpRef}>
-                
-            {itemsInCart.length > 0 ? itemsInCart : empty}
+
+            <div className='items_container'>
+                {itemsInCart.length > 0 ? itemsInCart : empty}
+            </div>
+
             <div className='checkout_section'>
                 <span>Total: ${total.toFixed(2)}</span>
-                <Button>CHECKOUT</Button>
+                <Button click={()=> props.history.push('/checkout')}>CHECKOUT</Button>
             </div>
         </div>
   
@@ -135,4 +139,4 @@ function CartPopUp() {
 }
 
 
-export default CartPopUp;
+export default withRouter(CartPopUp);

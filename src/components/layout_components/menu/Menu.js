@@ -5,6 +5,7 @@ import {storage, database as db} from '../../../firebase';
 import Card from '../../regular_components/card/Card';
 import {withRouter} from 'react-router-dom';
 import {CartContext} from '../../../context/CartContext';
+import {itemAddedRecentlyHandler} from '../../regular_components/cart/Cart'
 
 function Menu(props) {
 
@@ -64,6 +65,8 @@ function Menu(props) {
 
             return [...updatedItems];
         });
+
+        itemAddedRecentlyHandler() // Opens the cart popup
     }
 
     const icons = categoryProps.map((imgProps, index) => {

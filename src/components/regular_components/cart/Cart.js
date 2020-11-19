@@ -1,10 +1,20 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState, useEffect } from 'react';
 import './Cart.css'
 import cartIcon from '../../../images/icons/cart.png'
 import {CartContext} from '../../../context/CartContext';
 import Button from '../button/Button';
 
-function CartPopUp(props) {
+// Exported to give access from non parent components as menu to be able to open the popup
+
+let itemWasAddedRecently = false;
+
+export const itemAddedRecentlyHandler =()=>{
+    itemWasAddedRecently = true;
+    setTimeout(()=> itemWasAddedRecently = false, 500);
+}
+
+
+function CartPopUp() {
 
     //CART ICON
 
@@ -53,23 +63,39 @@ function CartPopUp(props) {
     const [isCartPopUpOpen, setIsCartPopUpOpen] = useState(false);
     const cartPopUpRef = useRef();
     const fadeOutAnimation = 'fade-in 400ms forwards ease-in alternate-reverse';
-    let timeout, nestedTimeout;
+    const timeoutRef = useRef();        //We use refs since rerenders don't delet timers but reset varibles that hold those timers
+    const nestedTimeoutRef = useRef();
 
     const showCartPopUp = ()=>{
-        setIsCartPopUpOpen(true);
-
-        clearTimeout(timeout);
-        clearTimeout(nestedTimeout); // Clearing this prevents from a bug where isCartOpen gets updated to a negative when it shouldn't
+        if(!isCartPopUpOpen) setIsCartPopUpOpen(true);
+        
+        clearTimeout(timeoutRef.current);
+        clearTimeout(nestedTimeoutRef.current); // Clearing this prevents from a bug where isCartOpen gets updated to a negative when it shouldn't
     }
 
     const hideCartPopUp = (closeAfter)=>{
-        const popUpStyle = cartPopUpRef.current.style;
+        // Async since there is a slight delay from when the component renders and the ref gets its value
+        const timeout = setTimeout(async ()=> {          
+            const popUp = await cartPopUpRef.current;
 
-        timeout = setTimeout(()=> {
-            popUpStyle.animation = fadeOutAnimation;
-            nestedTimeout = setTimeout(()=> setIsCartPopUpOpen(false), 350); // 350 instead of 400 to no trigger onAnimationEnd
-        }, closeAfter ? closeAfter : 550)
+            popUp.style.animation = fadeOutAnimation;
+            const nestedTimeout = setTimeout(()=> setIsCartPopUpOpen(false), 350); // 350 instead of 400 to no trigger onAnimationEnd
+
+            nestedTimeoutRef.current = nestedTimeout;
+
+        }, closeAfter ? closeAfter : 550);
+
+        timeoutRef.current = timeout;
     }
+
+    // When item gets added to the cart, automatically show the popup and hold it for longer
+    useEffect(() => {
+        if(itemWasAddedRecently) {
+            showCartPopUp();
+            hideCartPopUp(2500);
+        }
+    // eslint-disable-next-line
+    }, [itemWasAddedRecently]);
 
     // CART POP UP COMPONENT
 

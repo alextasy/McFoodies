@@ -7,10 +7,10 @@ export const CartContext = React.createContext({
 
 const CartContextProvider = (props)=>{
     const [cartItemsState, setCartItemsState] = useState([]);
-
+    
     return(
         <CartContext.Provider value={{
-            cartItems: cartItemsState, setCartItems: setCartItemsState,
+            cartItems: cartItemsState, setCartItems: setCartItemsState
          }}>
             {props.children}
         </CartContext.Provider>

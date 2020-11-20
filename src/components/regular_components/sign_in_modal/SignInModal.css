@@ -36,3 +36,8 @@
     margin: 10px 0 5px;
 
 }
+/* Overiding default input style */
+
+.SignInModal .input_div{
+    width: 75%;
+}

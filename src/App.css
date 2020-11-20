@@ -16,25 +16,6 @@
 
 /* GLOBAL INPUT STYLES */
 
-.input_div{
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    width: 75%;
-    position: relative;
-}
-.input_div input{
-    margin-top: 3px;
-    height: 30px;
-    border: 1px solid #aaaaaa;
-    font-size: 16px;
-    padding: 0px 10px;
-    outline: none;
-}
-
-.input_div input:focus{
-    border-bottom: 2px solid #d90a0a;
-}
 
 /* REMOVES DEFAULT AUTOFILL STYLES*/
 
@@ -45,7 +26,51 @@ input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
-/* IF FIELD IS EMPTY OR INVALID */
+
+.input_div{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    position: relative;
+    width: 500px;
+    margin: 8px 0;
+}
+
+.input_div input{
+    margin-top: 3px;
+    height: 30px;
+    border: 1px solid #aaaaaa;
+    font-size: 16px;
+    padding: 0px 10px;
+    outline: none;
+}
+.input_div input:focus{
+    border-bottom: 2px solid #d90a0a;
+}
+
+ select{
+    height: 30px;
+    border: 1px solid #aaaaaa;
+    font-size: 16px;
+    padding: 0px 10px;
+    outline: none;
+}
+
+ .checkbox {
+    flex-direction: row;
+    font-size: 14px;
+    width: 500px;
+    line-height: 22px;
+    margin-top: 16px;
+    margin-bottom: 6px;
+}
+
+ .checkbox label{
+    margin-left: 10px;
+    margin-top: 7px;
+}
+
+/* EMPY OR INVALID CLASES AND ID's */
 
 .empty input, .invalid input, .empty select, .invalid_email input, .invalid_password input{
     border: 1px solid #d90a0a;
@@ -57,4 +82,21 @@ input:-webkit-autofill:active  {
 }
 .empty label, .invalid label , .invalid_email label, .invalid_password label{
     color: #d90a0a;
+}
+
+ .input_div.invalid::after , .input_div.invalid_email::after, .input_div.invalid_password::after{
+    content: '* Minimum length is 7';
+    color: #d90a0a;
+    position: absolute;
+    font-size: 12px;
+    top: 28px;
+    right: 10px;
+}
+
+ .input_div.invalid_email::after{
+    content: '* Invalid email';
+}
+
+ .input_div.invalid_password::after{
+    content: '* Passwords must match';
 }

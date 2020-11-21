@@ -74,7 +74,7 @@
 
 /* THE POPUP CONTENT */
 .Cart .cart_pop_up .items_container{
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: calc(100vh - 285px);
 }
 

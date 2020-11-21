@@ -5,17 +5,7 @@ import {CartContext} from '../../../context/CartContext';
 import Button from '../button/Button';
 import {withRouter} from 'react-router-dom';
 
-// Exported to give access from non parent components as menu to be able to open the popup
-
-let itemWasAddedRecently = false;
-
-export const itemAddedRecentlyHandler =()=>{
-    itemWasAddedRecently = true;
-    setTimeout(()=> itemWasAddedRecently = false, 10);
-}
-
-
-function CartPopUp(props) {
+function Cart(props) {
 
     //CART ICON
 
@@ -61,7 +51,9 @@ function CartPopUp(props) {
 
     //OPENING AND CLOSING THE POPUP
 
-    const [isCartPopUpOpen, setIsCartPopUpOpen] = useState(false);
+    const [isCartPopUpOpen, setIsCartPopUpOpen] = useState(false); 
+    const [numberOfItemsBeforeUpdate, setNumberOfItemsBeforeUpdate] = useState(0);
+
     const cartPopUpRef = useRef();
     const fadeOutAnimation = 'fade-in 400ms forwards ease-in alternate-reverse';
     const timeoutRef = useRef();        //We use refs since rerenders don't delet timers but reset varibles that hold those timers
@@ -91,10 +83,11 @@ function CartPopUp(props) {
 
     // When item gets added to the cart, automatically show the popup and hold it for longer
     useEffect(() => {
-        if(itemWasAddedRecently) {
+        if(numberOfItemsInCart > numberOfItemsBeforeUpdate) { //Opens cart if an item was added but doesn't if it was removed
             showCartPopUp();
-            hideCartPopUp(2500);
+            hideCartPopUp(1500);
         }
+        setNumberOfItemsBeforeUpdate(numberOfItemsInCart);
     // eslint-disable-next-line
     }, [numberOfItemsInCart]);
 
@@ -139,4 +132,4 @@ function CartPopUp(props) {
 }
 
 
-export default withRouter(CartPopUp);
+export default withRouter(Cart);

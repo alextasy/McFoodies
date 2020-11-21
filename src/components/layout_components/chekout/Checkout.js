@@ -15,6 +15,10 @@ function Checkout() {
         phoneNumber: '',
 
     });
+
+    const [orderInfo, setOrderInfo] = useState({
+        notes: ''
+    })
     
     const updateState = (element)=>{
         const id = element.id;
@@ -69,7 +73,39 @@ function Checkout() {
     return (
         <Container class='Checkout'>
 
-            <h2>ADDRESS:</h2>
+            <form>
+
+            <div className='input_div' id='notes_div'>
+                <h2>LEAVE A NOTE:</h2>
+                <textarea 
+                    id='notes'
+                    placeholder='Leave us a note(eg. no onions, deliver at the back door...)'
+                    value={orderInfo.notes} maxLength='250'  
+                    onChange={(e) => setOrderInfo({...orderInfo, notes: e.target.value})} />
+            </div>
+
+            <h2>CONTACT DETAILS:</h2> 
+
+            <div className='input_div'>
+                <label>FULL NAME:</label>
+                <input 
+                    type='text'
+                    id='name'
+                    value={userInfo.name} maxLength='30'  
+                    onChange={(e) => updateState(e.target)} />
+            </div>
+
+            <div className='input_div'>
+                <label>PHONE NUMBER:</label>
+                <input 
+                    type='text'
+                    id='phoneNumber'
+                    value={userInfo.phoneNumber} maxLength='15'
+                    minLength='7' 
+                    onChange={(e) => updateState(e.target)} />
+            </div>
+
+            <h2>DELIVERY ADDRESS:</h2>
 
             <div className='input_div'>
                 <label>FIRST LINE OF ADDRESS:</label>
@@ -116,20 +152,21 @@ function Checkout() {
                     onChange={(e) => updateState(e.target)} />
             </div>
 
-            <div className='input_div checkbox'>
-                <input 
-                    type='checkbox'
-                    id='newsletter' 
-                    value={userInfo.newsletter} 
-                    onChange={(e) => setUserInfo({...userInfo, newsletter: e.target.checked})} />
-                <label>I want to sign up to McFoodie's newsletter to receive information about future products, promotions and discounts. </label>
-            </div>
-
             <Button 
-                style={{margin: '25px auto 0', width: '500px'}}
+                style={{margin: '25px 0', width: '500px'}}
                 
             >SIGN UP</Button>
-           
+
+            </form>
+
+            <div>
+                <h2>ORDER DETAILS:</h2>
+                <div className='itemsInCart'>
+                    {itemsInCart}
+                </div>
+                <p id='total'>Total: ${total.toFixed(2)}</p>
+            </div>
+
         </Container>
     )
 } 

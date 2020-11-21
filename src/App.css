@@ -36,7 +36,7 @@ input:-webkit-autofill:active  {
     margin: 8px 0;
 }
 
-.input_div input{
+.input_div input, textarea{
     margin-top: 3px;
     height: 30px;
     border: 1px solid #aaaaaa;
@@ -44,7 +44,7 @@ input:-webkit-autofill:active  {
     padding: 0px 10px;
     outline: none;
 }
-.input_div input:focus{
+.input_div input:focus, textarea:focus{
     border-bottom: 2px solid #d90a0a;
 }
 

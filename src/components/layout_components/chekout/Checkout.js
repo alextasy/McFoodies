@@ -1,11 +1,13 @@
 import React, {useContext, useState} from 'react';
 import './Checkout.css';
 import Container from '../container/Container';
-import {CartContext} from '../../../context/CartContext';
 import Button from '../../regular_components/button/Button';
+import OrderSummary from '../../regular_components/order_summary/OrderSummary';
+import {CartContext} from '../../../context/CartContext';
 
 function Checkout() {
 
+    const context = useContext(CartContext);
     const [userInfo, setUserInfo] = useState({
         name: '',
         firstLine: '',
@@ -33,41 +35,6 @@ function Checkout() {
             : parentDiv.classList.remove('invalid');
         
         setUserInfo({...userInfo, [id]: value});
-    }
-
-
-    const context = useContext(CartContext);
-    let total = 0;
-
-
-    const itemsInCart = context.cartItems.map((item) =>{ 
-        total += (item.price * item.quantity);
-
-        
-        return(
-
-        <div className='item' key={item.title}>
-            <img src={item.imageSrc} alt={item.title}/>
-
-            <div className ='properties_section'>
-                <h1>{item.title}</h1>
-                <span>Quantity: {item.quantity}</span>
-                <span>Price: ${item.price}</span>
-            </div>
-
-            <div className ='total_section'>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
-                <span id='remove' onClick={()=> removeItem(item)}>Remove</span>
-            </div>
-            
-        </div>)
-    });
-
-    const removeItem = (itemToRemove)=>{
-        const itemsToStay = context.cartItems.filter((item)=>{
-            return (item !== itemToRemove);
-        });
-        context.setCartItems(itemsToStay);
     }
 
     return (
@@ -162,9 +129,9 @@ function Checkout() {
             <div>
                 <h2>ORDER DETAILS:</h2>
                 <div className='itemsInCart'>
-                    {itemsInCart}
+                    <OrderSummary maxHeight='500px'/>
                 </div>
-                <p id='total'>Total: ${total.toFixed(2)}</p>
+                <p id='total'>Total: ${context.total.toFixed(2)}</p>
             </div>
 
         </Container>

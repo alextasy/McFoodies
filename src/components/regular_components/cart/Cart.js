@@ -4,50 +4,17 @@ import cartIcon from '../../../images/icons/cart.png'
 import {CartContext} from '../../../context/CartContext';
 import Button from '../button/Button';
 import {withRouter} from 'react-router-dom';
+import OrderSummary from '../order_summary/OrderSummary';
 
 function Cart(props) {
 
-    //CART ICON
 
     const context = useContext(CartContext);
-    let total = 0;
 
     const numberOfItemsInCart = context.cartItems.reduce((numberOfItems, item)=>{
         return numberOfItems + item.quantity;
     }, 0);
 
-    // CART POPUP CONTENT 
-
-    const empty = <div className='item'><p>Add items in the cart to be able to order.</p></div>
-
-    const itemsInCart = context.cartItems.map((item) =>{ 
-        total += (item.price * item.quantity);
-
-        return(
-
-        <div className='item' key={item.title}>
-            <img src={item.imageSrc} alt={item.title}/>
-
-            <div className ='properties_section'>
-                <h1>{item.title}</h1>
-                <span>Quantity: {item.quantity}</span>
-                <span>Price: ${item.price}</span>
-            </div>
-
-            <div className ='total_section'>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
-                <span id='remove' onClick={()=> removeItem(item)}>Remove</span>
-            </div>
-            
-        </div>)
-    });
-
-    const removeItem = (itemToRemove)=>{
-        const itemsToStay = context.cartItems.filter((item)=>{
-            return (item !== itemToRemove);
-        });
-        context.setCartItems(itemsToStay);
-    }
 
     //OPENING AND CLOSING THE POPUP
 
@@ -85,7 +52,7 @@ function Cart(props) {
     useEffect(() => {
         if(numberOfItemsInCart > numberOfItemsBeforeUpdate) { //Opens cart if an item was added but doesn't if it was removed
             showCartPopUp();
-            hideCartPopUp(1500);
+            hideCartPopUp(2000);
         }
         setNumberOfItemsBeforeUpdate(numberOfItemsInCart);
     // eslint-disable-next-line
@@ -102,11 +69,11 @@ function Cart(props) {
             ref={cartPopUpRef}>
 
             <div className='items_container'>
-                {itemsInCart.length > 0 ? itemsInCart : empty}
+                <OrderSummary maxHeight='calc(100vh - 285px)'/>
             </div>
 
             <div className='checkout_section'>
-                <span>Total: ${total.toFixed(2)}</span>
+                <span>Total: ${context.total.toFixed(2)}</span>
                 <Button click={()=> props.history.push('/checkout')}>CHECKOUT</Button>
             </div>
         </div>

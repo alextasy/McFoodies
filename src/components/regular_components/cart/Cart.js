@@ -51,7 +51,8 @@ function Cart(props) {
 
     // When item gets added to the cart, automatically show the popup and hold it for longer
     useEffect(() => {
-        if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current) { //Opens cart if an item was added but doesn't if it was removed
+        //Opens cart if an item was added but doesn't if it was removed, if the ref isn't null the popup is already open so no need to reopen
+        if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current && !cartPopUpRef.current){ 
             showCartPopUp();
             hideCartPopUp(2000);
         }

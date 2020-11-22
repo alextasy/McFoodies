@@ -24,7 +24,6 @@ function OrderSummary(props) {
                     <select 
                         defaultValue={item.quantity} 
                         onChange={(e)=> changeQuantity(item.title, +e.target.value)}> 
-
                             {quantityOptions}
                     </select>
                 </span>     

@@ -19,7 +19,10 @@
     color: #666666;
 }
 
-
+.Order_summary .item span, .Order_summary .item span:hover{
+    color: #666666;
+    cursor: auto;
+}
 
 .Order_summary .item img{
     height: 85px;
@@ -53,6 +56,8 @@
     display: block;
     font-size: 16px;
     margin: 0 10px 6px 0;
+    text-align: right;
+    font-weight: bold;
 }
 
 .Order_summary .item .total_section #remove{
@@ -61,4 +66,20 @@
     font-size: 14px;
     font-weight: normal;
     cursor: pointer;
+}
+
+/* QUANTITY */
+.Order_summary .item #quantity{
+    margin-right: 46px;
+}
+
+.Order_summary .item #quantity select{
+    width: 35px;
+    height: 20px;
+    font-size: 12px;
+    border: none;
+    color: #666666;
+    padding: 0;
+    position: absolute;
+    text-align: right;
 }

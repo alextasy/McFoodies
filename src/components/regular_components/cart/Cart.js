@@ -8,7 +8,6 @@ import OrderSummary from '../order_summary/OrderSummary';
 
 function Cart(props) {
 
-
     const context = useContext(CartContext);
 
     const numberOfItemsInCart = context.cartItems.reduce((numberOfItems, item)=>{
@@ -19,42 +18,44 @@ function Cart(props) {
     //OPENING AND CLOSING THE POPUP
 
     const [isCartPopUpOpen, setIsCartPopUpOpen] = useState(false); 
-    const [numberOfItemsBeforeUpdate, setNumberOfItemsBeforeUpdate] = useState(0);
+    const numberOfItemsBeforeUpdate = useRef(0);
 
     const cartPopUpRef = useRef();
     const fadeOutAnimation = 'fade-in 400ms forwards ease-in alternate-reverse';
-    const timeoutRef = useRef();        //We use refs since rerenders don't delet timers but reset varibles that hold those timers
-    const nestedTimeoutRef = useRef();
+    const startClosingAfterTimeoutRef = useRef();  //We use refs since rerenders don't delete timers but reset varibles that hold those timers
+    const closeTimeoutRef = useRef();
 
     const showCartPopUp = ()=>{
         if(!isCartPopUpOpen) setIsCartPopUpOpen(true);
         
-        clearTimeout(timeoutRef.current);
-        clearTimeout(nestedTimeoutRef.current); // Clearing this prevents from a bug where isCartOpen gets updated to a negative when it shouldn't
+        clearTimeout(startClosingAfterTimeoutRef.current);
+        clearTimeout(closeTimeoutRef.current); // Clearing this prevents from a bug where isCartOpen gets updated to a negative when it shouldn't
     }
 
     const hideCartPopUp = (closeAfter)=>{
+
         // Async since there is a slight delay from when the component renders and the ref gets its value
-        const timeout = setTimeout(async ()=> {          
+        const startClosingAfterTimeout = setTimeout(async ()=> {          
             const popUp = await cartPopUpRef.current;
 
-            popUp.style.animation = fadeOutAnimation;
-            const nestedTimeout = setTimeout(()=> setIsCartPopUpOpen(false), 350); // 350 instead of 400 to no trigger onAnimationEnd
+            if(popUp) popUp.style.animation = fadeOutAnimation; // if prevents a crash when the item has been removed but there is a new timer
 
-            nestedTimeoutRef.current = nestedTimeout;
+            const closeTimeout = setTimeout(()=> setIsCartPopUpOpen(false), 350); // 350 instead of 400 to no trigger onAnimationEnd
+
+            closeTimeoutRef.current = closeTimeout;
 
         }, closeAfter ? closeAfter : 550);
 
-        timeoutRef.current = timeout;
+        startClosingAfterTimeoutRef.current = startClosingAfterTimeout;
     }
 
     // When item gets added to the cart, automatically show the popup and hold it for longer
     useEffect(() => {
-        if(numberOfItemsInCart > numberOfItemsBeforeUpdate) { //Opens cart if an item was added but doesn't if it was removed
+        if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current) { //Opens cart if an item was added but doesn't if it was removed
             showCartPopUp();
             hideCartPopUp(2000);
         }
-        setNumberOfItemsBeforeUpdate(numberOfItemsInCart);
+        numberOfItemsBeforeUpdate.current = numberOfItemsInCart;
     // eslint-disable-next-line
     }, [numberOfItemsInCart]);
 

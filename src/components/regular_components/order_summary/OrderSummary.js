@@ -7,6 +7,11 @@ function OrderSummary(props) {
     
     const context = useContext(CartContext);
 
+    //Array spread since new Array(10) creates an array with no properties and map cannot be used for non-existant properties
+    const quantityOptions = [...new Array(10)].map((el, index)=> 
+        <option value={index+1} key={index}>{index+1}</option>
+    );
+
     const itemsInCart = context.cartItems.map((item) =>
         
         <div className='item' key={item.title}>
@@ -14,7 +19,16 @@ function OrderSummary(props) {
 
             <div className ='properties_section'>
                 <h1>{item.title}</h1>
-                <span>Quantity: {item.quantity}</span>
+
+                <span id='quantity'>Quantity: 
+                    <select 
+                        defaultValue={item.quantity} 
+                        onChange={(e)=> changeQuantity(item.title, +e.target.value)}> 
+
+                            {quantityOptions}
+                    </select>
+                </span>     
+
                 <span>Price: ${item.price}</span>
             </div>
 
@@ -25,6 +39,20 @@ function OrderSummary(props) {
             
         </div>
     );
+
+    const changeQuantity = (itemName, newQuantity) =>{
+        context.setCartItems((current)=>{
+            const newItems = [...current];
+
+            for (const item of newItems){
+                if(item.title === itemName) {
+                    item.quantity = newQuantity; 
+                    break;
+                }
+            }
+            return newItems;
+        })
+    }
 
     const removeItem = (itemToRemove)=>{
         const itemsToStay = context.cartItems.filter((item)=>{
@@ -42,4 +70,4 @@ function OrderSummary(props) {
     )
 }
 
-export default OrderSummary
+export default OrderSummary;

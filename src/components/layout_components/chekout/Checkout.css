@@ -1,5 +1,4 @@
 .Checkout{
-    height: 100vh;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
@@ -35,4 +34,20 @@
     font-weight: bold;
     font-size: 18px;
     color: #666666;
+}
+
+.Checkout .coupon{
+    width: 500px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Checkout .coupon input{
+    width: 320px;
+}
+
+.Checkout .coupon .Button{
+    width: 120px;
+    height: 36px;
 }

@@ -4,6 +4,17 @@
     overflow-y: auto;  
 }
 
+.Order_summary::-webkit-scrollbar{
+    width: 5px;
+    height: 20px;
+    background-color: white;
+}
+
+.Order_summary::-webkit-scrollbar-thumb{
+    background-color: #d85353;
+    border-radius: 30px;
+}
+
 
 .Order_summary .item{
     border-top: 1px solid #dedede;

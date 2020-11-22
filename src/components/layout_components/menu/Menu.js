@@ -37,14 +37,17 @@ function Menu(props) {
                             description={item.description}
                             buttonText={'ADD TO CART'}
                             key={item.title} 
-                            click={()=> addToCart(item, url)}/> 
+                            click={(e)=> addToCart(item, url, e.target)}
+                            menuItemCard='true'/> 
                     )       
             ));
             setItems(loadedItems);
         }) 
     }, [props]); //Whenever the URL changes to a different category it would mean props.history changed
+
     
-    const addToCart = (item, url)=>{
+    const addToCart = (item, url, button)=>{
+
         const newItem = {title: item.title, imageSrc: url, price: item.price, quantity: 1};
         
         cartContext.setCartItems((currentItems)=> {
@@ -53,12 +56,14 @@ function Menu(props) {
 
             //Checks if we already have the item so quantity can be updated instead of adding a copy
 
-            updatedItems.forEach((currentItem)=> { 
+            for(const currentItem of updatedItems) { 
+                if(currentItem.title === newItem.title && currentItem.quantity === 10) return [...currentItems];
+                
                 if(currentItem.title === newItem.title){
                     currentItem.quantity += 1;
                     notAlreadyInCart = false;
                 }
-            });
+            };
 
             if(notAlreadyInCart) updatedItems.push(newItem);
 
@@ -67,10 +72,10 @@ function Menu(props) {
 
     }
 
-    const icons = categoryProps.map((imgProps, index) => {
+    const navigationIcons = categoryProps.map((imgProps, index) => {
 
         const changeCategory = (element)=>{
-            props.history.push(`/menu/${element.innerHTML.toLowerCase()}`); //Labels for icons are in caps
+            props.history.push(`/menu/${element.innerHTML.toLowerCase()}`); //Labels for navigationIcons are in caps
         }
 
         return (
@@ -92,7 +97,7 @@ function Menu(props) {
         <div className='Menu'>
             <nav>
                 <section>
-                    {icons}
+                    {navigationIcons}
                 </section>
             </nav>
 

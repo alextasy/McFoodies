@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {CartContext} from '../../../context/CartContext';
 import './OrderSummary.css';
 
@@ -22,7 +22,7 @@ function OrderSummary(props) {
 
                 <span id='quantity'>Quantity: 
                     <select 
-                        defaultValue={item.quantity} 
+                        value={item.quantity} 
                         onChange={(e)=> changeQuantity(item.title, +e.target.value)}> 
                             {quantityOptions}
                     </select>
@@ -40,6 +40,7 @@ function OrderSummary(props) {
     );
 
     const changeQuantity = (itemName, newQuantity) =>{
+        
         context.setCartItems((current)=>{
             const newItems = [...current];
 

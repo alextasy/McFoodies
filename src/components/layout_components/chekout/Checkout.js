@@ -42,15 +42,6 @@ function Checkout() {
 
             <form>
 
-            <div className='input_div' id='notes_div'>
-                <h2>LEAVE A NOTE:</h2>
-                <textarea 
-                    id='notes'
-                    placeholder='Leave us a note(eg. no onions, deliver at the back door...)'
-                    value={orderInfo.notes} maxLength='250'  
-                    onChange={(e) => setOrderInfo({...orderInfo, notes: e.target.value})} />
-            </div>
-
             <h2>CONTACT DETAILS:</h2> 
 
             <div className='input_div'>
@@ -119,6 +110,16 @@ function Checkout() {
                     onChange={(e) => updateState(e.target)} />
             </div>
 
+            
+            <div className='input_div' id='notes_div'>
+                <h2>LEAVE A NOTE:</h2>
+                <textarea 
+                    id='notes'
+                    placeholder='Leave us a note(eg. no onions, deliver at the back door...)'
+                    value={orderInfo.notes} maxLength='250'  
+                    onChange={(e) => setOrderInfo({...orderInfo, notes: e.target.value})} />
+            </div>
+
             <Button 
                 style={{margin: '25px 0', width: '500px'}}
                 
@@ -132,6 +133,15 @@ function Checkout() {
                     <OrderSummary maxHeight='500px'/>
                 </div>
                 <p id='total'>Total: ${context.total.toFixed(2)}</p>
+
+                <h2>HAVE A COUPON?</h2>
+
+                <div className='input_div coupon'>
+                    <input 
+                        type='text' />
+                    <Button>SUBMIT</Button>
+                        
+                </div>
             </div>
 
         </Container>

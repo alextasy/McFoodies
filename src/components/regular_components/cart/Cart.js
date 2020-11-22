@@ -25,6 +25,9 @@ function Cart(props) {
     const startClosingAfterTimeoutRef = useRef();  //We use refs since rerenders don't delete timers but reset varibles that hold those timers
     const closeTimeoutRef = useRef();
 
+    let mouseIsOver = useRef(false);
+
+
     const showCartPopUp = ()=>{
         if(!isCartPopUpOpen) setIsCartPopUpOpen(true);
         
@@ -49,10 +52,12 @@ function Cart(props) {
         startClosingAfterTimeoutRef.current = startClosingAfterTimeout;
     }
 
-    // When item gets added to the cart, automatically show the popup and hold it for longer
+
     useEffect(() => {
-        //Opens cart if an item was added but doesn't if it was removed, if the ref isn't null the popup is already open so no need to reopen
-        if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current && !cartPopUpRef.current){ 
+        // Opens cart if an item was added but doesn't if it was removed 
+        // Checks if mouse is over the popup to not close it when quantity is updated through the dropdown
+
+        if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current && !mouseIsOver.current){  
             showCartPopUp();
             hideCartPopUp(2000);
         }
@@ -66,17 +71,21 @@ function Cart(props) {
         <div 
             className='cart_pop_up' 
             onMouseEnter={()=> showCartPopUp()}
-            onMouseLeave={()=> hideCartPopUp()}
+            onMouseLeave={()=> {hideCartPopUp(); mouseIsOver.current = false;}}
+            onMouseOver={()=> mouseIsOver.current = true}
             onAnimationEnd={(e)=> e.target.style.animation = 'none'} //Resets animation so fade out can be played
             ref={cartPopUpRef}>
 
             <div className='items_container'>
-                <OrderSummary maxHeight='calc(100vh - 285px)'/>
+                <OrderSummary maxHeight='395px'/>
             </div>
 
             <div className='checkout_section'>
                 <span>Total: ${context.total.toFixed(2)}</span>
-                <Button click={()=> props.history.push('/checkout')}>CHECKOUT</Button>
+                <Button click={()=>{
+                    setIsCartPopUpOpen(false);
+                    props.history.push('/checkout');
+                }}>CHECKOUT</Button>
             </div>
         </div>
   

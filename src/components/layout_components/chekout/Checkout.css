@@ -2,6 +2,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    margin-top: 120px;
 }
 
 .Checkout h2{
@@ -50,4 +51,118 @@
 .Checkout .coupon .Button{
     width: 120px;
     height: 36px;
+}
+
+.Checkout .radio{
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.Checkout .radio div{
+    position: relative;
+}
+
+.Checkout .radio .radio_circle{
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 0;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid #666666;
+    margin-left: 1px; /* Makes size offset unnoticible */
+}
+.Checkout .radio .active .radio_circle{
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #d90a0a;
+}
+
+.Checkout .radio .active .radio_circle::after{
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #d90a0a;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Checkout .radio input{
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.Checkout .radio label{
+    margin-left: 40px;
+    font-size: 16px;
+    color: #666666;
+}
+.Checkout .radio .active label{
+    color: rgb(34, 34, 34);
+}
+
+.Checkout .card_payment{
+    margin-top: 20px;
+    width: 500px;
+    flex-direction: column;
+}
+
+.Checkout .card_payment .input_div{
+    margin: 9px 0;
+}
+
+.Checkout .card_payment #date_and_cvc{
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Checkout .card_payment #date_and_cvc input, 
+.Checkout .card_payment #date_and_cvc .input_div{
+    width: 200px;
+}
+.Checkout .input_div.invalid.coupon::after{
+    content: '*Invalid discount code';
+    left: 0;
+    top: 40px;
+}
+
+.Checkout .card_payment .input_div.invalid.card_number::after{
+    content: '*Minimum length is 16';
+}
+
+.Checkout .card_payment #date_and_cvc .input_div.invalid::after{
+    content: '*Minimum length is 4';
+    left: 0;
+    top: 60px;
+}
+
+.Checkout .card_payment #date_and_cvc .input_div.cvc.invalid::after{
+    content: '*Minimum length is 3';
+}
+
+.Checkout .sign_in_reminder{
+    position: fixed;
+    background-color: #d90a0a;
+    color: white;
+    width: 100%;
+    top: 100px;
+    left: 0;
+    z-index: 100;
+    padding: 5px 0;
+    display: flex;
+}
+.Checkout .sign_in_reminder p{
+    width: 1200px;
+    margin: auto;
+    font-weight: bold;
 }

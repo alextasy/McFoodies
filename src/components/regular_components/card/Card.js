@@ -25,7 +25,7 @@ function Card(props) {
                 }
             });  
         }
-        
+    // eslint-disable-next-line
     }, [context]);
 
 

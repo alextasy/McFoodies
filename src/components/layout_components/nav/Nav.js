@@ -19,6 +19,7 @@ function Nav(props) {
     const isSignedIn = authContext.isAuth ?
         <MyAccount/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
 
+
     return (
         <nav className="Nav">
              <section>
@@ -40,7 +41,12 @@ function Nav(props) {
 
                 <Cart/>
 
-                <Button click={() => props.history.push('/menu')}>ORDER NOW</Button>
+                <Button click={() => {
+                    if(props.location.pathname === '/' 
+                    || props.location.pathname === '/signup') props.history.push('/menu');
+                    else props.history.push('/checkout');
+
+                }}>{props.location.pathname === '/' || props.location.pathname === '/signup' ? 'ORDER NOW' : 'CHECKOUT'}</Button>
 
             </section>
             {isModalOpen ? <SignInModal close={()=> setIsModalOpen(false)}/> : null}

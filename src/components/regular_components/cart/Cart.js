@@ -56,7 +56,7 @@ function Cart(props) {
     useEffect(() => {
         // Opens cart if an item was added but doesn't if it was removed 
         // Checks if mouse is over the popup to not close it when quantity is updated through the dropdown
-
+        console.log(numberOfItemsInCart, numberOfItemsBeforeUpdate.current);
         if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current && !mouseIsOver.current){  
             showCartPopUp();
             hideCartPopUp(2000);
@@ -77,12 +77,13 @@ function Cart(props) {
             ref={cartPopUpRef}>
 
             <div className='items_container'>
-                <OrderSummary maxHeight='395px'/>
+                <OrderSummary maxHeight='400px'/>
             </div>
 
             <div className='checkout_section'>
                 <span>Total: ${context.total.toFixed(2)}</span>
                 <Button click={()=>{
+                    mouseIsOver.current = false;
                     setIsCartPopUpOpen(false);
                     props.history.push('/checkout');
                 }}>CHECKOUT</Button>

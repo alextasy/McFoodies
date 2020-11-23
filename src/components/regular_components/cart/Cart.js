@@ -56,8 +56,9 @@ function Cart(props) {
     useEffect(() => {
         // Opens cart if an item was added but doesn't if it was removed 
         // Checks if mouse is over the popup to not close it when quantity is updated through the dropdown
-        console.log(numberOfItemsInCart, numberOfItemsBeforeUpdate.current);
-        if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current && !mouseIsOver.current){  
+        let notAtCheckout = props.location.pathname !== '/checkout';
+
+        if(numberOfItemsInCart > numberOfItemsBeforeUpdate.current && !mouseIsOver.current  && notAtCheckout){  
             showCartPopUp();
             hideCartPopUp(2000);
         }

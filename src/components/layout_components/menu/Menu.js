@@ -65,7 +65,7 @@ function Menu(props) {
                 }
             };
 
-            if(notAlreadyInCart) updatedItems.push(newItem);
+            if(notAlreadyInCart) updatedItems.unshift(newItem);
 
             return [...updatedItems];
         });

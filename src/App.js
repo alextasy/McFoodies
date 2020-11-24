@@ -5,7 +5,7 @@ import Home from './components/layout_components/home/Home';
 import {Route, Switch} from 'react-router-dom';
 import Menu from './components/layout_components/menu/Menu';
 import SignUp from './components/layout_components/sign_up/SignUp';
-import Checkout from './components/layout_components/chekout/Checkout';
+import Checkout from './components/layout_components/checkout/Checkout';
 
 function App() {
 

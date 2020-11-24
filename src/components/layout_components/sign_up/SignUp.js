@@ -234,10 +234,10 @@ function SignUp(props) {
                         onClick={(e)=> e.target.parentNode.classList.remove('empty') // If form was submited this class was added
                     }>
                             <option value=''> Choose city</option>
-                            <option value='London'>London</option>
-                            <option value='Manchester'>Manchester</option>
-                            <option value='Swansea'>Swansea</option>
-                            <option value='Bristol'>Bristol</option>
+                            <option value='New York'>London</option>
+                            <option value='Brooklyn'>Manchester</option>
+                            <option value='Bronx'>Swansea</option>
+                            <option value='Queens'>Bristol</option>
                     </select>
                 </div>
 

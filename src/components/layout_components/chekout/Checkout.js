@@ -3,8 +3,9 @@ import './Checkout.css';
 import Container from '../container/Container';
 import Button from '../../regular_components/button/Button';
 import OrderSummary from '../../regular_components/order_summary/OrderSummary';
-import {CartContext} from '../../../context/CartContext';
+import { CartContext } from '../../../context/CartContext';
 import { AuthContext } from '../../../context/AuthContext';
+import Modal, {closeModal} from '../../regular_components/modal/Modal';
 
 function Checkout() {
 
@@ -28,10 +29,16 @@ function Checkout() {
         notes: '',
         paymentOption: 'cash'
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(()=>{
         if(authContext.isAuth){
-            setUserInfo({...userInfo, ...authContext.userInfo})
+            
+            for(const key in userInfo){
+                const element = document.querySelector(`#${key}`).parentElement;
+                element.classList.remove('empty', 'invalid');
+            };
+            setUserInfo({...userInfo, ...authContext.userInfo});
         }
     // eslint-disable-next-line
     },[authContext]);
@@ -59,21 +66,26 @@ function Checkout() {
 
         let formIsInvalid = false;
 
-        Object.keys(userInfo).forEach((key)=>{
+        for(const key in userInfo){
             if(userInfo[key] === ''){
                 const element = document.querySelector(`#${key}`);
 
-                if(key === 'secondLine' || elementsToIgnore.includes(key)) return; // Ignores optional fields
+                if(key === 'secondLine' || elementsToIgnore.includes(key)) continue; // Ignores optional fields
                 if(key === 'city') {                // 'city' is a select and doesn't use the updateState function that tracks validity
-                    element.classList.add('empty');
-                    return;
+                    element.parentElement.classList.add('empty');
+                    continue;
                 }
                 formIsInvalid = true;
                 updateState(element);
             }
-        });
+        };
 
         if(formIsInvalid) return;
+        placeOrder();
+    }
+
+    const placeOrder = ()=>{
+
     }
     
     const creditCardFormat = (string)=>{
@@ -93,6 +105,21 @@ function Checkout() {
         <div className='sign_in_reminder' style={{display: authContext.isAuth ? 'none' : 'inline-block'}}>
            <p>Sign in to have your information autofilled and keep track of your orders</p>
         </div>
+
+    const modal = 
+        <Modal click={()=> setIsModalOpen(false)}>
+            <div className='modal_content'>
+                <h1>Thank you for ordering!</h1>
+                <p>Estimated delivery at:</p>
+                <h1>16:49</h1>
+
+                <p>Total: $12.97</p>
+                <p>Payment method: Cash</p>
+                <p>1 x BACONZILLA, 1 x COKE ZERO 330ml, 1 x NIRVANA CHOCOLATE</p>
+
+
+            </div>
+        </Modal>
 
 
     return (
@@ -145,17 +172,19 @@ function Checkout() {
                     onChange={(e) => setUserInfo({...userInfo, secondLine: e.target.value})} />
             </div>
 
-            <div className='input_div' id='city'>
+            <div className='input_div'>
                 <label>CITY:</label>
                 <select 
+                    value={userInfo.city}
+                    id='city'
                     onChange={(e) => setUserInfo({...userInfo, city: e.target.value})}
                     onClick={(e)=> e.target.parentNode.classList.remove('empty') // If form was submited this class was added
                 }>
                         <option value=''> Choose city</option>
-                        <option value='London'>London</option>
-                        <option value='Manchester'>Manchester</option>
-                        <option value='Swansea'>Swansea</option>
-                        <option value='Bristol'>Bristol</option>
+                        <option value='New York'>London</option>
+                        <option value='Brooklyn'>Manchester</option>
+                        <option value='Bronx'>Swansea</option>
+                        <option value='Queens'>Bristol</option>
                 </select>
             </div>
 
@@ -285,6 +314,8 @@ function Checkout() {
                         
                 </div>
             </div>
+
+          
 
         </Container>
     )

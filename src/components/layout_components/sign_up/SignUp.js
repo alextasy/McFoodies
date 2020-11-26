@@ -96,14 +96,16 @@ function SignUp(props) {
                 db.collection('users').doc(userId).set( {
                     ...newInfo
                 })
-                
-                //Changes the global state/context to be auth
 
-                authContext.setIsAuth(true);
-                authContext.setUserInfo(...newInfo);
+
+                //Changes the global state/context to be auth
+               
+                authContext.setUserInfo({...newInfo});
                 authContext.setUserID(userId);
+                authContext.setIsAuth(true);
                    
                 setIsSuccessful(true);
+                setSignUpMessage('Thank you for signing up. Enjoy our delicious food!');
 
                 //Newsletter emails are stored in a different db so non-account users can be subbscribed
                 if(userInfo.newsletter) {
@@ -112,15 +114,7 @@ function SignUp(props) {
                     });
                 }
             })
-            .catch((err)=> {
-                setSignUpMessage(err.message);
-
-                //Firebase gives that error when you spread an object as data but technically it works so replacing the msg is enough
-
-                if(err.message === 'Found non-callable @@iterator') {
-                    setSignUpMessage('Thank you for signing up. Enjoy our delicious food!');
-                }
-            });
+            .catch((err)=> setSignUpMessage(err.message));
     }
 
     const closeOrRedirect = ()=> {

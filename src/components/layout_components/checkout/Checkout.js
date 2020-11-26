@@ -6,11 +6,13 @@ import OrderSummary from '../../regular_components/order_summary/OrderSummary';
 import { CartContext } from '../../../context/CartContext';
 import { AuthContext } from '../../../context/AuthContext';
 import Modal, {closeModal} from '../../regular_components/modal/Modal';
+import {database as db } from '../../../firebase';
 
 function Checkout() {
 
     const authContext = useContext(AuthContext);
     const cartContext = useContext(CartContext);
+    const [time, setTime] = useState([]);
 
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -61,6 +63,8 @@ function Checkout() {
 
     const submitForm = ()=>{
       
+        if(cartContext.total < 7) return;
+
         const elementsToIgnore = orderInfo.paymentOption === 'cash' ? 
         ['cardholderName', 'cardNumber', 'cardExpiration', 'cardCVC'] : [];
 
@@ -85,7 +89,28 @@ function Checkout() {
     }
 
     const placeOrder = ()=>{
+        const currentDate = new Date();
+        const deliveryDate = new Date(currentDate);
 
+        deliveryDate.setMinutes (currentDate.getMinutes() + 35);
+        const arr = deliveryDate.toLocaleTimeString(deliveryDate).split(':'); // returns [Hours, Minutes ,Seconds PM]
+
+        setTime([arr[0], arr[1]]);
+
+        setIsModalOpen(true);
+
+        if(authContext.isAuth){
+            const itemsOrdered = cartContext.cartItems.map((item) => `${item.quantity} x ${item.title}`);
+            const orderTime = `${currentDate.toLocaleTimeString()} - ${currentDate.toLocaleDateString()}`;
+
+            const userOrders = db.collection('orders').doc(authContext.userID);
+            userOrders.get()
+                .then((doc) => {
+
+                    if (doc.data()) userOrders.set({...doc.data(), [orderTime] : [...itemsOrdered]});
+                    else userOrders.set({[orderTime] : [...itemsOrdered]});
+                });
+        }
     }
     
     const creditCardFormat = (string)=>{
@@ -106,17 +131,19 @@ function Checkout() {
            <p>Sign in to have your information autofilled and keep track of your orders</p>
         </div>
 
+    
+
     const modal = 
-        <Modal click={()=> setIsModalOpen(false)}>
+        <Modal click={()=> closeModal(()=> setIsModalOpen(false))}>
             <div className='modal_content'>
                 <h1>Thank you for ordering!</h1>
                 <p>Estimated delivery at:</p>
-                <h1>16:49</h1>
+                <h1>{`${time[0]}:${time[1]}`}</h1>
 
-                <p>Total: $12.97</p>
-                <p>Payment method: Cash</p>
-                <p>1 x BACONZILLA, 1 x COKE ZERO 330ml, 1 x NIRVANA CHOCOLATE</p>
+                <p>Our delivery driver will get in touch with you when they arrive at your address.</p>
+               
 
+                <Button>I UNDERSTAND</Button>
 
             </div>
         </Modal>
@@ -292,9 +319,10 @@ function Checkout() {
 
 
             <Button 
+                class={cartContext.total < 7 ? 'min_price' : ''}
                 style={{margin: '45px 0', width: '500px'}}
                 click={submitForm} 
-            >ORDER NOW</Button>
+            >{cartContext.total < 7 ? 'MINIMAL ORDER PRICE IS $7.00' : 'ORDER NOW'}</Button>
 
             </form>
 
@@ -315,7 +343,7 @@ function Checkout() {
                 </div>
             </div>
 
-          
+          {isModalOpen ? modal : null}
 
         </Container>
     )

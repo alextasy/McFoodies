@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Modal, {closeModal} from '../modal/Modal';
 import Button from '../button/Button';
 import { AuthContext } from '../../../context/AuthContext';
-import {firebaseAuth} from '../../../firebase';
+import {firebaseAuth, database as db} from '../../../firebase';
 import './MyAccount.css';
 
 
@@ -12,11 +12,21 @@ function MyAccount() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [active, setActive] = useState('about_me');
     const context = useContext(AuthContext);
+    const [orders, setOrders] = useState(null);
+
+    useEffect(() => {
+        db.collection('orders').doc(context.userID).get()
+            .then((doc)=>{
+                console.log(doc.data());
+            })
+        
+    }, [])
 
 
     const symbolX = <div id='x' onClick={()=> closeModal(()=>setIsModalOpen(false))}></div>
 
     const aboutMe = active !== 'about_me' ? null :
+
         <div className='about_me_div'>
             <div>
                 <h2>CONTACT DETAILS:</h2>
@@ -55,8 +65,15 @@ function MyAccount() {
             </div>
 
         </div>
+    
+    const myOrders = active !== 'my_orders' ? null :
+
+        <div className='my_orders_div'>
+            {orders ? orders : <div style={{color: '#666666'}}> You don't have any orders yet. </div>}
+        </div>
 
     const discountCodes = active !== 'discount_codes' ? null :
+
         <div style={{color: '#666666'}}>
             You don't have any discount codes currently.
         </div>
@@ -98,7 +115,7 @@ function MyAccount() {
     const myAccountModal = 
         <Modal click={()=> closeModal(()=> setIsModalOpen(false))}>
             {symbolX}
-            {aboutMe || discountCodes}
+            {aboutMe || myOrders || discountCodes}
             {navs}
         </Modal>
 

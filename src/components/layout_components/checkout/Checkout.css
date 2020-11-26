@@ -166,12 +166,16 @@
     margin: auto;
     font-weight: bold;
 }
+.Checkout form .Button.min_price{
+    background-color: #666666;
+}
 
 .Checkout .modal_container{
-    width: 650px;
-    height: 450px;
+    width: 450px;
+    height: 400px;
 }
 .Checkout .modal_container .modal_content{
+    margin-top: 20px;
     width: 600px;
     height: 325px;
     display: flex;
@@ -182,10 +186,14 @@
 .Checkout .modal_content h1{
     color: #d90a0a;
     font-size: 26px;
-    margin-bottom: 10px;
+    margin: 15px 0;
 }
 
 .Checkout .modal_content p{
     width: fit-content;
-    max-width: 90%;
+    max-width: 278px
+}
+
+.Checkout .modal_content .Button{
+    margin-top: 29px;
 }

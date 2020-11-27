@@ -13,14 +13,36 @@ function MyAccount() {
     const [active, setActive] = useState('about_me');
     const context = useContext(AuthContext);
     const [orders, setOrders] = useState(null);
+    
 
     useEffect(() => {
-        db.collection('orders').doc(context.userID).get()
-            .then((doc)=>{
-                console.log(doc.data());
+        let orderArr = [];
+
+        db.collection('orders').where('userId', '==', context.userID).orderBy('timeStamp').get()
+            .then((querySnapshot)=>{
+                querySnapshot.forEach((doc)=>{
+                    const order = doc.data();
+
+                    orderArr.unshift({orderedAt: order.orderedAt, orderedItems: order.orderedItems});
+                });
             })
-        
-    }, [])
+            .then(()=>{
+                orderArr = orderArr.map((order)=>{ 
+
+                    const orderItemsToStrings = order.orderedItems.map((item)=>
+                        `${item.quantity} x ${item.name} `
+                    );
+
+                    return  <div className='order' key={order.orderedAt}>
+                                <div className='order_time'>{order.orderedAt}</div>
+                                <div className='ordered_items'>{orderItemsToStrings}</div>
+                            </div>
+                });
+
+                setOrders([...orderArr]);
+            });
+    // eslint-disable-next-line
+    }, [isModalOpen])
 
 
     const symbolX = <div id='x' onClick={()=> closeModal(()=>setIsModalOpen(false))}></div>
@@ -65,12 +87,18 @@ function MyAccount() {
             </div>
 
         </div>
+
     
     const myOrders = active !== 'my_orders' ? null :
 
-        <div className='my_orders_div'>
-            {orders ? orders : <div style={{color: '#666666'}}> You don't have any orders yet. </div>}
-        </div>
+        orders ?
+
+            <div className='my_orders_div'>
+                {orders}
+            </div>
+        
+        :   <div style={{color: '#666666'}}> You don't have any orders yet. </div>
+
 
     const discountCodes = active !== 'discount_codes' ? null :
 

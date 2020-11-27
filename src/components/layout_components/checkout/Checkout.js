@@ -6,9 +6,10 @@ import OrderSummary from '../../regular_components/order_summary/OrderSummary';
 import { CartContext } from '../../../context/CartContext';
 import { AuthContext } from '../../../context/AuthContext';
 import Modal, {closeModal} from '../../regular_components/modal/Modal';
-import {database as db } from '../../../firebase';
+import {database as db, timeStamp } from '../../../firebase';
+import {withRouter} from 'react-router-dom';
 
-function Checkout() {
+function Checkout(props) {
 
     const authContext = useContext(AuthContext);
     const cartContext = useContext(CartContext);
@@ -37,8 +38,8 @@ function Checkout() {
         if(authContext.isAuth){
             
             for(const key in userInfo){
-                const element = document.querySelector(`#${key}`).parentElement;
-                element.classList.remove('empty', 'invalid');
+                const element = document.querySelector(`#${key}`);
+                if(element) element.parentElement.classList.remove('empty', 'invalid');
             };
             setUserInfo({...userInfo, ...authContext.userInfo});
         }
@@ -100,16 +101,18 @@ function Checkout() {
         setIsModalOpen(true);
 
         if(authContext.isAuth){
-            const itemsOrdered = cartContext.cartItems.map((item) => `${item.quantity} x ${item.title}`);
+            const itemsOrdered = cartContext.cartItems.map((item) =>{
+                return { name: item.title, quantity: item.quantity }
+            });
             const orderTime = `${currentDate.toLocaleTimeString()} - ${currentDate.toLocaleDateString()}`;
 
-            const userOrders = db.collection('orders').doc(authContext.userID);
-            userOrders.get()
-                .then((doc) => {
-
-                    if (doc.data()) userOrders.set({...doc.data(), [orderTime] : [...itemsOrdered]});
-                    else userOrders.set({[orderTime] : [...itemsOrdered]});
-                });
+            db.collection('orders').doc().set({
+                userId: authContext.userID,
+                orderedAt : orderTime,
+                orderedItems : [...itemsOrdered],
+                timeStamp: timeStamp.now()
+            });
+              
         }
     }
     
@@ -131,10 +134,17 @@ function Checkout() {
            <p>Sign in to have your information autofilled and keep track of your orders</p>
         </div>
 
-    
+    const understandHandler = ()=>{
+        closeModal(()=>{
+            cartContext.setCartItems([]);
+            props.history.push('/');
+            setIsModalOpen(false);
+        });
+    }    
 
     const modal = 
-        <Modal click={()=> closeModal(()=> setIsModalOpen(false))}>
+        <Modal click={understandHandler}>
+            
             <div className='modal_content'>
                 <h1>Thank you for ordering!</h1>
                 <p>Estimated delivery at:</p>
@@ -143,8 +153,7 @@ function Checkout() {
                 <p>Our delivery driver will get in touch with you when they arrive at your address.</p>
                
 
-                <Button>I UNDERSTAND</Button>
-
+                <Button click={understandHandler}>I UNDERSTAND</Button>
             </div>
         </Modal>
 
@@ -341,12 +350,13 @@ function Checkout() {
                     <Button click={(e)=> e.target.parentElement.classList.add('invalid')}>SUBMIT</Button>
                         
                 </div>
+                {isModalOpen ? modal : null}
             </div>
 
-          {isModalOpen ? modal : null}
+          
 
         </Container>
     )
 } 
 
-export default Checkout;
+export default withRouter(Checkout);

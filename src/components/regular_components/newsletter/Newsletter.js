@@ -19,8 +19,10 @@ function Newsletter() {
     const emailRegexPattern = /^[a-z,0-9][a-z, 0-9,.,_]+@[a-z,.,_]+\.[a-z]{2,4}$/i;
 
     useEffect(()=>{
-        setEmailThatIsSubbed(authContext.userInfo.email);
-        setHasSubscribed(authContext.userInfo.newsletter);
+        if(authContext.isAuth){
+            setEmailThatIsSubbed(authContext.userInfo.email);
+            setHasSubscribed(authContext.userInfo.newsletter);
+        }
     }, [authContext]);
 
     const buttonStyle ={

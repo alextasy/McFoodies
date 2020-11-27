@@ -1,7 +1,7 @@
 .MyAccount .modal_container{
     width: 900px;
     height: 600px;
-    padding: 25px;
+    padding: 25px 65px;
 }
 
 
@@ -35,6 +35,40 @@
     display: inline-block;
     margin-bottom: 3px;
 }
+
+/* MY ORDERS */
+
+.MyAccount .my_orders_div{
+    width: 100%;
+    overflow-y: auto;
+    margin: 25px 0;
+}
+.MyAccount .my_orders_div::-webkit-scrollbar{
+    width: 5px;
+    height: 20px;
+    background-color: white;
+}
+
+.MyAccount .my_orders_div::-webkit-scrollbar-thumb{
+    background-color: #d85353;
+    border-radius: 30px;
+}
+
+.MyAccount .my_orders_div .order{
+    margin: 20px 0;
+}
+.MyAccount .my_orders_div .order .order_time{
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.MyAccount .my_orders_div .order .ordered_items{
+    color: #666666;
+}
+
+
+
+
+
 
 /* CLOSE MODAL X SYMBOL */
 
@@ -71,6 +105,10 @@
     margin: 0;
     margin-left: 40px;
 }
+.MyAccount .navs #about_me{
+    margin: 0;
+}
+
 .MyAccount .navs span.active{
     color: #d90a0a;
 }
@@ -81,7 +119,6 @@
     height: 43px;
     color: #666666;
     margin-left: auto;
-    margin-right: 40px;
 }
 .MyAccount .navs .Button:hover{
     color: #d90a0a;

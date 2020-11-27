@@ -19,7 +19,6 @@ import 'firebase/auth';
   export const storage = firebase.storage();
   export const database = firebase.firestore();
   export const firebaseAuth = firebase.auth(); 
+  export const timeStamp = firebase.firestore.Timestamp;
 
   export default firebase;
-
- 

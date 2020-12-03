@@ -24,13 +24,19 @@ function Nav(props) {
         <nav className="Nav">
              <section>
 
+                <div id='hamburger_menu_icon'>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
                 <img id='logo' src={logo} alt="Logo" onClick={() => props.history.push('/')}/>
                 
-                <img src={phoneIcon} alt="Phone icon"
+                <img src={phoneIcon} alt="Phone icon" id='phone_icon'
                     onMouseEnter={(e)=>phoneIconOnHover(e.target)}
                     onMouseOut={(e)=> phoneIconOnHover(e.target)}>                     
                 </img>
-                <span 
+                <span id='phone_span'
                     onMouseEnter={(e)=>phoneIconOnHover(e.target.parentNode.children[1])}
                     onMouseOut={(e)=> phoneIconOnHover(e.target.parentNode.children[1])}
                 >0 873 421 891</span>

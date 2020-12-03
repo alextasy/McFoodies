@@ -35,3 +35,80 @@
 .Nav img{
     cursor: pointer;
 }
+
+.Nav #hamburger_menu_icon{
+    display: none;
+}
+
+@media only screen and (max-width: 767px){
+    .Nav{
+        height: 50px;
+    }
+    .Nav section{
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .Nav #hamburger_menu_icon{
+        width: 25px;
+        height: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 20px;
+    }
+
+    .Nav #hamburger_menu_icon div{
+        width: 100%;
+        height: 4px;
+        background-color: #d90a0a;
+    }
+    
+    .Nav section #logo{
+        width: 135px;
+        margin: 0;
+    }
+
+    .Nav .Cart .cart_icon{
+        margin-right: 20px;
+        margin-top: 5px;
+    }
+
+    .Nav .Cart .cart_icon img{
+        height: 28px;
+    }
+
+    .Nav span, 
+    .Nav .Button, 
+    .Nav #phone_icon{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1199px){
+    .Nav section{
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .Nav section #logo{
+        width: 155px;
+        margin-left: 20px;
+    }
+    .Nav section span{
+        margin-right: 20px;
+        font-size: 20px
+    }
+
+    .Nav .Button {
+        margin-right: 20px;
+    }
+
+    .Nav #phone_icon,
+    .Nav #phone_span{
+        display: none;
+    }
+
+
+
+}

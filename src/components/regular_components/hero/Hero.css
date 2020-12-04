@@ -1,6 +1,5 @@
 .Hero{
     width: 100%;
-    height: 500px;
     margin-top: 26px;
     position: relative;  
     background-color: black;
@@ -16,10 +15,12 @@
     top: 0;
     left: 0;
     pointer-events: none;
+    width: 100%;
 }
 
 .Hero section img{
     transform: translateX(-100%);
+    width: 100%;
     
 }
 .Hero section img.transitioning{
@@ -98,9 +99,13 @@
     width: 340px;
     height: 220px;
     background-color: white;
+
     position: absolute;
     right: 60px;
     bottom: 140px;
+    top: 50%;
+    transform: translateY(-50%);
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -140,3 +145,20 @@
         transform: rotateY(0deg);
     }
 }
+
+@media only screen and (max-width: 1199px){
+    .Hero {
+        margin-top: 0px;
+    }
+}
+
+
+@media only screen and (max-width: 767px){
+    .Hero .order_modal, 
+    .Hero button{
+        display: none;
+    }
+
+
+}
+

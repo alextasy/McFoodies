@@ -47,3 +47,30 @@
     align-items: center;
     justify-content: center;
 }
+
+.Newsletter .box .Button{
+    width: 120px;
+    height: 36px;
+    font-size: 17px;
+}
+
+@media only screen and (max-width: 629px){
+    .Newsletter{
+        width: 90%;
+        margin-bottom: 75px;
+    }
+
+    .Newsletter .box .input{
+        min-width: 100%;
+        margin: 0;
+    }
+
+    .Newsletter .box .Button{
+        position: absolute;
+        top: calc(100% + 15px);
+        right: 0;
+        width: 100%;
+    }
+
+    
+}

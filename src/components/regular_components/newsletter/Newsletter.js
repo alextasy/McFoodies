@@ -26,9 +26,6 @@ function Newsletter() {
     }, [authContext]);
 
     const buttonStyle ={
-        width: '120px',
-        height: '36px',
-        fontSize: '17px',
         backgroundColor: hasSubscribed ? '#434343' : null,
         cursor: hasSubscribed ? 'not-allowed' : null
     }

@@ -48,6 +48,10 @@
     .Footer img{
         transform: scale(0.9);
     }
+
+    .Footer .socials #phone_span span{
+        font-size: 20px;
+    }
 }
 
 @media only screen and (max-width: 767px){
@@ -66,9 +70,6 @@
     .Footer .socials #phone_span{
         grid-column: 1 / -1;
         grid-row: 2;
-    }
-    .Footer span{
-        font-size: 22px;
     }
 
 }

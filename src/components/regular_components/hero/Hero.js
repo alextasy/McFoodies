@@ -121,11 +121,6 @@ function Hero(props) {
 
             dragDistance = e.pageX - startX;
 
-            if(dragDistance > 400 || dragDistance < -400) {
-                finishTransition(element, images);
-                return;
-            }
-
             images.forEach((image)=> image.style.transform = `translate(${currentPos + dragDistance}px)`);
         });
 

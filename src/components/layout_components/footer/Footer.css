@@ -35,3 +35,40 @@
 .Footer img{
     cursor: pointer;
 }
+
+@media only screen and (max-width: 1199px){
+    .Footer nav{
+        width: 100%;
+    }
+
+    .Footer span{
+        font-size: 16px;
+    }
+
+    .Footer img{
+        transform: scale(0.9);
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .Footer nav{
+        display: none;
+    }
+    .Footer .socials{
+        width: 100%;
+        max-width: 500px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-items: center;
+        row-gap: 30px;
+    }
+
+    .Footer .socials #phone_span{
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+    .Footer span{
+        font-size: 22px;
+    }
+
+}

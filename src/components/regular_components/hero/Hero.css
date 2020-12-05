@@ -128,21 +128,21 @@
 
 @keyframes flip{
     0%{
-        transform: rotateY(0deg); 
+        transform: rotateY(0deg) translateY(-50%); 
         opacity: 1;
     }
     35%{
         opacity: 0.2;
     }
     50%{
-        transform: rotateY(90deg);  
+        transform: rotateY(90deg) translateY(-50%);  
     }
     65%{
         opacity: 0.2;
     }
     100%{
         opacity: 1;
-        transform: rotateY(0deg);
+        transform: rotateY(0deg) translateY(-50%);
     }
 }
 

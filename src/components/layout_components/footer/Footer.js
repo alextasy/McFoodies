@@ -6,12 +6,12 @@ function Footer() {
 
     const socials = <div className='socials'>
         
-        <span>
+        <span id='phone_span'> 
             <img src={icons[0]} alt={icons_alt[0]}
                  onMouseEnter={(e)=> e.target.src = icons_hover[0]}
                  onMouseOut={(e)=> e.target.src= icons[0]}>
             </img>
-            <span 
+            <span  
                 onMouseEnter={(e)=> e.target.parentNode.firstChild.src = icons_hover[0]}
                 onMouseOut={(e)=> e.target.parentNode.firstChild.src = icons[0]}
             >0 873 421 891</span>

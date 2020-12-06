@@ -255,10 +255,7 @@ function SignUp(props) {
                     <label>I want to sign up to McFoodie's newsletter to receive information about future products, promotions and discounts. </label>
                 </div>
 
-                <Button 
-                    style={{margin: '25px auto 0', width: '500px'}}
-                    click={submitForm}
-                >SIGN UP</Button>
+                <Button click={submitForm}>SIGN UP</Button>
 
             </form>
             {isModalOpen ? signUpModal : null}

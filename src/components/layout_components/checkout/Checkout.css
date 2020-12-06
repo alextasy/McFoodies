@@ -197,3 +197,90 @@
 .Checkout .modal_content .Button{
     margin-top: 29px;
 }
+.Checkout .Button{
+    margin: 45px 0;
+    width: 500px;
+}
+
+@media only screen and (max-width: 1199px){
+    .Checkout{
+        flex-direction: column-reverse; 
+        width: 100%;
+        align-items: center;
+    }
+    .Checkout .sign_in_reminder p{
+        width: 100%;
+        text-align: center;
+        padding: 0 10px;
+    }
+    .Checkout form{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .Checkout .input_div,
+    .Checkout h2,
+    .Checkout .radio,
+    .Checkout .Button{
+        width: 80%;
+        max-width: 500px;
+    }
+    .Checkout #notes_div textarea{
+        width: 100%;
+        max-width: 500px;
+    }
+    .Checkout .coupon{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 767px){
+    .Checkout{
+        margin-top: 85px;
+    }
+    .Checkout .sign_in_reminder{
+        top: 50px;
+    }
+
+    .Checkout .order_details{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .Checkout .itemsInCart{
+        width: 100%;
+        max-width: 500px;
+    }
+    .Checkout .itemsInCart img{
+        width: 65px;
+        height: 65px;
+    }
+    .Checkout .itemsInCart .properties_section{
+        margin-left: 75px;
+    }
+    .Checkout #total{
+        width: calc(100% - 10px);
+        margin-left: 10px;
+        max-width: 500px;
+    }
+
+    .Checkout .coupon{
+        width: 80%;
+        position: relative;
+        justify-content: center;
+        margin-bottom: 50px;
+        margin-top: 0;
+    }
+    .Checkout .coupon input{
+        width: 100%;
+    }
+
+    .Checkout .coupon .Button{
+        position: absolute;
+        top: 50px;
+        margin: 0;
+        width: 100%;
+    }
+}

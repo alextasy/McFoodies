@@ -255,7 +255,7 @@ function Checkout(props) {
                         name = 'payment'
                         checked={orderInfo.paymentOption === 'cash' ? true : false}
                         onChange={()=> setOrderInfo({...orderInfo, paymentOption: 'cash'})} />
-                    <label>Pay with cash when your order arrives</label>
+                    <label>Pay with cash at arrival</label>
                 </div>
                 
                 <div className={orderInfo.paymentOption === 'card' ? 'active' : ''}>
@@ -329,13 +329,12 @@ function Checkout(props) {
 
             <Button 
                 class={cartContext.total < 7 ? 'min_price' : ''}
-                style={{margin: '45px 0', width: '500px'}}
                 click={submitForm} 
             >{cartContext.total < 7 ? 'MINIMAL ORDER PRICE IS $7.00' : 'ORDER NOW'}</Button>
 
             </form>
 
-            <div>
+            <div className='order_details'>
                 <h2>ORDER DETAILS:</h2>
                 <div className='itemsInCart'>
                     <OrderSummary maxHeight='500px'/>

@@ -78,7 +78,8 @@
     align-items: center;  
 }
 
-.hamburger_menu #menu_links section span, .hamburger_menu #menu_links section .MyAccount{
+.hamburger_menu #menu_links section span, 
+.hamburger_menu #menu_links section .MyAccount{
     width: 80%;
     color: #666666;
     font-size: 22px;

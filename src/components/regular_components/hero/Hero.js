@@ -31,7 +31,7 @@ function Hero(props) {
             <span 
                 key={image.alt} 
                 className = {index === 0 ? 'active' : null} // First element is active at start.
-                onPointerDown={(e)=> {
+                onClick={(e)=> {
                     if(counter === index + 1 || isTransitioning) return; //If the same element is clicked returns
                     slide(e.target.parentNode.parentNode, index + 1 - counter);
                 }}>
@@ -143,12 +143,12 @@ function Hero(props) {
 
             <button 
                 className="prevBtn" 
-                onPointerDown={(event)=> isTransitioning ? null : slide(event.target.parentNode, -1)}>
+                onClick={(event)=> isTransitioning ? null : slide(event.target.parentNode, -1)}>
             </button>
 
             <button 
                 className="nextBtn" 
-                onPointerDown={(event)=> isTransitioning ? null : slide(event.target.parentNode, +1)}>
+                onClick={(event)=> isTransitioning ? null : slide(event.target.parentNode, +1)}>
             </button>
 
             <div className="order_modal">

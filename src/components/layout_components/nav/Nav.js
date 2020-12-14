@@ -13,18 +13,36 @@ import Cart from '../../regular_components/cart/Cart';
 function Nav(props) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
     const phoneIconOnHover = (img) => img.src = img.src === phoneIcon ? phoneIcon_hover : phoneIcon;
     const authContext = useContext(AuthContext);
 
     const isSignedIn = authContext.isAuth ?
         <MyAccount/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
 
+    const menuSpan = <span onClick={() => props.history.push('/menu')}>MENU</span>
+
+
+    const hamburgerMenu = 
+        <div className='hamburger_menu'>
+            <div id='overlay'></div>
+
+            <div id='menu_links'>
+                <section>
+                    {isSignedIn}
+                    {menuSpan}
+                </section>
+            </div>
+        </div>
 
     return (
+        <>
+        {isHamburgerOpen ? hamburgerMenu : null}
+
         <nav className="Nav">
              <section>
 
-                <div id='hamburger_menu_icon'>
+                <div id='hamburger_menu_icon' onClick={()=> setIsHamburgerOpen(!isHamburgerOpen)}>
                     <div></div>
                     <div></div>
                     <div></div>
@@ -41,13 +59,13 @@ function Nav(props) {
                     onMouseOut={(e)=> phoneIconOnHover(e.target.parentNode.children[1])}
                 >0 873 421 891</span>
 
-                <span onClick={() => props.history.push('/menu')}>MENU</span>
+                {menuSpan}
 
                 {isSignedIn}
 
                 <Cart/>
 
-                <Button click={() => {
+                <Button class='order_button' click={() => {
                     if(props.location.pathname === '/' 
                     || props.location.pathname === '/signup') props.history.push('/menu');
                     else props.history.push('/checkout');
@@ -56,7 +74,9 @@ function Nav(props) {
 
             </section>
             {isModalOpen ? <SignInModal close={()=> setIsModalOpen(false)}/> : null}
+
         </nav>
+        </>
     )
 }
 

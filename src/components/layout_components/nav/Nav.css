@@ -40,6 +40,55 @@
     display: none;
 }
 
+/* HAMBURGER MENU */
+
+.hamburger_menu{
+    position: fixed;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    z-index: 900;
+}
+
+.hamburger_menu #overlay{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.hamburger_menu #menu_links{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    max-width: 200px;
+    height: 100%;
+    background-color: white;
+    
+}
+
+.hamburger_menu #menu_links section{
+    margin-top: 100px;
+    padding: 30px 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+}
+
+.hamburger_menu #menu_links section span, .hamburger_menu #menu_links section .MyAccount{
+    width: 80%;
+    color: #666666;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 20px 0;
+    border-bottom: 1px solid #dedede;
+    text-align: center;
+}
+
+
 @media only screen and (max-width: 767px){
     .Nav{
         height: 50px;
@@ -79,10 +128,15 @@
     }
 
     .Nav span, 
-    .Nav .Button, 
+    .Nav .order_button, 
     .Nav #phone_icon{
         display: none;
     }
+
+    .hamburger_menu #menu_links section{
+        margin-top: 50px;
+    }
+
 }
 
 @media only screen and (max-width: 1199px){

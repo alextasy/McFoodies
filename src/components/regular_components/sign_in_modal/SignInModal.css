@@ -1,12 +1,13 @@
 .SignInModal .modal_container{
-    height: 380px;
+    height: 360px;
+    width: 90%;
+    max-width: 350px;
 }
 
 .SignInModal #inputs_container{
     display: flex;
     height: 125px;
     width: 100%;
-    margin-top: 20px;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
@@ -16,17 +17,19 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 75%;
 }
 
 .SignInModal .button_div p{
     margin-top: 12px;
     font-size: 14px;
-    width: 100%;
+    width: 130%;
     text-align: center;
 }
-.SignInModal .button_div span{
+.SignInModal .button_div #sign_up{
     color:  #d90a0a;
     cursor: pointer;
+    display: initial;
 }
 
 .SignInModal .error{
@@ -36,8 +39,16 @@
     margin: 10px 0 5px;
 
 }
+.SignInModal .Button{
+    width: 100%;
+    margin: 0;
+    height: 36px;
+    margin-top: 10px;
+}
+
 /* Overiding default input style */
 
 .SignInModal .input_div{
     width: 75%;
 }
+

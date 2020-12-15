@@ -88,15 +88,12 @@ function SignInModal(props) {
                 <div className='error'>{error}</div>
 
                 <div className='button_div'>
-                    <Button 
-                        style={{width: '262.5px', height: '36px', marginTop: '10px' }}
-                        click={()=> {signInHandler()}}
-                        >SIGN IN
-                    </Button>
+                    <Button click={()=> {signInHandler()}}>SIGN IN </Button>
 
-                    <p id='no_account'>Don't have an account yet? <span onClick={()=> {
-                        closeModal(props.close);
-                        props.history.push('/signup');
+                    <p id='no_account'>Don't have an account yet? 
+                        <span id='sign_up' onClick={()=> {
+                            closeModal(props.close);
+                            props.history.push('/signup');
                     }}> Sign up here!</span></p>
 
                 </div>

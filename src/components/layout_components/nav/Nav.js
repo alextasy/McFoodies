@@ -20,24 +20,36 @@ function Nav(props) {
     const isSignedIn = authContext.isAuth ?
         <MyAccount/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
 
-    const menuSpan = <span onClick={() => props.history.push('/menu')}>MENU</span>
+    const menuSpan = <span onClick={() => {
+            props.history.push('/menu');
+            setIsHamburgerOpen(false);
+        }}>MENU</span>
 
 
     const hamburgerMenu = 
-        <div className='hamburger_menu'>
-            <div id='overlay'></div>
+        <div className={`hamburger_menu ${isHamburgerOpen ? 'active' : null}`}>
 
-            <div id='menu_links'>
+            <div 
+                id='overlay' 
+                className={isHamburgerOpen ? 'active' : null}
+                onClick={()=> setIsHamburgerOpen(false)}></div>
+
+            <div id='menu_links' className={isHamburgerOpen ? 'active' : null}>
                 <section>
                     {isSignedIn}
                     {menuSpan}
+                    <Button click={() => {
+                        props.history.push('/checkout');
+                        setIsHamburgerOpen(false);
+                    }}>CHECKOUT</Button>
+                    <span id='hamburger_phone'>0 873 421 891</span>
                 </section>
             </div>
         </div>
 
     return (
         <>
-        {isHamburgerOpen ? hamburgerMenu : null}
+        {hamburgerMenu}
 
         <nav className="Nav">
              <section>
@@ -48,7 +60,10 @@ function Nav(props) {
                     <div></div>
                 </div>
 
-                <img id='logo' src={logo} alt="Logo" onClick={() => props.history.push('/')}/>
+                <img id='logo' src={logo} alt="Logo" onClick={() => {
+                        props.history.push('/');
+                        setIsHamburgerOpen(false);
+                    }}/>
                 
                 <img src={phoneIcon} alt="Phone icon" id='phone_icon'
                     onMouseEnter={(e)=>phoneIconOnHover(e.target)}

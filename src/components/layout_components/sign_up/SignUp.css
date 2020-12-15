@@ -22,6 +22,16 @@
     width: 500px;
 }
 
+.Sign_up .modal_container{
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+}
+
+.Sign_up .modal_container .Button{
+    margin: 0;
+}
+
 @media only screen and (max-width: 1199px){
     .Container.Sign_up{
         width: 100%;

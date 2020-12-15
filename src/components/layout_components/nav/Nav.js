@@ -1,4 +1,4 @@
-import React, { useState, useContext} from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import './Nav.css';
 import logo from '../../../images/icons/logo.png';
 import phoneIcon from '../../../images/icons/phone.png';
@@ -17,13 +17,14 @@ function Nav(props) {
     const phoneIconOnHover = (img) => img.src = img.src === phoneIcon ? phoneIcon_hover : phoneIcon;
     const authContext = useContext(AuthContext);
 
+    useEffect(() => {
+        setIsHamburgerOpen(false); // Closes menu when going to a new page.
+    }, [props]);
+
     const isSignedIn = authContext.isAuth ?
         <MyAccount/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
 
-    const menuSpan = <span onClick={() => {
-            props.history.push('/menu');
-            setIsHamburgerOpen(false);
-        }}>MENU</span>
+    const menuSpan = <span onClick={() => {props.history.push('/menu');}}>MENU</span>
 
 
     const hamburgerMenu = 
@@ -38,10 +39,7 @@ function Nav(props) {
                 <section>
                     {isSignedIn}
                     {menuSpan}
-                    <Button click={() => {
-                        props.history.push('/checkout');
-                        setIsHamburgerOpen(false);
-                    }}>CHECKOUT</Button>
+                    <Button click={() => props.history.push('/checkout')}>CHECKOUT</Button>
                     <span id='hamburger_phone'>0 873 421 891</span>
                 </section>
             </div>

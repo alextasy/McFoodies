@@ -148,7 +148,7 @@ function Checkout(props) {
             <div className='modal_content'>
                 <h1>Thank you for ordering!</h1>
                 <p>Estimated delivery at:</p>
-                <h1>{`${time[0]}:${time[1]}`}</h1>
+                <h1 id='time'>{`${time[0]}:${time[1]}`}</h1>
 
                 <p>Our delivery driver will get in touch with you when they arrive at your address.</p>
                

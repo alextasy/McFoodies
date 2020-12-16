@@ -68,8 +68,8 @@ function Nav(props) {
                     onMouseOut={(e)=> phoneIconOnHover(e.target)}>                     
                 </img>
                 <span id='phone_span'
-                    onMouseEnter={(e)=>phoneIconOnHover(e.target.parentNode.children[1])}
-                    onMouseOut={(e)=> phoneIconOnHover(e.target.parentNode.children[1])}
+                    onMouseEnter={(e)=>phoneIconOnHover(e.target.parentNode.children[2])}
+                    onMouseOut={(e)=> phoneIconOnHover(e.target.parentNode.children[2])}
                 >0 873 421 891</span>
 
                 {menuSpan}

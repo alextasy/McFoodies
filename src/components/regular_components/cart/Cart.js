@@ -102,9 +102,8 @@ function Cart(props) {
                 <div id='number_of_items'>{numberOfItemsInCart}</div>
                 <img src={cartIcon} alt='Cart icon' height='33'></img>
 
+                {isCartPopUpOpen ? cartPopUp : null} 
             </div>
-
-            {isCartPopUpOpen ? cartPopUp : null} 
 
         </div>
         

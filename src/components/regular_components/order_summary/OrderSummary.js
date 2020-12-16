@@ -28,7 +28,7 @@ function OrderSummary(props) {
                     </select>
                 </span>     
 
-                <span>Price: ${item.price}</span>
+                <span id='price_span'>Price: ${item.price}</span>
             </div>
 
             <div className ='total_section'>

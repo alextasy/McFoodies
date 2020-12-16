@@ -31,8 +31,8 @@
 
 .Cart .cart_pop_up{
     width: 385px;
-    right: 0px;
-    top: 80px;
+    right: -190px;
+    top: 50px;
     position: absolute;
     background-color: white;
     border: 1px solid #dedede;
@@ -90,4 +90,54 @@
 
 .Cart .cart_pop_up .Button{
     margin: 25px;
+}
+
+@media only screen and (max-width: 767px){
+    .Cart .cart_pop_up{ 
+        right: -15px;
+        width: calc(100vw - 10px);
+        max-width: 385px;
+    }
+    .Cart .cart_pop_up::before{
+        left: auto;
+        right: 17px;
+    } 
+    .Cart .cart_pop_up::after{
+        left: auto;
+        right: 18px;
+    }
+    .Cart .cart_pop_up span{
+        display: initial; 
+    }
+
+    .Cart .cart_pop_up span#price_span{
+        margin: 0;
+    }
+
+    .Cart .cart_pop_up .Order_summary .item .properties_section{
+        margin-left: 75px;
+    }
+
+    .Nav .Cart .cart_pop_up img{
+        height: 65px;
+    }
+
+    .Nav .Cart .cart_pop_up .Button{
+        margin: 25px 15px 25px 0;
+        width: 135px;
+    }
+
+    .Nav .Cart .cart_pop_up .items_container{
+        padding: 0 5px;
+    }
+
+}
+
+@media only screen and (max-width: 344px){
+    .Cart .cart_pop_up .Order_summary .item h1{
+        font-size: 16px;
+    }
+    .Cart .cart_pop_up span#quantity{
+        margin-right: 35px;
+    }
 }

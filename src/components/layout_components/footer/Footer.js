@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Footer.css';
 import {icons, icons_hover, icons_alt} from './icons';
 
@@ -26,6 +26,11 @@ function Footer() {
          })}
     </div>
 
+    const [hasScrolledEnough, setHasScrolledEnough] = useState(false);
+
+    window.onscroll = ()=> setHasScrolledEnough(document.body.scrollTop > 155 
+                                             || document.documentElement.scrollTop > 155);
+
     return (
         <footer className='Footer'>
 
@@ -38,6 +43,17 @@ function Footer() {
                 <span>DATA PROTECTION POLICY</span>
             </nav>
             {socials}
+
+            <div 
+                id='mobile_scroll_up'
+                className={hasScrolledEnough ? 'active' : ''}
+                onClick={() => {
+                    document.body.scrollTop = 0; // for Safari
+                    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            }}>
+                <div></div>
+                <div></div>
+            </div>
             
         </footer>
     )

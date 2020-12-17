@@ -36,6 +36,11 @@
     cursor: pointer;
 }
 
+.Footer #mobile_scroll_up,
+.Footer #mobile_scroll_up.active{
+    display: none;
+}
+
 @media only screen and (max-width: 1199px){
     .Footer nav{
         width: 100%;
@@ -70,6 +75,45 @@
     .Footer .socials #phone_span{
         grid-column: 1 / -1;
         grid-row: 2;
+    }
+
+    .Footer #mobile_scroll_up.active{
+        display: block;
+        background-color: #d90a0a;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        animation: fadeIn 300ms ease-in;
+    }
+    .Footer #mobile_scroll_up.active div:first-child{
+        width: 8px;
+        height: 20px;
+        background-color: white;
+        position: absolute;
+        left: 12px;
+        top: 9px;
+
+        transform: rotate(45deg);
+    }
+
+    .Footer #mobile_scroll_up.active div:last-child{
+        width: 8px;
+        height: 20px;
+        background-color: white;
+        position: absolute;
+        left: 21px;
+        top: 9px;
+
+        transform: rotate(-45deg);
+    }
+
+
+    @keyframes fadeIn {
+        0%{ opacity: 0;}
+        100%{ opacity: 1;}
     }
 
 }

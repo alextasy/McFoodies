@@ -28,6 +28,9 @@
 }
 
 /* CART POPUP STYLES */
+.Cart .Order_summary{
+    max-height: 400px;
+}
 
 .Cart .cart_pop_up{
     width: 385px;
@@ -93,6 +96,9 @@
 }
 
 @media only screen and (max-width: 767px){
+    .Cart .Order_summary{
+        max-height: 200px;
+    }
     .Cart .cart_pop_up{ 
         right: -15px;
         width: calc(100vw - 10px);

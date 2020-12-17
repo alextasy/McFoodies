@@ -24,6 +24,8 @@ function Cart(props) {
     const fadeOutAnimation = 'fade-in 400ms forwards ease-in alternate-reverse';
     const startClosingAfterTimeoutRef = useRef();  //We use refs since rerenders don't delete timers but reset varibles that hold those timers
     const closeTimeoutRef = useRef();
+    
+    const isMobile = window.matchMedia('(max-width: 1199px)').matches; 
 
     let mouseIsOver = useRef(false);
 
@@ -78,7 +80,7 @@ function Cart(props) {
             ref={cartPopUpRef}>
 
             <div className='items_container'>
-                <OrderSummary maxHeight='400px'/>
+                <OrderSummary/>
             </div>
 
             <div className='checkout_section'>
@@ -96,8 +98,9 @@ function Cart(props) {
 
             <div 
                 className= 'cart_icon'
-                onMouseEnter={()=> showCartPopUp()}
-                onMouseLeave={()=> hideCartPopUp()}>
+                onMouseEnter={()=> isMobile ? null : showCartPopUp()}
+                onMouseLeave={()=> isMobile ? null : hideCartPopUp()}
+                onClick={()=> {if(isCartPopUpOpen) hideCartPopUp(); else showCartPopUp()}}>
                     
                 <div id='number_of_items'>{numberOfItemsInCart}</div>
                 <img src={cartIcon} alt='Cart icon' height='33'></img>

@@ -234,6 +234,10 @@
     .Checkout .coupon{
         width: 100%;
     }
+
+    .Checkout .card_payment .input_div{
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 767px){
@@ -316,5 +320,28 @@
         margin: 0;
         margin-top: 20px;
         width: 250px;
+    }
+
+    /* PAYMENT WITH CARD */
+
+    .Checkout .card_payment{
+        width: 100%;
+        align-items: center;
+    }
+    .Checkout .card_payment #date_and_cvc {
+        width: 80%;
+    }
+
+    .Checkout .card_payment #date_and_cvc .input_div{
+        width: 70%;
+    }
+    .Checkout .card_payment #date_and_cvc .input_div #cardExpiration{
+        width: 100%;
+    }
+    .Checkout .card_payment #date_and_cvc .input_div.cvc{
+        width: 50px;
+    }
+    .Checkout .card_payment #date_and_cvc .input_div.cvc input{
+        width: 50px;
     }
 }

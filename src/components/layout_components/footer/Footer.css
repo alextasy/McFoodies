@@ -86,6 +86,8 @@
         position: fixed;
         bottom: 20px;
         right: 20px;
+        box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.3);
+
         animation: fadeIn 300ms ease-in;
     }
     .Footer #mobile_scroll_up.active div:first-child{

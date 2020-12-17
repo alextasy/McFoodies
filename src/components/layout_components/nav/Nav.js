@@ -39,7 +39,14 @@ function Nav(props) {
                 <section>
                     {isSignedIn}
                     {menuSpan}
-                    <Button click={() => props.history.push('/checkout')}>CHECKOUT</Button>
+                    <Button click={() => 
+                        {
+                            if(props.location.pathname === '/' 
+                            || props.location.pathname === '/signup') props.history.push('/menu');
+                            else props.history.push('/checkout');
+                        }}>{props.location.pathname === '/' || props.location.pathname === '/signup' ? 'ORDER NOW' : 'CHECKOUT'}
+                    </Button>
+
                     <span id='hamburger_phone'>0 873 421 891</span>
                 </section>
             </div>

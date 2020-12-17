@@ -98,9 +98,14 @@ function Cart(props) {
 
             <div 
                 className= 'cart_icon'
-                onMouseEnter={()=> isMobile ? null : showCartPopUp()}
-                onMouseLeave={()=> isMobile ? null : hideCartPopUp()}
-                onClick={()=> {if(isCartPopUpOpen) hideCartPopUp(); else showCartPopUp()}}>
+                onMouseEnter={()=> isMobile ? null : showCartPopUp()} // Prevents auto closing on mobile
+                onMouseLeave={()=> hideCartPopUp()}
+                onClick={(e)=> {
+                    if(isCartPopUpOpen && e.target === document.querySelector('.cart_icon')){ 
+                        hideCartPopUp();
+                    }
+                    else showCartPopUp()
+                }}>
                     
                 <div id='number_of_items'>{numberOfItemsInCart}</div>
                 <img src={cartIcon} alt='Cart icon' height='33'></img>

@@ -7,7 +7,7 @@ import './MyAccount.css';
 
 
 
-function MyAccount() {
+function MyAccount({isHamburgerOpen}) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [active, setActive] = useState('about_me');
@@ -42,15 +42,23 @@ function MyAccount() {
                 setOrders([...orderArr]);
             });
     // eslint-disable-next-line
-    }, [isModalOpen])
+    }, [isModalOpen]);
+
+    // If hamburger menu closes it closes the MyAccount modal
+    useEffect(() => {
+        if(!isHamburgerOpen) setIsModalOpen(false);
+    }, [isHamburgerOpen]);
 
 
-    const symbolX = <div id='x' onClick={()=> closeModal(()=>setIsModalOpen(false))}></div>
+    const symbolX = <div id='x' onClick={()=> {
+        closeModal(()=>setIsModalOpen(false));
+        if(isHamburgerOpen) setIsModalOpen(false);
+    }}></div>
 
     const aboutMe = active !== 'about_me' ? null :
 
         <div className='about_me_div'>
-            <div>
+            <div className='about_container'>
                 <h2>CONTACT DETAILS:</h2>
                 <div className='info'>
                     <label>EMAIL:</label> 
@@ -66,7 +74,7 @@ function MyAccount() {
                 </div>
             </div>
 
-            <div>
+            <div className='about_container'>
                 <h2>ADDRESS DETAILS:</h2>
                 <div className='info'>
                     <label>FIRST LINE OF ADDRESS:</label> 
@@ -102,7 +110,7 @@ function MyAccount() {
 
     const discountCodes = active !== 'discount_codes' ? null :
 
-        <div style={{color: '#666666'}}>
+        <div style={{color: '#666666'}} id='discount'>
             You don't have any discount codes currently.
         </div>
 
@@ -116,6 +124,15 @@ function MyAccount() {
             context.setUserInfo(null);
             context.setUserID(null);
         });
+        //If it's mobile the user is logged out after the animation
+
+        if(isHamburgerOpen) {
+            setIsModalOpen(false);
+            setTimeout(()=> {
+                context.setIsAuth(false);
+                context.setUserInfo(null);
+                context.setUserID(null);}, 500);
+        }
         
     }
 
@@ -135,7 +152,7 @@ function MyAccount() {
                 id='discount_codes'
                 className ={active === 'discount_codes' ? 'active' :null}
                 onClick={(e)=> setActive(e.target.id)}
-                >DISCOUNT CODES</span>
+                >DISCOUNTS</span>
 
             <Button click={signOut} >SIGN OUT</Button>
         </div>
@@ -147,11 +164,19 @@ function MyAccount() {
             {navs}
         </Modal>
 
+    const mobileMyAccount = 
+        <div className={`mobile_myAccount ${isModalOpen && isHamburgerOpen ? 'active' : ''}`}>
+            {symbolX}
+            {aboutMe || myOrders || discountCodes}
+            {navs}
+            <Button click={signOut} >SIGN OUT</Button>
+        </div>
 
     return (
         <div className='MyAccount'>
            <span onClick={()=> setIsModalOpen(true)}>MY ACCOUNT</span> 
             {isModalOpen ? myAccountModal : null}
+            {mobileMyAccount}
         </div>
     )
 }

@@ -26,6 +26,8 @@
     margin: 25px 0;
     font-size: 16px;
     color: #666666;
+    font-weight: normal;
+    text-align: left;
 }
 .MyAccount .about_me_div .info label{
     font-weight: bold;
@@ -56,13 +58,18 @@
 
 .MyAccount .my_orders_div .order{
     margin: 20px 0;
+    text-align: left;
 }
 .MyAccount .my_orders_div .order .order_time{
     margin-bottom: 10px;
     font-weight: bold;
+    color: black;
+    font-size: 16px;
 }
 .MyAccount .my_orders_div .order .ordered_items{
     color: #666666;
+    font-weight: normal;
+    font-size: 16px;
 }
 
 
@@ -113,15 +120,158 @@
     color: #d90a0a;
 }
 
-.MyAccount .navs .Button{
+.MyAccount .Button{
     background-color: white;
     border: 2px solid #666666;
     height: 43px;
     color: #666666;
     margin-left: auto;
 }
-.MyAccount .navs .Button:hover{
+.MyAccount .Button:hover{
     color: #d90a0a;
     border: 2px solid #d90a0a;
 
+}
+.MyAccount .mobile_myAccount{
+    display: none;
+}
+
+@media only screen and (max-width: 1199px){
+    .MyAccount .modal_container{
+        max-width: 900px;
+        width: 90%;
+        height: 550px;
+        padding: 25px 50px;
+    }
+    .MyAccount .about_me_div{
+        all: revert;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    
+    .MyAccount .Button{
+        margin-right: 0;
+    }
+}
+
+
+@media only screen and (max-width: 767px){
+    .MyAccount .Modal{
+        display: none;
+     }
+
+    .MyAccount .mobile_myAccount{
+        width: 100vw;
+        height: 100%;
+
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        display: flex;
+        flex-direction: column;
+        z-index: 500;
+        background-color: white;
+        transform: translate(-100%);
+        transition: transform 500ms ease-in;
+    }
+
+    .MyAccount .mobile_myAccount.active{
+        transform: translate(0);
+    }
+
+    /* MY ORDERS */
+
+    .MyAccount .my_orders_div{
+        margin: 0;
+        padding: 0 25px;
+    }
+
+    /* NAVS */
+    
+     .MyAccount .navs{
+        border-top: 1px solid #dedede;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .hamburger_menu #menu_links section .MyAccount .navs span{
+        font-size: 15px;
+        margin: 0;
+        border: none;
+        width: fit-content;
+    }
+    .hamburger_menu #menu_links section .MyAccount .navs span#about_me{
+        margin-left: 7.5%;
+    }
+    .hamburger_menu #menu_links section .MyAccount .navs span#discount_codes{
+        margin-right: 7.5%;
+    }
+
+    .hamburger_menu #menu_links section .MyAccount .navs .Button{
+        display: none;
+    }
+
+    .hamburger_menu #menu_links section .MyAccount .mobile_myAccount .Button{
+        margin: 0 auto 20px;
+        width: 85%;
+        height: 42px;
+        min-height: 42px;
+    }
+
+    /* ABOUT ME */
+
+    .MyAccount .about_me_div{
+        all: initial;
+        margin: 0;
+        width: 100%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 20px;
+        overflow-y: auto;
+    }
+
+    .MyAccount .about_me_div .info{
+        width: 100%;
+    }
+
+    .MyAccount .about_me_div h2{
+        font-size: 24px;
+        width: fit-content;
+    }
+
+    .MyAccount #x{
+        right: 25px;
+        top: 25px;
+    }
+
+    .MyAccount #discount{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100% - 120px);
+        font-weight: normal;
+    }
+
+    
+}
+
+@media only screen and (max-width: 767px) and (min-width: 550px){
+    .MyAccount .about_me_div{
+        all: initial;
+        overflow: auto;
+        padding-top: 25px;
+        display: flex;
+        justify-content: space-evenly;
+        
+    }
+    .MyAccount .about_me_div .about_container{
+        height: fit-content;
+        width: 220px;
+    }
+    .MyAccount .navs{
+        margin-top: auto;
+    }
 }

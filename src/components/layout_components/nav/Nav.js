@@ -22,7 +22,7 @@ function Nav(props) {
     }, [props]);
 
     const isSignedIn = authContext.isAuth ?
-        <MyAccount/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
+        <MyAccount isHamburgerOpen={isHamburgerOpen}/> : <span onClick={()=> setIsModalOpen(true)}>SIGN IN</span>
 
     const menuSpan = <span onClick={() => {props.history.push('/menu');}}>MENU</span>
 
@@ -47,7 +47,6 @@ function Nav(props) {
                         }}>{props.location.pathname === '/' || props.location.pathname === '/signup' ? 'ORDER NOW' : 'CHECKOUT'}
                     </Button>
 
-                    <span id='hamburger_phone'>0 873 421 891</span>
                 </section>
             </div>
         </div>

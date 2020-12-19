@@ -44,9 +44,9 @@
 
 .hamburger_menu{
     position: fixed;
-    overflow: hidden;
+    top: 50px;
     width: 100vw;
-    height: 100vh;
+    height: calc(100% - 50px);
     z-index: 900;
     pointer-events: none;
 }
@@ -112,6 +112,32 @@
 } 
 
 
+@media only screen and (max-width: 1199px){
+    .Nav section{
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .Nav section #logo{
+        width: 155px;
+        margin-left: 20px;
+    }
+    .Nav section span{
+        margin-right: 20px;
+        font-size: 20px
+    }
+
+    .Nav .Button {
+        margin-right: 20px;
+    }
+
+    .Nav #phone_icon,
+    .Nav #phone_span{
+        display: none;
+    }
+
+}
+
 
 
 @media only screen and (max-width: 767px){
@@ -141,6 +167,9 @@
     .Nav section #logo{
         width: 135px;
         margin: 0;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .Nav .Cart .cart_icon{
@@ -159,35 +188,7 @@
     }
 
     .hamburger_menu #menu_links section{
-        margin-top: 50px;
+        margin-top: 0px;
     }
-
-}
-
-@media only screen and (max-width: 1199px){
-    .Nav section{
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .Nav section #logo{
-        width: 155px;
-        margin-left: 20px;
-    }
-    .Nav section span{
-        margin-right: 20px;
-        font-size: 20px
-    }
-
-    .Nav .Button {
-        margin-right: 20px;
-    }
-
-    .Nav #phone_icon,
-    .Nav #phone_span{
-        display: none;
-    }
-
-
 
 }

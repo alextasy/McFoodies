@@ -72,5 +72,10 @@
         width: 100%;
     }
 
+    .Newsletter .modal_container{
+        width: 90%;
+        max-width: 350px;
+    }
+
     
 }

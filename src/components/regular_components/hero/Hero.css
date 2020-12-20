@@ -27,6 +27,11 @@
     animation: fade 600ms ease-in-out;
 }
 
+.Hero section img.move_dropped{
+    transition: transform 200ms ease-in-out;
+}
+
+
 @keyframes fade{
     0%{
         opacity: 1;

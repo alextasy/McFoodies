@@ -59,6 +59,7 @@ function Hero(props) {
         else indicators[counter-1].className = 'active'; 
 
         images.forEach((element)=> {
+            element.classList.remove('move_dropped'); // Prevents unwated transition properties from sliding
 
             element.classList.toggle('transitioning');
             element.style.transform = `translateX(-${100*counter}%)`;
@@ -122,21 +123,22 @@ function Hero(props) {
 
         const finishTransition = ()=>{
             if(isTransitioning) return;
+            isDown = false;
+            isMoving = false;
+
+            if(dragDistance === 0) return; // Prevents moving in the else block on mouseleave
             
             if(Math.abs(dragDistance) > 25) slide(element, dragDistance < 0 ? 1 : -1); //imagesToJump will be +/- 1 depending if we drag right or left
             //Resets the offset on small distances and adds a smooth transition
             else {
                 images.forEach((image)=> {
-                    image.style.transition = 'transform 200ms ease-in-out'
+                    image.classList.add('move_dropped')
                     image.style.transform = `translate(${currentPos}px)`
                 });
 
-                setTimeout(()=> images.forEach((image)=> image.style.transition = ''), 200);
+                setTimeout(()=> images.forEach((image)=> image.classList.remove('move_dropped')), 200);
             } 
-
             dragDistance = 0;
-            isDown = false;
-            isMoving = false;
         };
         
 

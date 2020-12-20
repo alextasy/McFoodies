@@ -99,39 +99,66 @@ function Hero(props) {
     
     const onLoad = (element)=>{
 
-        let isDown = false;
+        let isDown = false, isMoving = false;
         let startX, currentPos, dragDistance;
         const images = [...element.firstChild.children];
 
-        element.addEventListener('touchstart', (e)=> e.preventDefault()); // optimizes for mobile
-
-        element.addEventListener('pointerdown', (e)=> {
-            e.preventDefault();
+        const start = (e)=>{
             if(isTransitioning) return;
 
             currentPos = - element.clientWidth * counter;
             isDown = true;
-            startX = e.pageX;
-        });
-        element.addEventListener('pointerup', ()=> {finishTransition(element, images)});
-        element.addEventListener('pointerleave', ()=> finishTransition(element, images));
+            startX = e.pageX || e.targetTouches[0].pageX;
+        }
 
-        element.addEventListener('pointermove', (e)=> {
+        const move = (e)=>{
             if(!isDown || isTransitioning) return;
+            isMoving = true;
 
-            dragDistance = e.pageX - startX;
+            dragDistance = (e.pageX || e.targetTouches[0].pageX) - startX;
 
             images.forEach((image)=> image.style.transform = `translate(${currentPos + dragDistance}px)`);
-        });
+        }
 
-        const finishTransition = (element)=>{
+        const finishTransition = ()=>{
             if(isTransitioning) return;
             
-            isDown = false;
-            if(dragDistance) slide(element, dragDistance < 0 ? 1 : -1); //imagesToJump will be +/- 1 depending if we drag right or left
+            if(Math.abs(dragDistance) > 25) slide(element, dragDistance < 0 ? 1 : -1); //imagesToJump will be +/- 1 depending if we drag right or left
+            //Resets the offset on small distances and adds a smooth transition
+            else {
+                images.forEach((image)=> {
+                    image.style.transition = 'transform 200ms ease-in-out'
+                    image.style.transform = `translate(${currentPos}px)`
+                });
+
+                setTimeout(()=> images.forEach((image)=> image.style.transition = ''), 200);
+            } 
+
             dragDistance = 0;
+            isDown = false;
+            isMoving = false;
         };
-    
+        
+
+        //PC VERSION
+
+        element.addEventListener('mousedown', (e)=> {
+            e.preventDefault();
+            start(e);
+        });
+        element.addEventListener('mouseup', ()=> finishTransition());
+        element.addEventListener('mouseleave', ()=> finishTransition());
+        element.addEventListener('mousemove', (e)=> move(e));
+
+        //MOBILE VERSION
+
+        element.addEventListener('touchstart', (e)=> start(e));
+        element.addEventListener('touchend', ()=> finishTransition());
+        element.addEventListener('touchmove', (e)=> {
+            let hasDraggedEnough = Math.abs(e.targetTouches[0].pageX - startX) > 12;
+
+            if(hasDraggedEnough || isMoving) move(e); //Creates deadzone but if the move has been started removes the deadzone
+        });
     }
     
 

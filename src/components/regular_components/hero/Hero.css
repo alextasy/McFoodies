@@ -21,7 +21,6 @@
 .Hero section img{
     transform: translateX(-100%);
     width: 100%;
-    
 }
 .Hero section img.transitioning{
     transition: transform 600ms ease-in-out;
@@ -33,10 +32,10 @@
         opacity: 1;
     }
     35%{
-        opacity: 0.2;
+        opacity: 0.4;
     }
     65%{
-        opacity: 0.2;
+        opacity: 0.4;
     }
     100%{
         opacity: 1;

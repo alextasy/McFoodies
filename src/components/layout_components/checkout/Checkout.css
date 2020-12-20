@@ -325,11 +325,12 @@
     /* PAYMENT WITH CARD */
 
     .Checkout .card_payment{
-        width: 100%;
+        width: 80%;
+        max-width: 500px;
         align-items: center;
     }
     .Checkout .card_payment #date_and_cvc {
-        width: 80%;
+        width: 100%;
     }
 
     .Checkout .card_payment #date_and_cvc .input_div{

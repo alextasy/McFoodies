@@ -51,8 +51,11 @@ function MyAccount({isHamburgerOpen}) {
 
 
     const symbolX = <div id='x' onClick={()=> {
+        if(isHamburgerOpen) {
+            setIsModalOpen(false);
+            return;
+        }
         closeModal(()=>setIsModalOpen(false));
-        if(isHamburgerOpen) setIsModalOpen(false);
     }}></div>
 
     const aboutMe = active !== 'about_me' ? null :
@@ -175,7 +178,7 @@ function MyAccount({isHamburgerOpen}) {
     return (
         <div className='MyAccount'>
            <span onClick={()=> setIsModalOpen(true)}>MY ACCOUNT</span>
-            {isModalOpen ? myAccountModal : null}
+            {isModalOpen && !isHamburgerOpen ? myAccountModal : null}
             {mobileMyAccount}
         </div>
     )

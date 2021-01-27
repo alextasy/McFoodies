@@ -120,6 +120,15 @@ function MyAccount({isHamburgerOpen}) {
     const signOut = ()=>{
         firebaseAuth.signOut()
 
+        //If it's mobile the user is logged out after the animation
+        if(isHamburgerOpen) {
+            setIsModalOpen(false);
+            setTimeout(()=> {
+                context.setIsAuth(false);
+                context.setUserInfo(null);
+                context.setUserID(null);}, 500);
+            return;
+        }
         //When isAuth = false, the component gets unmouted
         //the closeModal function play the param funcion after the modal close animation has ended
         closeModal(()=> {
@@ -127,16 +136,6 @@ function MyAccount({isHamburgerOpen}) {
             context.setUserInfo(null);
             context.setUserID(null);
         });
-        //If it's mobile the user is logged out after the animation
-
-        if(isHamburgerOpen) {
-            setIsModalOpen(false);
-            setTimeout(()=> {
-                context.setIsAuth(false);
-                context.setUserInfo(null);
-                context.setUserID(null);}, 500);
-        }
-
     }
 
     const navs =

@@ -130,8 +130,16 @@
 .MyAccount .Button:hover{
     color: #d90a0a;
     border: 2px solid #d90a0a;
-
 }
+.MyAccount .no_orders{
+    color: #666666;
+    font-size: 16px;
+    font-weight: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .MyAccount .mobile_myAccount{
     display: none;
 }
@@ -184,12 +192,12 @@
 
     .MyAccount .mobile_myAccount.active #discount{
         padding: 25px;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     /* MY ORDERS */
 
-    .MyAccount .my_orders_div{
+    .MyAccount .my_orders_div, .MyAccount .no_orders{
         margin: 0;
         padding: 0 25px;
         min-height: calc(100vh - 171px);

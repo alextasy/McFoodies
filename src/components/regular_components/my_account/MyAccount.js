@@ -13,7 +13,7 @@ function MyAccount({isHamburgerOpen}) {
     const [active, setActive] = useState('about_me');
     const context = useContext(AuthContext);
     const [orders, setOrders] = useState(null);
-    
+
 
     useEffect(() => {
         let orderArr = [];
@@ -27,7 +27,7 @@ function MyAccount({isHamburgerOpen}) {
                 });
             })
             .then(()=>{
-                orderArr = orderArr.map((order)=>{ 
+                orderArr = orderArr.map((order)=>{
 
                     const orderItemsToStrings = order.orderedItems.map((item)=>
                         `${item.quantity} x ${item.name} `
@@ -61,12 +61,12 @@ function MyAccount({isHamburgerOpen}) {
             <div className='about_container'>
                 <h2>CONTACT DETAILS:</h2>
                 <div className='info'>
-                    <label>EMAIL:</label> 
-                    <div>{context.userInfo.email}</div> 
+                    <label>EMAIL:</label>
+                    <div>{context.userInfo.email}</div>
                 </div>
                 <div className='info'>
-                    <label>FULL NAME: </label> 
-                    <div>{context.userInfo.name}</div> 
+                    <label>FULL NAME: </label>
+                    <div>{context.userInfo.name}</div>
                 </div>
                 <div className='info'>
                     <label>PHONE NUMBER: </label>
@@ -77,12 +77,12 @@ function MyAccount({isHamburgerOpen}) {
             <div className='about_container'>
                 <h2>ADDRESS DETAILS:</h2>
                 <div className='info'>
-                    <label>FIRST LINE OF ADDRESS:</label> 
-                    <div>{context.userInfo.firstLine}</div> 
+                    <label>FIRST LINE OF ADDRESS:</label>
+                    <div>{context.userInfo.firstLine}</div>
                 </div>
                 <div className='info'>
-                    <label>SECOND LINE OF ADDRESS: </label> 
-                    <div>{context.userInfo.secondLine}</div> 
+                    <label>SECOND LINE OF ADDRESS: </label>
+                    <div>{context.userInfo.secondLine}</div>
                 </div>
                 <div className='info'>
                     <label>CITY: </label>
@@ -96,16 +96,16 @@ function MyAccount({isHamburgerOpen}) {
 
         </div>
 
-    
+
     const myOrders = active !== 'my_orders' ? null :
 
-        orders ?
+        orders[0] ?
 
             <div className='my_orders_div'>
                 {orders}
             </div>
-        
-        :   <div style={{color: '#666666'}}> You don't have any orders yet. </div>
+
+        :   <div className='no_orders'> You don't have any orders yet. </div>
 
 
     const discountCodes = active !== 'discount_codes' ? null :
@@ -133,22 +133,22 @@ function MyAccount({isHamburgerOpen}) {
                 context.setUserInfo(null);
                 context.setUserID(null);}, 500);
         }
-        
+
     }
 
-    const navs = 
+    const navs =
         <div className='navs'>
-            <span 
-                id='about_me' 
+            <span
+                id='about_me'
                 className ={active === 'about_me' ? 'active' :null}
                 onClick={(e)=> setActive(e.target.id)}
                 >ABOUT ME</span>
-            <span 
+            <span
                 id='my_orders'
                 className ={active === 'my_orders' ? 'active' :null}
                 onClick={(e)=> setActive(e.target.id)}
                 >MY ORDERS</span>
-            <span 
+            <span
                 id='discount_codes'
                 className ={active === 'discount_codes' ? 'active' :null}
                 onClick={(e)=> setActive(e.target.id)}
@@ -156,15 +156,15 @@ function MyAccount({isHamburgerOpen}) {
 
             <Button click={signOut} >SIGN OUT</Button>
         </div>
-   
-    const myAccountModal = 
+
+    const myAccountModal =
         <Modal click={()=> closeModal(()=> setIsModalOpen(false))}>
             {symbolX}
             {aboutMe || myOrders || discountCodes}
             {navs}
         </Modal>
 
-    const mobileMyAccount = 
+    const mobileMyAccount =
         <div className={`mobile_myAccount ${isModalOpen && isHamburgerOpen ? 'active' : ''}`}>
             {symbolX}
             {aboutMe || myOrders || discountCodes}
@@ -174,7 +174,7 @@ function MyAccount({isHamburgerOpen}) {
 
     return (
         <div className='MyAccount'>
-           <span onClick={()=> setIsModalOpen(true)}>MY ACCOUNT</span> 
+           <span onClick={()=> setIsModalOpen(true)}>MY ACCOUNT</span>
             {isModalOpen ? myAccountModal : null}
             {mobileMyAccount}
         </div>

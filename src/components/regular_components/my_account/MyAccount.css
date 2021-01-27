@@ -180,6 +180,13 @@
         transform: translate(0);
     }
 
+    /* DISCOUNTS */
+
+    .MyAccount .mobile_myAccount.active #discount{
+        padding: 25px;
+        font-size: 18px;
+    }
+
     /* MY ORDERS */
 
     .MyAccount .my_orders_div{
